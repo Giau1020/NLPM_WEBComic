@@ -1,0 +1,322 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="/css/styles.css" />
+    <title>Trang Thanh Toán</title>
+    <style>
+      
+        .main {
+            display: flex;
+            align-items: center;
+            flex-direction: column;
+            flex-grow: 1;
+        }
+        .TTin, .SP {
+            width: 700px;
+            margin-top: 20px;
+            background-color: white;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+        }
+        .form-group {
+            margin-bottom: 15px;
+        }
+        label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+        input, select {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            font-size: 16px;
+        }
+        
+        .product-list {
+            margin-top: 20px;
+        }
+        .product-item {
+            display: flex;
+            align-items: center;
+            margin: 10px 0;
+            border-bottom: 1px solid #ccc;
+            padding-bottom: 10px;
+        }
+        .product-image {
+            width: 80px;
+            height: auto;
+            margin-right: 15px;
+        }
+        .product-info {
+            flex-grow: 1;
+        }
+        .product-name {
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+        .product-price {
+            color: green;
+            
+        }
+        .product-total{
+            color: blue;
+        }
+        .final-total {
+            text-align: right;
+            font-size: 20px;
+            font-weight: bold;
+            color: red;
+            margin-top: 20px;
+        }
+        .checkout-button {
+    background-color: red;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    font-size: 18px;
+    cursor: pointer;
+    margin-top: 10px;
+    margin-left: 500px;
+    
+    
+}
+
+.checkout-button:hover {
+    background-color: darkgreen;
+}
+h2 {
+    border-bottom: 1px solid gray; /* Tạo đường kẻ màu đỏ phía dưới tiêu đề */
+    padding-bottom: 10px; /* Tạo khoảng cách giữa nội dung tiêu đề và đường kẻ */
+    margin-bottom: 20px; /* Tạo khoảng cách giữa tiêu đề và nội dung bên dưới */
+}
+
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div id="header"></div>
+        <main class="main">
+            <div class="TTin">
+                <h2>Địa chỉ giao hàng</h2>
+                <form id="checkoutForm">
+                    <div class="form-group">
+                        <label for="fullName">Họ và Tên:</label>
+                        <input type="text" id="fullName" name="fullName" required />
+                    </div>
+                    <div class="form-group">
+                        <label for="phoneNumber">Số điện thoại:</label>
+                        <input type="tel" id="phoneNumber" name="phoneNumber" required />
+                    </div>
+                    <div class="form-group">
+                        <label for="province">Tỉnh/Thành phố:</label>
+                        <select id="province" name="province" required>
+                            <option value="">Chọn tỉnh/thành phố</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="district">Quận/Huyện:</label>
+                        <select id="district" name="district" required>
+                            <option value="">Chọn quận/huyện</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="ward">Phường/Xã:</label>
+                        <select id="ward" name="ward" required>
+                            <option value="">Chọn phường/xã</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="address">Địa chỉ giao hàng:</label>
+                        <input type="text" id="address" name="address" required />
+                    </div>
+                    
+                </form>
+            </div>
+            <div class="SP">
+                <div ><h2>Kiểm tra lại đơn hàng</h2></div>
+                <div class="product-list" id="productList"></div>
+                <div class="final-total" id="finalTotal">Tổng thành tiền: 0 VNĐ</div>
+                <button id="checkoutButton" class="checkout-button">Đặt Hàng</button>
+            </div>
+        </main>
+        <div id="footer"></div>
+    </div>
+    <script src="js/Header.js"></script>
+    <script>
+//           fetch('header.html')
+// .then(response => response.text())
+// .then(data => {
+//     document.getElementById('header').innerHTML = data;
+//     checkLoginStatus(); // Sau khi header được tải, kiểm tra trạng thái đăng nhập
+// })
+// .catch(error => console.error('Error loading header:', error));
+// // Tải footer
+// fetch("footer.html")
+// .then((response) => response.text())
+// .then((data) => {
+// document.getElementById("footer").innerHTML = data;
+// });
+        // Hàm định dạng giá tiền với dấu phân cách hàng nghìn
+        function formatPrice(price) {
+            return price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
+        }
+
+        function loadCheckoutItems() {
+            fetch('/cart/user', { // Gọi API để lấy sản phẩm từ giỏ hàng
+                method: 'GET',
+                credentials: 'include'
+            })
+            .then(response => response.json())
+            .then(items => {
+                const productList = document.getElementById('productList');
+                const finalTotal = document.getElementById('finalTotal');
+                productList.innerHTML = '';
+                let grandTotal = 0;
+
+                // Lọc các sản phẩm có selected = true
+                const selectedItems = items.filter(item => item.selected === true);
+
+                if (selectedItems.length === 0) {
+                    productList.innerHTML = '<p>Giỏ hàng trống.</p>';
+                    finalTotal.textContent = 'Tổng thành tiền: 0 VNĐ';
+                } else {
+                    selectedItems.forEach(item => {
+                        const itemDiv = document.createElement('div');
+                        itemDiv.classList.add('product-item');
+
+                        const productImage = document.createElement('img');
+                        productImage.src = item.comic.url; // Đường dẫn ảnh sản phẩm
+                        productImage.classList.add('product-image');
+
+                        const productInfo = document.createElement('div');
+                        productInfo.classList.add('product-info');
+
+                        const productName = document.createElement('div');
+                        productName.classList.add('product-name');
+                        productName.textContent = item.comic.name;
+
+                        const productPrice = document.createElement('div');
+                        productPrice.classList.add('product-price');
+                        productPrice.textContent = `Giá: ${formatPrice(item.comic.price)} VNĐ`;
+
+                        const productQuantity = document.createElement('div');
+                        productQuantity.textContent = `Số lượng: ${item.quantity}`;
+
+                        const productTotal = document.createElement('div');
+                        productTotal.classList.add('product-total');
+                        const totalItemPrice = item.comic.price * item.quantity;
+                        productTotal.textContent = `Tổng tiền: ${formatPrice(totalItemPrice)} VNĐ`;
+
+                        productInfo.appendChild(productName);
+                        productInfo.appendChild(productPrice);
+                        productInfo.appendChild(productQuantity);
+                        productInfo.appendChild(productTotal);
+
+                        itemDiv.appendChild(productImage);
+                        itemDiv.appendChild(productInfo);
+                        productList.appendChild(itemDiv);
+
+                        grandTotal += totalItemPrice;
+                    });
+
+                    finalTotal.textContent = `Tổng thành tiền: ${formatPrice(grandTotal)} VNĐ`;
+                }
+            })
+            .catch(error => console.error('Lỗi:', error));
+        }
+
+        // Gọi API để lấy danh sách tỉnh/thành phố, quận/huyện, phường/xã
+        const provinceSelect = document.getElementById('province');
+        const districtSelect = document.getElementById('district');
+        const wardSelect = document.getElementById('ward');
+
+        let locationData = [];
+
+        function fetchProvinces() {
+            fetch('https://provinces.open-api.vn/api/?depth=3')
+                .then(response => response.json())
+                .then(data => {
+                    locationData = data;  // Lưu dữ liệu toàn bộ vào biến locationData
+                    populateProvinces();
+                })
+                .catch(error => console.error('Error fetching data:', error));
+        }
+
+        // Hàm để thêm các tỉnh/thành phố vào combobox
+        function populateProvinces() {
+            locationData.forEach(province => {
+                const option = document.createElement('option');
+                option.value = province.code;
+                option.textContent = province.name;
+                provinceSelect.appendChild(option);
+            });
+        }
+
+        // Hàm để cập nhật danh sách quận/huyện khi chọn tỉnh/thành phố
+        function updateDistricts() {
+            const selectedProvinceCode = provinceSelect.value;
+            districtSelect.innerHTML = '<option value="">Chọn quận/huyện</option>';
+            wardSelect.innerHTML = '<option value="">Chọn phường/xã</option>';
+
+            const selectedProvince = locationData.find(province => province.code == selectedProvinceCode);
+            if (selectedProvince) {
+                selectedProvince.districts.forEach(district => {
+                    const option = document.createElement('option');
+                    option.value = district.code;
+                    option.textContent = district.name;
+                    districtSelect.appendChild(option);
+                });
+            }
+        }
+
+        // Hàm để cập nhật danh sách phường/xã khi chọn quận/huyện
+        function updateWards() {
+            const selectedProvinceCode = provinceSelect.value;
+            const selectedDistrictCode = districtSelect.value;
+            wardSelect.innerHTML = '<option value="">Chọn phường/xã</option>';
+
+            const selectedProvince = locationData.find(province => province.code == selectedProvinceCode);
+            if (selectedProvince) {
+                const selectedDistrict = selectedProvince.districts.find(district => district.code == selectedDistrictCode);
+                if (selectedDistrict) {
+                    selectedDistrict.wards.forEach(ward => {
+                        const option = document.createElement('option');
+                        option.value = ward.code;
+                        option.textContent = ward.name;
+                        wardSelect.appendChild(option);
+                    });
+                }
+            }
+        }
+
+        // Thêm sự kiện khi chọn tỉnh/thành phố và quận/huyện
+        provinceSelect.addEventListener('change', updateDistricts);
+        districtSelect.addEventListener('change', updateWards);
+
+        // Gọi hàm khi tải trang
+        window.onload = function() {
+            fetchProvinces();  // Tải danh sách tỉnh/thành phố
+            loadCheckoutItems();  // Tải danh sách sản phẩm đã chọn
+        };
+
+        // // Tải header và footer
+        // fetch("header.html")
+        //     .then((response) => response.text())
+        //     .then((data) => {
+        //         document.getElementById("header").innerHTML = data;
+        //     });
+
+        // fetch("footer.html")
+        //     .then((response) => response.text())
+        //     .then((data) => {
+        //         document.getElementById("footer").innerHTML = data;
+        //     });
+    </script>
+</body>
+</html>

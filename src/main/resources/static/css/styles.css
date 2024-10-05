@@ -1,0 +1,206 @@
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* Sử dụng flexbox để trang có chiều cao 100% */
+html, body {
+    height: 100%;
+    background:#f0efef; /* Màu nền mặc định là trắng */
+    font-family: 'Nunito_Sans variant0', Tofu !important;
+   
+}
+
+/* Container chính của toàn bộ nội dung */
+.container {
+    min-height: 100vh; /* Chiều cao tối thiểu là 100% viewport height */
+    display: flex;
+    flex-direction: column;
+   
+}
+.main {
+display: flex;
+/* justify-content: center; /* Căn giữa theo chiều ngang */
+align-items: center;   
+flex-direction: column;
+flex-grow: 1;            /* Chiếm không gian còn lại của trang */
+/* Căn giữa văn bản trong các phần tử */
+}
+.s1 {
+    height: 115px;
+    background-color: #ffffff;   
+    display: flex;          
+    justify-content: center; 
+    align-items: center;     
+    padding: 0 0px;         
+    box-sizing: border-box;
+   
+}
+.s2 {
+    background-color: white; 
+    height: 55px;           
+    display: flex;          
+    justify-content: center; 
+    align-items: center;     
+    padding: 0 10px;         
+    box-sizing: border-box;
+    width: 100%;
+    margin: auto;
+}
+
+.s3 {
+    background-color: white;
+    height: 50px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 0 10px;
+    box-sizing: border-box;
+    width: 100%;
+    margin: auto;
+}
+#danhmuc {
+    height: 40%;
+    width: auto;
+    margin-right: 10px;
+}
+#sp {
+    display: flex;
+    align-items: center;
+    line-height: 1;
+    font-size: 130%;
+    margin-right: 30px;
+    white-space: nowrap;
+}
+.search-container {
+    display: flex;
+    align-items: center;
+    height: 70%;
+    margin-right: 5px;
+    margin-left: 70px;
+}
+#khungsearch {
+    height: 100%;
+    width: 400px;
+    border-radius: 25px 0 0 25px;
+    padding: 0 15px;
+    font-size: 1rem;
+    border: 1px solid #ccc;
+    outline: none;
+    box-sizing: border-box;
+}
+#btsearch {
+    height: 100%;
+    padding: 0 20px;
+    background-color: #007BFF;
+    color: white;
+    border: none;
+    border-radius: 0 25px 25px 0;
+    cursor: pointer;
+    font-size: 1rem;
+    box-sizing: border-box;
+}
+#lgo  {
+    height: 55px;
+    margin-left: 20px;
+    margin-right: 50px;
+    transition: transform 0.3s ease, filter 0.3s ease; /* Thêm hiệu ứng chuyển tiếp */
+}
+
+
+#lgo:hover {
+    transform: scale(1.1); /* Phóng to hình ảnh lên 10% khi hover */
+    filter: brightness(1.2); /* Tăng độ sáng hình ảnh */
+}
+
+.auth-links {
+    display: flex;
+    align-items: center;
+    margin-left: 20px;
+}
+.auth-links a {
+    font-size: 130%;
+    margin-left: 10px;
+}
+
+footer {
+background-color: white;
+color: rgb(10, 1, 1);
+display: flex;
+/* justify-content: space-between; /* Tạo khoảng cách đều giữa các phần */
+align-items: stretch; /* Đảm bảo các phần tử kéo dài hết chiều cao */
+height: 180px; /* Chiều cao của footer */
+padding: 0 20px;
+box-sizing: border-box;
+width: 1365px;
+margin: auto;
+margin-top: 50px;
+}
+
+.footer-section {
+display: flex;
+flex-direction: column; /* Đặt nội dung theo cột */
+justify-content: center; /* Căn giữa nội dung theo chiều dọc */
+align-items: center; /* Căn giữa nội dung theo chiều ngang */
+width: 33%; /* Mỗi phần tử chiếm 1/3 chiều rộng */
+text-align: center;
+/* padding-right: 20px; /* Khoảng cách nội dung bên trong */
+border-right: 2px solid #ccc; /* Đường ngăn cách giữa các phần */
+}
+
+.footer-section:last-child {
+border-right: none; /* Xóa đường ngăn cách cho phần tử cuối cùng */
+}
+
+.footer-section img {
+height: 30px;
+margin-bottom: 20px;
+}
+
+.footer-section h3 {
+margin-bottom: 10px;
+font-size: 1.2em;
+}
+
+.footer-section p, .footer-section a {
+font-size: 0.9em;
+line-height: 1.6;
+color: #0f0f0f;
+text-decoration: none;
+
+}
+
+.footer-section a:hover {
+text-decoration: underline;
+}
+
+#lgft {
+height: 78px;
+margin-top: 0%;
+}
+
+.justified-text {
+text-align: justify;
+text-indent: 24px;
+}
+
+.footer-section input[type="email"] {
+padding: 5px;
+width: 70%; /* Giảm chiều rộng để phù hợp với các phần tử khác */
+margin-bottom: 10px;
+}
+
+.footer-section button {
+padding: 5px 10px;
+background-color: #007BFF;
+color: white;
+border: none;
+cursor: pointer;
+width: auto;
+}
+
+.footer-section div img {
+margin: 0 5px; /* Điều chỉnh khoảng cách giữa các hình ảnh */
+}

@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        /* Phần CSS hiện có */
+        
+.p1{
+    margin-top: 10px;
+    background-color:rgb(230, 124, 124);
+    height: 280px;
+    width: 1200px;
+    display: flex;
+}
+.ps1{
+    margin-top: 15px;
+    height: 250px;
+    width: 700px;
+    background-color:white;
+}
+.ps2{
+    margin-top: 15px;
+   margin-left: 15px;
+    height: 250px;
+    width: 485px;
+    background-color:rgb(24, 23, 23);
+}
+.ps2 img {
+    display: block;
+    margin: 0;  /* Xóa khoảng cách margin mặc định */
+    padding: 0; /* Xóa khoảng cách padding mặc định */
+}
+.p2 {
+    background-color: red;
+    flex-direction: column;
+    height: 300px;
+    width: 1200px;
+    display: flex;             /* Kích hoạt Flexbox cho .p2 */
+    justify-content: center;    /* Căn giữa theo chiều dọc khi không thay đổi flex-direction */
+    text-align: center;  /* Căn giữa theo chiều ngang */
+}
+.p3{
+    margin-top: 15px;
+    background-color: rgb(204, 0, 255);
+    flex-direction: column;
+    height: 650px;
+    width: 1200px;
+    display: flex;             
+    
+}
+.p3s1{
+    background-color: aqua;
+    height: 50px;
+    width: 1200px;
+    display: flex;
+    justify-content: space-between;
+}
+.p3s1 div{ display: flex;              
+    align-items: center;        
+    height: 100%; 
+    font-size: 25px;}
+.p3s11 {
+    margin-left: 10px;
+    color: red;
+}
+.p3s12 {
+    margin-right: 10px;
+    color: rgb(18, 15, 214);
+}
+.p3s2{
+    background-color: #0f0f0f;
+    width: 1200px;
+    height: 300px;
+    display: flex;
+}
+.p3s2 img,.p3s3 img{height: 235px; width: 180px;}
+.p3s21{
+    height: 280px;
+    width: 180px;
+    background-color: #f3f1f1;
+    margin-top: 20px;
+    margin-left: 39px;
+}
+.p3s22{
+    height: 280px;
+    width: 180px;
+    background-color: #f3f1f1;
+    margin-top: 20px;
+    margin-left: 55px;
+}
+.p3s3{background-color: #19e7a9;
+    width: 1200px;
+    height: 300px;
+    display: flex;}
+    </style>
+</head>
+<body>
+    <div class="container" >
+       
+        <div id="header"></div>
+        <main class="main">
+            <div class="p1">
+                <div class="ps1">
+                    <img src="images/pkc.jpg" alt="" height="250px" width="700px">
+                </div>
+                <div class="ps2">
+                    <div class="ps2-top" >
+                        <img src="images/pkc.jpg" alt="" height="125px" width="485px">
+                    </div>
+                    <div class="ps2-bottom">
+                        <img src="images/pkc.jpg" alt="" height="125px" width="485px">
+                    </div>
+                </div>
+            </div>
+            <div class="p2">
+                rhgbch
+            </div>
+            <div class="p3">
+                <div class="p3s1">
+                    <div class="p3s11">Bán chạy</div>
+                    <div class="p3s12">Xem tất cả</div>
+                </div>
+                <div class="p3s2">
+                    <div class="p3s21">
+                        <img src="images/pkc.jpg" alt="" >
+                        <div>Tên truyện</div>
+                        <div>fefefefef</div>
+                    </div>
+                    <div class="p3s22">
+                        <img src="images/pkc.jpg" alt="" >
+                        <div>Tên truyện</div>
+                        <div>fefefefef</div>
+                    </div>
+                    <div class="p3s22">
+                        <img src="images/pkc.jpg" alt="" >
+                        <div>Tên truyện</div>
+                        <div>fefefefef</div>
+                    </div>
+                    <div class="p3s22">
+                        <img src="images/pkc.jpg" alt="" >
+                        <div>Tên truyện</div>
+                        <div>fefefefef</div>
+                    </div>
+                    <div class="p3s22">
+                        <img src="images/pkc.jpg" alt="" >
+                        <div>Tên truyện</div>
+                        <div>fefefefef</div>
+                    </div>
+                </div>
+                <div class="p3s3"> 
+                    <div class="p3s21">
+                        <img src="images/pkc.jpg" alt="" >
+                        <div>Tên truyện</div>
+                        <div>fefefefef</div>
+                    </div>
+                    <div class="p3s22">
+                        <img src="images/pkc.jpg" alt="" >
+                        <div>Tên truyện</div>
+                        <div>fefefefef</div>
+                    </div>
+                    <div class="p3s22">
+                        <img src="images/pkc.jpg" alt="" >
+                        <div>Tên truyện</div>
+                        <div>fefefefef</div>
+                    </div>
+                    <div class="p3s22">
+                        <img src="images/pkc.jpg" alt="" >
+                        <div>Tên truyện</div>
+                        <div>fefefefef</div>
+                    </div>
+                    <div class="p3s22">
+                        <img src="images/pkc.jpg" alt="" height="235px" width="180px">
+                        <div>Tên truyện</div>
+                        <div>fefefefef</div>
+                    </div>
+                </div>
+            </div>
+            <div class="p3">
+                <div class="p3s1">
+                    <div class="p3s11">Truyện tranh mới</div>
+                    <div class="p3s12">Xem tất cả</div>
+                </div>
+                <div class="p3s2">
+                    <div class="p3s21">
+                        <img src="images/pkc.jpg" alt="" >
+                        <div>Tên truyện</div>
+                        <div>fefefefef</div>
+                    </div>
+                    <div class="p3s22">
+                        <img src="images/pkc.jpg" alt="" >
+                        <div>Tên truyện</div>
+                        <div>fefefefef</div>
+                    </div>
+                    <div class="p3s22">
+                        <img src="images/pkc.jpg" alt="" >
+                        <div>Tên truyện</div>
+                        <div>fefefefef</div>
+                    </div>
+                    <div class="p3s22">
+                        <img src="images/pkc.jpg" alt="" >
+                        <div>Tên truyện</div>
+                        <div>fefefefef</div>
+                    </div>
+                    <div class="p3s22">
+                        <img src="images/pkc.jpg" alt="" >
+                        <div>Tên truyện</div>
+                        <div>fefefefef</div>
+                    </div>
+                </div>
+                <div class="p3s3"> 
+                    <div class="p3s21">
+                        <img src="images/pkc.jpg" alt="" >
+                        <div>Tên truyện</div>
+                        <div>fefefefef</div>
+                    </div>
+                    <div class="p3s22">
+                        <img src="images/pkc.jpg" alt="" >
+                        <div>Tên truyện</div>
+                        <div>fefefefef</div>
+                    </div>
+                    <div class="p3s22">
+                        <img src="images/pkc.jpg" alt="" >
+                        <div>Tên truyện</div>
+                        <div>fefefefef</div>
+                    </div>
+                    <div class="p3s22">
+                        <img src="images/pkc.jpg" alt="" >
+                        <div>Tên truyện</div>
+                        <div>fefefefef</div>
+                    </div>
+                    <div class="p3s22">
+                        <img src="images/pkc.jpg" alt="" height="235px" width="180px">
+                        <div>Tên truyện</div>
+                        <div>fefefefef</div>
+                    </div>
+                </div>
+            </div>
+             
+        </main>
+        <div id="footer"></div>   
+<!-- Footer -->
+<script>
+    // Tải header
+    fetch('header.html')
+        .then(response => response.text())
+        .then(data => {
+            document.getElementById('header').innerHTML = data;
+        });
+
+    // Tải footer
+    fetch('footer.html')
+        .then(response => response.text())
+        .then(data => {
+            document.getElementById('footer').innerHTML = data;
+        });
+</script>
+
+    </div>
+</body>
+</html>

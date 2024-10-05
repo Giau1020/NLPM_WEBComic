@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="/css/styles.css" />
+    <title>Trang Thanh Toán</title>
+    <style>
+      
+        .main {
+            display: flex;
+            align-items: center;
+            flex-direction: column;
+            flex-grow: 1;
+            display: flex;
+         justify-content: center; /* Căn giữa theo chiều ngang */
+        
+        }
+        .login-container {
+        background-color: white;
+        padding: 50px 100px;
+        border-radius: 10px;
+        box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+        width: 600px;
+        height: 400px;
+      }
+      h2 {
+        text-align: center;
+        margin-bottom: 20px;
+      }
+      input[type="text"],
+      input[type="password"] {
+        width: 100%;
+        padding: 10px;
+        margin: 10px 0;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+      }
+      #btlg {
+        width: 100%;
+        padding: 10px;
+        background-color: rgb(220, 41, 41);
+        color: white;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        font-size: 16px;
+      }
+      button:hover {
+        background-color: #218838;
+      }
+      .error-message {
+        color: red;
+        font-size: 14px;
+        margin-top: 10px;
+        text-align: center;
+      }
+       a{
+          color: black;
+          cursor: pointer;
+          text-decoration: none;
+        }
+         a:hover{
+          color: red;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div id="header"></div>
+        <main class="main">
+            <div class="login-container">
+              <fieldset style="padding: 30px ; ">
+                <legend><h2>Đăng nhập</h2></legend>
+                <form id="login-form">
+                  <input type="text" id="username" placeholder="Tên đăng nhập" required />
+                  <input type="password" id="password" placeholder="Mật khẩu" required />
+                  <button type="button" id="btlg" onclick="login()">Đăng nhập</button>
+                </form>
+                <div id="error-message" class="error-message"></div>
+              </div> 
+              </fieldset>
+                 
+        </main>
+        <div id="footer"></div>
+    </div>
+    <script src="js/Header.js"></script>
+    <script>
+     function login() {
+    const username = document.getElementById("username").value;
+    const password = document.getElementById("password").value;
+
+    console.log("Hàm login được gọi với:", { username, password });
+
+    fetch("/user/login", {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ username, password }),
+    })
+    .then((response) => {
+        console.log("Phản hồi từ API:", response);
+
+        if (response.ok) {
+            return response.json();  // Chuyển đổi phản hồi thành JSON
+        } else {
+            document.getElementById("error-message").innerText =
+                "Sai tên đăng nhập hoặc mật khẩu!";
+            throw new Error("Login failed");
+        }
+    })
+    .then((data) => {
+        console.log("Dữ liệu trả về từ API:", data);
+
+        const role = data.role; 
+        console.log("Quyền của người dùng:", role);
+
+        let redirectUrl;
+
+        if (role.trim() === "user") {
+            redirectUrl = new URLSearchParams(window.location.search).get("redirectUrl") || "TrangChu.html";
+        } else {
+            redirectUrl = "tcad.html"; 
+        }
+
+        console.log("Chuyển hướng đến:", redirectUrl);
+        window.location.href = redirectUrl;
+    })
+    .catch((error) => {
+        console.error("Lỗi khi đăng nhập:", error);
+    });
+}
+
+    </script>
+</body>
+</html>

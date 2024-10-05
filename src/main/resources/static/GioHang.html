@@ -1,0 +1,492 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="/css/styles.css" />
+    <style>
+        .main {
+            display: flex;
+            align-items: center;
+            flex-direction: column;
+            flex-grow: 1;
+        }
+        #cartContainer {
+            background-color: white;
+            padding: 10px;
+            border-radius: 5px;
+        }
+        .cart-item {
+            display: flex;
+            align-items: center;
+            margin: 10px 0;
+            padding-bottom: 10px;
+            border-bottom: 1px solid #ccc;
+        }
+        .item-image {
+            width: 80px;
+            height: auto;
+            margin-right: 15px;
+        }
+        .item-info {
+            display: flex;
+            flex-direction: column;
+        }
+        .quantity-container {
+            display: flex;
+            align-items: center;
+            margin-top: 5px;
+        }
+        .quantity-container input {
+            width: 50px;
+            height: 20px;
+            text-align: center;
+           /* -moz-appearance: textfield;*/
+        }
+        .quantity-container input::-webkit-outer-spin-button,
+        .quantity-container input::-webkit-inner-spin-button {
+            -webkit-appearance: none;
+            margin: 0;
+        }
+        .change-button {
+            cursor: pointer;
+            padding: 0;
+            margin: 0 5px;
+            height: 20px;
+            width: 20px;
+            font-size: 16px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .delete-button {
+            cursor: pointer;
+           
+            background: none;
+            border: none;
+            color: red;
+            font-size: 20px;
+            /* margin-left: 320px; */
+            margin-left: auto; /* Đẩy thùng rác về phía phải */
+            margin-right: 50px; /* Cách bên phải 50px */
+            
+        }
+        .a {
+            width: 700px; 
+            height: 70px;
+            background-color: white;
+            margin-bottom: 10px;
+            margin-top: 10px;
+            padding: 10px;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+        .b {
+            background-color: white;
+            margin-bottom: 10px;
+            width: 700px;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+        .checkbox {
+            margin-right: 10px;
+        }
+        .item-price {
+            color: green;
+            margin-top: 5px;
+        }
+        .total-price {
+            color: blue;
+            margin-top: 5px;
+        }
+        .item-stock {
+            color: red;
+            margin-top: 5px;
+        }
+        .final-total {
+            text-align: right;  
+            margin-right: 50px;
+            font-weight: bold; 
+            color: red; 
+            font-size: 20px;
+        }
+        .checkout-button {
+    background-color: red;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    font-size: 18px;
+    cursor: pointer;
+    margin-top: 10px;
+    margin-left: 500px;
+    margin-bottom: 20px;
+    
+}
+
+.checkout-button:hover {
+    background-color: darkgreen;
+}
+
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div id="header"></div>
+        <main class="main">
+            <div class="a">
+                <div style="font-size: 25px; ">GIỎ HÀNG</div>
+                <div id="totalProducts" >Tổng số sản phẩm: 0</div>
+                
+            </div>
+            <div class="b"> 
+                <label>
+                    <input type="checkbox" id="selectAllCheckbox" style=" margin: 10px;"> <b>Chọn tất cả</b>
+                </label>
+                <hr style="  border: 1px solid #ccc;">
+                <div id="cartContainer"></div>
+                <div class="final-total" id="finalTotal">Tổng thành tiền: 0 VNĐ</div>
+                <button id="checkoutButton" class="checkout-button">Thanh Toán</button>
+            </div>
+        </main>
+        <div id="footer"></div>
+    </div>
+    <script src="js/Header.js"></script>
+    <script>
+        // // Tải header
+        // fetch("header.html")
+        //     .then((response) => response.text())
+        //     .then((data) => {
+        //         document.getElementById("header").innerHTML = data;
+        //     });
+
+        // // Tải footer
+        // fetch("footer.html")
+        //     .then((response) => response.text())
+        //     .then((data) => {
+        //         document.getElementById("footer").innerHTML = data;
+        //     });
+//         fetch('header.html')
+// .then(response => response.text())
+// .then(data => {
+//     document.getElementById('header').innerHTML = data;
+//     checkLoginStatus(); // Sau khi header được tải, kiểm tra trạng thái đăng nhập
+// })
+// .catch(error => console.error('Error loading header:', error));
+// // Tải footer
+// fetch("footer.html")
+// .then((response) => response.text())
+// .then((data) => {
+// document.getElementById("footer").innerHTML = data;
+// });
+            //-----------------------------------------------------
+            //-----------------------
+            function formatPrice(price) {
+    return price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
+}
+//-------------------------
+        function loadCart() {
+            fetch('/cart/user', {
+                method: 'GET',
+                credentials: 'include'
+            })
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Lỗi khi lấy giỏ hàng');
+                }
+                return response.json();
+            })
+            .then(cartItems => {
+    const cartContainer = document.getElementById("cartContainer");
+    const finalTotal = document.getElementById("finalTotal");
+    const totalProducts = document.getElementById("totalProducts");
+    cartContainer.innerHTML = ""; // Xóa nội dung trước đó
+    let grandTotal = 0; // Biến để tính tổng tiền
+    let totalItems = cartItems.length; // Tổng số sản phẩm
+
+    if (totalItems === 0) {
+        cartContainer.innerHTML = "<p>Giỏ hàng rỗng!</p>";
+        finalTotal.textContent = "Tổng thành tiền: 0 VNĐ"; // Cập nhật tổng
+        totalProducts.textContent = "Tổng số sản phẩm: 0"; // Cập nhật tổng số sản phẩm
+    } else {
+        cartItems.forEach(item => {
+            const itemDiv = document.createElement("div");
+            itemDiv.classList.add("cart-item");
+
+            const itemImage = document.createElement("img");
+            itemImage.src = item.comic.url;
+            itemImage.classList.add("item-image");
+
+            const checkbox = document.createElement("input");
+            checkbox.type = "checkbox";
+            checkbox.classList.add("checkbox");
+            checkbox.checked = item.selected;
+
+            // Kiểm tra nếu số lượng còn lại là 0 thì disable checkbox
+            if (item.comic.quantity === 0) {
+                    checkbox.checked = false; // Bỏ chọn checkbox
+                    checkbox.disabled = true;  // Vô hiệu hóa checkbox
+                    item.quantity = 0;  // Cập nhật số lượng đã chọn về 0
+                    updateCheckboxStatus(item.comic.id, false);
+                }
+               
+
+            checkbox.onchange = () => {
+                updateCheckboxStatus(item.comic.id, checkbox.checked);
+                updateTotal();
+
+                // Cập nhật trạng thái của checkbox "Chọn tất cả"
+                const allCheckboxes = document.querySelectorAll('.checkbox');
+                const allChecked = Array.from(allCheckboxes).every(checkbox => checkbox.checked);
+                document.getElementById("selectAllCheckbox").checked = allChecked;
+            };
+
+            const itemInfo = document.createElement("div");
+            itemInfo.classList.add("item-info");
+
+            const itemName = document.createElement("span");
+            itemName.textContent = item.comic.name;
+            itemName.style.fontWeight = "bold";
+
+            const itemPrice = document.createElement("span");
+            itemPrice.classList.add("item-price");
+            itemPrice.textContent = `${formatPrice(parseInt(item.comic.price))} VNĐ`;
+
+            const quantityContainer = document.createElement("div");
+            quantityContainer.classList.add("quantity-container");
+
+            const quantityLabel = document.createElement("span");
+            quantityLabel.textContent = "Số lượng:";
+            quantityContainer.appendChild(quantityLabel);
+
+            const decreaseButton = document.createElement("button");
+            decreaseButton.textContent = "-";
+            decreaseButton.classList.add("change-button");
+            decreaseButton.onclick = function() {
+                updateQuantity(item.comic.id, -1);
+            };
+
+            const quantityInput = document.createElement("input");
+            quantityInput.type = "number";
+            quantityInput.value = item.quantity;
+            quantityInput.min = 1;
+            quantityInput.dataset.comicId = item.comic.id;
+
+            const increaseButton = document.createElement("button");
+            increaseButton.textContent = "+";
+            increaseButton.classList.add("change-button");
+            increaseButton.onclick = function() {
+                updateQuantity(item.comic.id, 1);
+            };
+
+            const totalPrice = document.createElement("span");
+            totalPrice.classList.add("total-price");
+            const calculateTotal = () => {
+                const price = parseFloat(item.comic.price);
+                const quantity = parseInt(quantityInput.value);
+                totalPrice.textContent = `Thành tiền: ${formatPrice(price * quantity)} VNĐ`;
+                return price * quantity;
+            };
+            calculateTotal();
+
+            if (item.quantity > item.comic.quantity) {
+    // Cập nhật lại số lượng bằng số lượng còn lại
+    item.quantity = item.comic.quantity;
+    quantityInput.value = item.comic.quantity;
+
+    // Gửi yêu cầu cập nhật số lượng trong cơ sở dữ liệu
+    fetch('/cart/update', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        credentials: 'include',
+        body: JSON.stringify({
+            comicId: item.comic.id,
+            quantity: item.comic.quantity
+        })
+    })
+    .then(response => {
+        if (!response.ok) {
+            throw new Error('Lỗi khi cập nhật số lượng giỏ hàng');
+        }
+    })
+    .catch(error => {
+        console.error('Lỗi:', error);
+    });
+}
+            // Hiển thị số lượng còn lại
+            const stockInfo = document.createElement("span");
+            stockInfo.classList.add("item-stock");
+            stockInfo.textContent = `Số lượng còn: ${item.comic.quantity}`;
+
+            quantityInput.addEventListener("input", () => {
+                calculateTotal();
+                updateTotal();
+            });
+
+            const deleteButton = document.createElement("button");
+            deleteButton.innerHTML = "🗑️";
+            deleteButton.classList.add("delete-button");
+            deleteButton.onclick = function() {
+                removeFromCart(item.comic.id);
+            };
+
+            quantityContainer.appendChild(decreaseButton);
+            quantityContainer.appendChild(quantityInput);
+            quantityContainer.appendChild(increaseButton);
+            itemInfo.appendChild(itemName);
+            itemInfo.appendChild(itemPrice);
+            itemInfo.appendChild(quantityContainer);
+            itemInfo.appendChild(totalPrice);
+            itemInfo.appendChild(stockInfo);  // Thêm dòng hiển thị số lượng còn
+            itemDiv.appendChild(checkbox);
+            itemDiv.appendChild(itemImage);
+            itemDiv.appendChild(itemInfo);
+            itemDiv.appendChild(deleteButton);
+            cartContainer.appendChild(itemDiv);
+        });
+
+        updateTotal();
+        totalProducts.textContent = `Tổng số sản phẩm: ${totalItems}`;
+    }
+})
+
+        }
+
+        function updateCheckboxStatus(comicId, isChecked) {
+            fetch('/cart/update-selected', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                credentials: 'include',
+                body: JSON.stringify({
+                    comicId: comicId,
+                    selected: isChecked
+                })
+            })
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Lỗi khi cập nhật trạng thái checkbox');
+                }
+                console.log("Trạng thái checkbox đã được cập nhật");
+            })
+            .catch(error => {
+                console.error('Lỗi:', error);
+            });
+        }
+
+        function updateQuantity(comicId, change) {
+    const quantityInput = Array.from(document.querySelectorAll('input[type="number"]'))
+        .find(input => input.dataset.comicId == comicId);
+    
+    const stockInfo = quantityInput.closest('.cart-item').querySelector('.item-stock').textContent;
+    const stockQuantity = parseInt(stockInfo.replace(/[^0-9]/g, '')); // Lấy số lượng còn lại từ dòng 'Số lượng còn: ...'
+
+    let newQuantity = parseInt(quantityInput.value) + change;
+   
+    // Kiểm tra nếu số lượng mới vượt quá số lượng còn lại
+    if ( newQuantity > stockQuantity) {
+        alert(`Không thể vượt quá số lượng còn lại (${stockQuantity})`);
+        return;
+    }
+     // Kiểm tra nếu số lượng mới nhỏ hơn 1
+     if (newQuantity < 1) {
+        newQuantity = 1;  // Đặt số lượng tối thiểu là 1
+        alert('Số lượng phải lớn hơn 0.');
+    }
+    
+    quantityInput.value = newQuantity;
+
+    // Xử lý checkbox nếu số lượng bằng 0
+    // const checkbox = quantityInput.closest('.cart-item').querySelector('.checkbox');
+    // if (newQuantity === 0) {
+    //     checkbox.checked = false; // Bỏ check nếu số lượng là 0
+    //     checkbox.disabled = true; // Vô hiệu hóa checkbox
+    //     updateCheckboxStatus(comicId, false);
+    // } else {
+    //     checkbox.disabled = false; // Kích hoạt lại checkbox nếu số lượng lớn hơn 0
+    // }
+
+    fetch('/cart/update', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        credentials: 'include',
+        body: JSON.stringify({
+            comicId: comicId,
+            quantity: newQuantity
+        })
+    })
+    .then(response => {
+        if (!response.ok) {
+            throw new Error('Lỗi khi cập nhật giỏ hàng');
+        }
+        loadCart();
+    })
+    .catch(error => {
+        console.error('Lỗi:', error);
+    });
+}
+
+
+        function removeFromCart(comicId) {
+            fetch('/cart/remove', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                credentials: 'include',
+                body: JSON.stringify({
+                    comicId: comicId
+                })
+            })
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Lỗi khi xóa sản phẩm');
+                }
+                loadCart();
+            })
+            .catch(error => {
+                console.error('Lỗi:', error);
+            });
+        }
+
+        function updateTotal() {
+            const checkboxes = document.querySelectorAll('.checkbox');
+            const totalElements = document.querySelectorAll('.total-price');
+            let grandTotal = 0;
+
+            checkboxes.forEach((checkbox, index) => {
+                if (checkbox.checked) {
+                    const priceText = totalElements[index].textContent;
+                    const price = parseFloat(priceText.replace(/\./g, "").replace(/[^0-9.-]+/g, ""));
+                    grandTotal += price;
+                }
+            });
+
+            document.getElementById("finalTotal").textContent = `Tổng thành tiền: ${formatPrice(grandTotal)} VNĐ`;
+
+        }
+
+        // Xử lý sự kiện cho checkbox "Chọn tất cả"
+        document.getElementById("selectAllCheckbox").addEventListener("change", function() {
+            const checkboxes = document.querySelectorAll('.checkbox');
+            checkboxes.forEach(checkbox => {
+                checkbox.checked = this.checked;
+                const comicId = checkbox.closest('.cart-item').querySelector('.item-info input').dataset.comicId;
+                updateCheckboxStatus(comicId, checkbox.checked);
+            });
+            updateTotal();
+        });
+        document.getElementById("checkoutButton").addEventListener("click", function() {
+    window.location.href = "TT.html";
+});
+
+
+        window.onload = loadCart;
+    </script>
+</body>
+</html>

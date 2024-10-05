@@ -1,0 +1,815 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="css/styles.css">
+    <title>Document</title>
+    <style>
+        .CTSP{
+            height: 600px;
+            width: 1200px;
+            background-color: #f0efef;
+           display: flex;
+           margin-top: 20px;
+        }
+        .CTSP1{
+         
+            height: 600px;
+            width: 400px;
+            background-color: white;
+           display: flex;
+           flex-direction: column;
+           text-align: center;
+           border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+        .image{
+            height: 300px;
+            width: 200px;
+            margin-top: 30px;
+            margin: 30px auto 0px; /* Căn giữa theo chiều ngang */
+            display: block;
+        }
+       
+        .button{
+            height: 50px;
+            width: 360px;
+            margin-left: 35px;
+            background-color: white;
+            display: flex;
+            flex-direction: row;
+        } 
+        .btn-rounded {
+          padding: 10px 20px;
+            background-color: white;
+            border: 2px solid;
+            border-radius: 20px;  
+            cursor: pointer;
+            font-size: 16px;
+            transition: background-color 0.3s ease, transform 0.3s ease;
+            height: 50px;
+            width: 150px;
+        }
+
+        .btn-rounded:hover {
+            background-color: #e0e1e2;  /* Màu khi hover */
+            transform: scale(1.05);     /* Hiệu ứng phóng to nhẹ khi hover */
+        }
+        .CTSP2-top{
+            height: 420px;
+            width: 780px;
+            background-color: white;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+        .r1{
+            display: flex;
+        }
+        .CTSP2-bottom{
+          margin-top: 20px;
+            height: 160px;
+            width: 780px;
+            background-color: white;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+        .CTSP2-bottom a{
+          color: black;
+        }.CTSP2-bottom a:hover{
+          color: red;
+        }
+        .tt{
+            height: 40px;
+            font-size: 20px;
+             display: flex;
+             align-items: center;
+            padding-left: 35px;
+             margin-top: 12px;
+             position: relative; 
+            
+        }
+        .tt::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 37px; /* Cách bên trái 20px */
+    right: 50px; /* Cách bên phải 20px */
+    height: 1px; /* Độ dày của đường kẻ */
+    background-color: rgb(233, 230, 230); /* Màu xám cho đường kẻ */
+}
+#publisher,#tloai,#kt,#tl,#st,#tg{ margin-left: 10px;}
+        .chinhsach{
+          display: flex;
+           margin-top: 10px;
+            padding-left: 35px;
+        }
+        .chinhsach div{
+          
+          padding-top: 5px;
+           font-size: 17px;
+        }
+        .p3 {
+        margin-top: 15px;
+        background-color: white;
+        border: 1px solid color(grey  );
+        height: 390px;
+        width: 1200px;
+        border-radius: 10px;
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        overflow: hidden; /* Thêm dòng này để tránh tràn nội dung */
+      }
+      .p3s1 {
+        background-color:rgb(220, 41, 41);
+        height: 50px;
+        width: 1200px;
+        display: flex;
+        justify-content: space-between;
+      }
+      .p3s1 div {
+        display: flex;
+        align-items: center;
+        height: 100%;
+        font-size: 25px;
+      }
+      .p3s11 {
+        margin-left: 10px;
+        color:white;
+      }
+      .p3s12 {
+        margin-right: 10px;
+        color: rgb(18, 15, 214);
+      }
+
+      .p3s2 {
+        background-color: white;
+        width: 1200px;
+        height: 370px;
+        display: flex;
+        margin-top: 2px; 
+        
+      }
+
+
+      .i4-comic {
+        height: 320px;
+        width: 230px;
+        background-color: white;
+        margin-top: 10px;
+        margin-left: 8px;
+        display: flex;
+  flex-direction: column; /* Để đảm bảo các phần tử xếp theo cột */
+  align-items: center; /* Căn giữa theo chiều ngang */
+  justify-content: center; /* Căn giữa theo chiều dọc */
+  justify-content: flex-start; /* Giữ các phần tử căn trên cùng */
+  text-align: center; /* Căn giữa nội dung văn bản */
+      }
+      .i4-comic img{
+        margin-top: 10px; 
+      }
+      .name-comics,
+      .price-comics {
+        color: rgb(21, 21, 21);
+       text-align: left;
+        margin-top: 5px;
+      }
+      .price-comics{
+        color: red;
+      }
+      .i4-comic:hover {
+        border: 2px solid rgb(235, 229, 229); /* Tạo khung có độ dày 2px màu xanh */
+      
+      }
+      .name-comics {
+  color: rgb(21, 21, 21);
+  text-align: left;
+  margin-top: 5px;
+  max-width: 190px; /* Giới hạn độ rộng để đảm bảo căn giữa */
+  
+  
+}
+a {
+  cursor: pointer;
+  text-decoration: none;
+    color: black; /* Màu mặc định */
+}
+a:hover{
+  color: red;
+}
+.Name {
+ min-height: 135px; /* Chiều cao của div */
+  font-size: 10px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center; /* Căn giữa theo trục dọc */
+  align-items: center; /* Căn giữa theo trục ngang */
+  background-color: white;
+ margin-top: 10px;
+ 
+}
+.MTSP{
+  height: auto;
+  width: 1200px;
+  background-color: white;
+  margin-top: 20px;
+  border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+    /*---------------*/
+    .modal {
+            display: none; /* Ẩn modal */
+            position: fixed; 
+            z-index: 1; 
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5); /* Hiệu ứng mờ */
+        }
+#openModal,#previewButton{
+  color: blue;
+}
+#openModal:hover,#previewButton:hover{
+  color:red;
+}
+        /* Nội dung của modal */
+        .modal-content {
+            background-color: white;
+            margin: 15% auto;
+            padding: 20px;
+            border: 1px solid #888;
+            width: 80%; /* Độ rộng của modal */
+            text-align: left; /* Canh trái nội dung */
+            border-radius: 10px; /* Bo góc modal */
+        }
+
+        /* Nút để đóng modal */
+        .close {
+            color: #aaa;
+            float: right;
+            font-size: 28px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        .close:hover,
+        .close:focus {
+            color: black;
+            text-decoration: none;
+            cursor: pointer;
+        }
+
+        /* Định dạng phần dữ liệu */
+        
+
+        .modal-description {
+            font-size: 22px;
+            color: black;
+            line-height: 1.5;
+            margin-bottom: 20px;
+        }
+
+
+        /* Định dạng cho các phần khác */
+        h2 {
+            text-align: center;
+            font-size: 30px;
+            margin-bottom: 20px;
+        }   
+
+        /*
+        -----------------------------------------------------
+        */
+        .modal1 {
+            display: none; /* Ẩn modal */
+            position: fixed; 
+            z-index: 1; 
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5); /* Hiệu ứng mờ */
+        }
+
+        .modal1-content {
+    background-color: white;
+    margin: 10% auto;  /* Điều chỉnh khoảng cách của modal từ phía trên */
+    padding: 20px;
+    border: 1px solid #888;
+    width: 50%; /* Tăng chiều rộng của modal lên 70% thay vì 40% */
+    max-width: 1000px; /* Giới hạn chiều rộng tối đa */
+    text-align: center;
+    border-radius: 10px;
+    position: relative;
+}
+
+.modal1 img {
+    width: 100%;
+    max-height: 400px; /* Tăng chiều cao tối đa của hình ảnh */
+    object-fit: contain;
+    display: block;
+    margin: 0 auto;
+}
+
+/* Đưa nút đóng "X" về góc trên bên phải */
+.close-preview {
+    position: absolute;
+    top: 10px;  /* Căn chỉnh khoảng cách từ phía trên */
+    right: 15px; /* Căn chỉnh khoảng cách từ phía bên phải */
+    color: #aaa;
+    font-size: 28px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.close-preview:hover,
+.close-preview:focus {
+    color: black;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+#prevImageButton, #nextImageButton {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    background-color: transparent;
+    border: none;
+    font-size: 36px; /* Tăng kích thước của các nút điều hướng */
+    cursor: pointer;
+}
+
+#prevImageButton {
+    left: 15px; /* Điều chỉnh vị trí của nút Previous */
+}
+
+#nextImageButton {
+    right: 15px; /* Điều chỉnh vị trí của nút Next */
+}
+
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div id="header"></div>
+        <main class="main">
+         <div>
+          <div id="previewModal" class="modal1">
+            <div class="modal1-content">
+                <span class="close-preview">&times;</span>
+                <h2>Xem thử vài trang</h2>
+                <img id="previewImage" src="" alt="Preview Image">
+                <button id="prevImageButton">&#10094;</button>
+                <button id="nextImageButton">&#10095;</button>
+            </div>
+        </div>
+      </div>
+            <div class="CTSP">
+                <div class="CTSP1">
+                    <img class="image" src="" alt="" id="img-id">
+                    <div class="Name">
+                      <div style=" font-size: 20px; width: 350px;" id="Name1" ></div>
+                      <div style="color: red; font-size: 20px; font-weight: bold  ; margin-top: 10px;" id="Price" ></div>
+                    </div>
+                    <div class="button">
+                        <button class="btn-rounded" id="addToCartButton">
+                             Thêm vào giỏ hàng
+                        </button>
+                        <button class="btn-rounded"  style="margin-left: 30px;" id="buyNowButton">
+                              Mua ngay
+                        </button>
+                    </div>
+                    <a href="#" id="openModal" style="margin-top: 10px; font-size: 20px; ">
+                      Xem tóm tắt
+                    </a>
+                    <a href="#" id="previewButton" style=" font-size: 20px; ">
+                      Xem thử vài trang
+                  </a>
+            </div>
+            <div class="CTSP2" style="margin-left: 20px; ">
+                <div class="CTSP2-top ">
+                  <div style=" font-size: 30px; padding-top: 25px; padding-left: 15px;"><b>Thông tin chi tiết:</b></div>
+                  <div class="tt">
+                    <div>Nhà xuất bản:</div>
+                    <div id="publisher"></div>
+                  </div>
+                  <div class="tt">
+                    <div>Thể loại:</div>
+                    <div id="tloai"></div>
+                  </div>
+                  <div class="tt">
+                    <div>Tác giả:</div>
+                    <div id="tg"></div>
+                  </div>
+                  <div class="tt">
+                    <div>Kích thước:</div>
+                    <div id="kt"></div>
+                  </div>
+                  <div class="tt">
+                    <div>Trọng lượng:</div>
+                    <div id="tl" ></div>
+                  </div>
+                  <div class="tt">
+                    <div>Số trang:</div>
+                    <div id="st"></div>
+                  </div>    
+                </div>
+                <div class="CTSP2-bottom">
+                  <div style=" font-size: 22px; padding-top:15px; padding-left: 15px;">
+                    <b>Chính sách ưu đãi của SNG Comics </b>
+                  </div>
+                  <a href="CSGiaoHang.html" >
+                    <div class="chinhsach">
+                      <img src="images/car.png" alt=""  >
+                      <div style="margin-left: 5px;">
+                        <b>Thời gian giao hàng:</b> Giao nhanh và uy tín
+                      </div>
+                    </div>
+                  </a>
+                  <a href="CSHoanTra.html" >
+                    <div class="chinhsach"> 
+                      <img src="images/hoantra.png" alt="">
+                      <div style="margin-left: 7px;">
+                        <b>Chính sách đổi trả:</b> Đổi trả miễn phí toàn quốc
+                      </div>
+                    </div>
+                  </a>
+                <a href="CSKhachSi.html">
+                  <div class="chinhsach" >
+                    <img src="images/khachsi.png" alt="">
+                    <div style="margin-left: 9px;"> <b>Chính sách khách sỉ:</b> Ưu đãi khi mua số lượng lớn</div>
+                  </div>
+                </a>
+                  
+                </div>
+            </div>
+            </div>
+            <div class="MTSP" > 
+              <div style=" font-size: 22px; padding-top:15px; padding-left: 15px;"><b>Mô tả sản phẩm</b></div>
+       <div id="mt" style="font-size: 19px; padding-left: 15px; padding-bottom: 20px; padding-top: 20px;"></div>
+            </div>
+        <div class="p3">
+            <div class="p3s1">
+              <div class="p3s11">Sản phẩm tương tự</div>
+            </div>
+            <div class="p3s2">
+              <div class="i4-comic" >
+                <a id="comic-link-1">
+                  <img src="" alt="Comic image" id="comic-image-1" />
+        <div class="name-comics" id="comic-name-1">dedd</div>
+        <div class="price-comics" id="comic-price-1">dddddd</div>
+                </a>
+              </div>
+              <div class="i4-comic">
+                <a id="comic-link-2">
+                  <img src="" alt="Comic image" id="comic-image-2" />
+        <div class="name-comics" id="comic-name-2"></div>
+        <div class="price-comics" id="comic-price-2"></div>
+                </a>
+              </div>
+              <div class="i4-comic">
+                <a id="comic-link-3">
+                  <img src="" alt="Comic image" id="comic-image-3" />
+                  <div class="name-comics" id="comic-name-3"></div>
+                  <div class="price-comics" id="comic-price-3"></div>
+                </a>
+              </div>
+              <div class="i4-comic">
+                <a id="comic-link-4">
+                  <img src="" alt="Comic image" id="comic-image-4" />
+                  <div class="name-comics" id="comic-name-4"></div>
+                  <div class="price-comics" id="comic-price-4"></div>
+                </a>
+              </div>
+              <div class="i4-comic">
+                <a id="comic-link-5">
+                  <img src="" alt="Comic image" id="comic-image-5" />
+                  <div class="name-comics" id="comic-name-5"></div>
+                  <div class="price-comics" id="comic-price-5"></div>
+                </a>
+              </div>
+            </div>
+          </div>
+          
+                <!-- Modal -->
+    <div id="myModal" class="modal">
+      <div class="modal-content">
+          <span class="close">&times;</span>
+          <h2>Tóm tắt truyện</h2>
+          <div id="modalBody">
+              <!-- Nội dung sẽ được thêm vào đây -->
+          </div>
+      </div>
+  </div>
+        </main>
+        </div>
+
+        <div id="footer"></div>
+        <script src="js/Header.js"></script>
+        <script>
+          //-------------------------------
+
+          //--------------------------------------
+          
+           
+                //----------------------
+               // Hàm định dạng giá với dấu chấm thay vì dấu phẩy
+               function formatPrice(price) {
+    return price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
+}
+//------------------------
+
+
+
+/////////////////////////////////////////////
+    // Lấy ID từ URL
+    const urlParams = new URLSearchParams(window.location.search);
+    const productId = urlParams.get('id');
+
+    // Gọi API để lấy thông tin chi tiết của truyện dựa vào ID
+    if (productId) {
+      fetch(`http://localhost:8080/comics/${productId}`) // Gọi API chi tiết của truyện
+        .then(response => response.json())
+        .then(data => {
+          
+          document.getElementById('img-id').src = data.url || 'default-image.png';
+          document.getElementById('Name1').innerText = data.name || 'Tên không có sẵn';
+          document.getElementById('Price').innerText = formatPrice(data.price) +' Vnđ'|| 'Tên không có sẵn';
+          document.getElementById('publisher').innerText = data.publisher
+          document.getElementById('tloai').innerText = data.genre
+          document.getElementById('tg').innerText = data.author
+          document.getElementById('tl').innerText = data.weight
+          document.getElementById('mt').innerText = data.description || 'Tên không có sẵn';
+          document.getElementById('st').innerText = data.pages
+          document.getElementById('kt').innerText = data.size
+        })
+        .catch(error => {
+          console.error("Lỗi khi lấy chi tiết truyện:", error);
+        });
+    } else {
+      console.error("Không có ID của truyện trong URL");
+    }
+  /*----------------------------------*/
+  document.addEventListener("DOMContentLoaded", function () {
+  // Gọi API để lấy dữ liệu các truyện tranh bán chạy nhất
+  fetch("/comics/top5byid") // Đường dẫn tới API Spring Boot của bạn
+    .then(response => response.json()) // API trả về dữ liệu dạng JSON
+    .then(data => {
+      console.log("Dữ liệu từ API:", data); // Kiểm tra dữ liệu trong console
+
+      // Duyệt qua dữ liệu truyện tranh trả về từ API
+      data.forEach((comic, index) => {
+        // Giới hạn chỉ lấy 8 comic
+        if (index < 5) {
+          // Đảm bảo phần tử có tồn tại để tránh lỗi
+          const comicImage = document.getElementById(`comic-image-${index + 1}`);
+          const comicName = document.getElementById(`comic-name-${index + 1}`);
+          const comicPrice = document.getElementById(`comic-price-${index + 1}`);
+          const comicLink = document.getElementById(`comic-link-${index + 1}`);
+
+          if (comicImage && comicName && comicPrice) {
+            // Gán giá trị từ API vào các thẻ HTML
+            comicImage.src = comic.url || "default-image.png"; // Nếu không có URL, dùng ảnh mặc định
+            comicName.innerText = comic.name;
+            comicPrice.innerText = `${formatPrice(comic.price)} VND`;
+
+               // Thêm ID của truyện vào URL để chuyển hướng sang trang CTSP
+               comicLink.href = `ChiTietSP.html?id=${comic.id}`;
+          }
+        }
+      });
+    })
+    .catch(error => {
+      console.error("Lỗi khi lấy dữ liệu từ API:", error);
+    });
+});
+//-------------------------------------------------------
+ // Lấy phần tử modal và các phần tử cần thiết khác
+        var modal = document.getElementById("myModal");
+        var btn = document.getElementById("openModal");
+        var span = document.getElementsByClassName("close")[0];
+        var modalBody = document.getElementById("modalBody");
+    //----------------------
+    
+        // Khi nhấn vào nút, mở modal và thêm dữ liệu động từ API
+    
+        btn.onclick = function(event) {
+    event.preventDefault(); // Ngăn không cho trang chuyển hướng
+
+    // Gọi API để lấy dữ liệu truyện
+    fetch(`http://localhost:8080/comics/${productId}`)
+        .then(response => response.json())
+        .then(data => {
+            console.log(data);  // Kiểm tra dữ liệu trả về
+            // Hiển thị tóm tắt trong modal
+            modalBody.innerHTML = `
+                <div class="modal-description">${data.summarize}</div>
+            `;
+            modal.style.display = "block"; // Hiển thị modal
+        })
+        .catch(error => console.error("Lỗi khi lấy dữ liệu truyện:", error));
+}
+
+        // Đóng modal khi nhấn vào nút 'x'
+        span.onclick = function() {
+            modal.style.display = "none";
+        }
+    
+        // Đóng modal khi nhấn ra ngoài
+        window.onclick = function(event) {
+    // Kiểm tra nếu nhấn ra ngoài các modal thì đóng chúng
+    if (event.target == modal) {
+        modal.style.display = "none";
+    } else if (event.target == previewModal) {
+        previewModal.style.display = "none";
+    }
+}
+
+        //-------------------------------------------
+        function showSuccessMessage(message) {
+    // Hiển thị thông báo thành công cho người dùng
+    alert(message); // Bạn có thể sử dụng alert hoặc thiết lập một thông báo tùy chỉnh
+    
+}
+
+       // Gắn sự kiện khi người dùng nhấn vào nút "Thêm vào giỏ hàng"
+document.getElementById('addToCartButton').addEventListener('click', function() {
+    checkLoginStatusAndAddToCart();
+});
+
+// Gắn sự kiện khi người dùng nhấn vào nút "Mua ngay"
+document.getElementById('buyNowButton').addEventListener('click', function() {
+    checkLoginStatusAndBuyNow();
+});
+
+// Hàm kiểm tra trạng thái đăng nhập và xử lý thêm vào giỏ hàng
+function checkLoginStatusAndAddToCart() {
+    fetch('/user/is-logged-in', {
+        credentials: 'include'  // Gửi cookie với mỗi request
+    })
+    .then(response => response.json())
+    .then(isLoggedIn => {
+        console.log("Đã đăng nhập:", isLoggedIn);  // Kiểm tra trạng thái đăng nhập
+        if (isLoggedIn) {
+            // Nếu đã đăng nhập, thêm vào giỏ hàng
+            addToCart();
+            
+        } else {
+            // Nếu chưa đăng nhập, chuyển hướng tới trang đăng nhập và truyền trang hiện tại
+            window.location.href = `/login.html?redirectUrl=${window.location.href}`;
+        }
+    })
+    .catch(error => {
+        console.error('Lỗi khi kiểm tra trạng thái đăng nhập:', error);
+    });
+}
+
+// Hàm kiểm tra trạng thái đăng nhập và xử lý mua ngay
+function checkLoginStatusAndBuyNow() {
+    fetch('/user/is-logged-in', {
+        credentials: 'include'  // Gửi cookie với mỗi request
+    })
+    .then(response => response.json())
+    .then(isLoggedIn => {
+        if (isLoggedIn) {
+            // Nếu đã đăng nhập, xử lý logic mua ngay
+            buyNow();
+        } else {
+            // Nếu chưa đăng nhập, chuyển hướng tới trang đăng nhập và truyền trang hiện tại
+            window.location.href = `/login.html?redirectUrl=${window.location.href}`;
+        }
+    })
+    .catch(error => {
+        console.error('Lỗi khi kiểm tra trạng thái đăng nhập:', error);
+    });
+}
+
+
+// Hàm gửi yêu cầu thêm sản phẩm vào giỏ hàng
+function addToCart() {
+    const productId = urlParams.get('id'); // Lấy ID của sản phẩm từ URL
+    const quantity = 1; // Số lượng sản phẩm muốn thêm (giả sử luôn là 1)
+
+    fetch('/cart/add', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+            comicId: productId, // ID sản phẩm (truyện)
+            quantity: quantity  // Số lượng sản phẩm
+        }),
+    })
+    .then(response => {
+        if (response.ok) {
+            return response.text(); // Trả về chuỗi thay vì JSON
+        } else {
+            throw new Error('Thêm sản phẩm vào giỏ hàng thất bại');
+        }
+    })
+    .then(data => {
+        console.log('Kết quả thêm vào giỏ hàng:', data); // Đây sẽ là chuỗi văn bản
+        showSuccessMessage("Thêm vào giỏ hàng thành công!");
+        
+    })
+    .catch(error => {
+        console.error('Lỗi khi thêm vào giỏ hàng:', error);
+        showErrorMessage("Không thể thêm sản phẩm vào giỏ hàng");
+    });
+}
+function buyNow() {
+    const productId = urlParams.get('id'); // Lấy ID của sản phẩm từ URL
+    const quantity = 1; // Số lượng sản phẩm muốn thêm (giả sử luôn là 1)
+
+    fetch('/cart/add', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+            comicId: productId, // ID sản phẩm (truyện)
+            quantity: quantity  // Số lượng sản phẩm
+        }),
+    })
+    .then(response => {
+        if (response.ok) {
+            return response.text(); // Trả về chuỗi thay vì JSON
+        } else {
+            throw new Error('Thêm sản phẩm vào giỏ hàng thất bại');
+        }
+    })
+    .then(data => {
+        console.log('Kết quả thêm vào giỏ hàng:', data); // Đây sẽ là chuỗi văn bản
+        window.location.href = "GioHang.html";
+        
+    })
+    .catch(error => {
+        console.error('Lỗi khi thêm vào giỏ hàng:', error);
+        showErrorMessage("Không thể thêm sản phẩm vào giỏ hàng");
+    });
+}
+
+
+        //-----------------
+       // Modal xem thử vài trang
+       var previewModal = document.getElementById("previewModal");
+        var previewBtn = document.getElementById("previewButton");
+        var closePreview = document.getElementsByClassName("close-preview")[0];
+        var previewImage = document.getElementById("previewImage");
+        var prevImageButton = document.getElementById("prevImageButton");
+        var nextImageButton = document.getElementById("nextImageButton");
+
+        var currentImageIndex = 0;  // Vị trí ảnh hiện tại
+        var imageUrls = [];  // Mảng chứa URL của các hình ảnh
+
+        // Khi nhấn vào nút "Xem thử vài trang", mở modal và hiển thị hình ảnh từ API
+        previewBtn.onclick = function(event) {
+            event.preventDefault(); // Ngăn không cho trang chuyển hướng
+
+            // Gọi API để lấy 5 URL từ backend
+            fetch(`http://localhost:8080/comics/${productId}/images`)
+                .then(response => response.json())
+                .then(data => {
+                    imageUrls = [data.url1, data.url2, data.url3, data.url4, data.url5];
+                    currentImageIndex = 0;
+                    showImage(currentImageIndex);
+                    previewModal.style.display = "block"; // Hiển thị modal
+                })
+                .catch(error => console.error("Lỗi khi lấy hình ảnh:", error));
+        }
+
+        // Hiển thị hình ảnh theo chỉ số
+        function showImage(index) {
+            if (imageUrls.length > 0) {
+                previewImage.src = imageUrls[index] || 'default-image.png';
+            }
+        }
+
+        // Đóng modal khi nhấn vào nút 'x'
+        closePreview.onclick = function() {
+            previewModal.style.display = "none";
+        }
+
+        // Đóng modal khi nhấn ra ngoài modal
+     
+
+        // Khi nhấn nút "Previous", chuyển sang hình ảnh trước
+        prevImageButton.onclick = function() {
+            if (currentImageIndex > 0) {
+                currentImageIndex--;  // Giảm chỉ số ảnh hiện tại
+                showImage(currentImageIndex); // Hiển thị ảnh tương ứng
+            }
+        }
+
+        // Khi nhấn nút "Next", chuyển sang hình ảnh kế tiếp
+        nextImageButton.onclick = function() {
+            if (currentImageIndex < imageUrls.length - 1) {
+                currentImageIndex++;  // Tăng chỉ số ảnh hiện tại
+                showImage(currentImageIndex); // Hiển thị ảnh tương ứng
+            }
+        }
+        </script>
+        
+    </div>
+</body>
+</html>

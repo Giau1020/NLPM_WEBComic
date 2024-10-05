@@ -1,0 +1,89 @@
+<style>
+    #loggedInUser {
+        width: 240px; /* Đặt độ rộng cố định tương tự như phần Đăng nhập/Đăng ký */
+        display: flex;
+        justify-content: space-between; /* Căn chỉnh đều giữa các phần tử */
+        
+    }
+
+
+    #usernameDisplay {
+        font-size: 18px; /* Kích thước chữ cho username */
+        font-weight: bold;
+        color: #007BFF; /* Màu sắc cho username */
+        
+    }
+    #usernameDisplay:hover {
+        cursor: pointer;
+        color: red;
+    }
+    #authLinks {
+        width: 220px; /* Đặt độ rộng tương tự như phần "loggedInUser" */
+        display: flex;
+        justify-content: space-between;
+        margin-left: 50px;
+    }
+    #userMenu {
+    display: none; /* Ẩn menu */
+    position: absolute;
+    background-color: white;
+    border: 1px solid #ccc;
+    width: 150px;
+    z-index: 1;
+    top: 100%; 
+}
+
+#userMenu a {
+    display: block;
+    padding: 10px;
+    text-decoration: none;
+    color: black;
+}
+
+#userMenu a:hover {
+    background-color: #f0f0f0;
+}
+
+#usernameDisplay {
+    cursor: pointer;
+}
+
+
+</style>
+
+ <header>
+    <div class="s1" style="width: 100%; height: 70px; align-items: center;">
+        <img src="images/top1.webp" alt="" style="width: 1263%; height: 60px;">
+    </div>
+    <div class="s3">
+        <img src="images/3Gach.svg" alt="Sample Image" id="danhmuc">
+        <span id="sp"><b>DANH MỤC SẢN PHẨM</b></span>
+        <div class="search-container">
+            <input type="text" placeholder="Tìm kiếm sản phẩm..." id="khungsearch">
+            <button type="submit" id="btsearch">Tìm kiếm</button>
+        </div>
+        <a href="TrangChu.html">
+            <img src="images/logo.svg" alt="" id="lgo">
+        </a>
+        <div id="authLinks" class="auth-links">
+            <a href="login.html">Đăng nhập</a>
+            <span style="margin-left: 10px;"><b>|</b></span>
+            <a href="dki.html">Đăng ký</a>
+        </div>
+        <div id="loggedInUser" style="display: none; position: relative; ">
+            Xin chào <span id="usernameDisplay"></span>
+            <div id="userMenu" style="display: none; position: absolute; top: 100%; left: 0; background-color: white; border: 1px solid #ccc; width: 150px; z-index: 1;">
+                <a href="TrangChu.html">Trang chủ</a>
+                <a href="#">Thông tin tài khoản</a>
+                <a href="GioHang.html">Giỏ hàng của tôi</a>
+                <a href="orders.html">Đơn hàng của tôi</a>
+                <a href="#" id="logoutLink">Đăng xuất</a>
+            </div>
+        </div>
+        
+        
+        
+    </div>
+</header>
+
+

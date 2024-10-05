@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Đăng nhập</title>
+    <link rel="stylesheet" href="/css/styles.css" />
+    <style>
+      
+      .main {
+        display: flex;
+        /* justify-content: center; /* Căn giữa theo chiều ngang */
+        align-items: center;
+        flex-direction: column;
+        flex-grow: 1; /* Chiếm không gian còn lại của trang */
+        /* Căn giữa văn bản trong các phần tử */
+      }
+      .login-container {
+        background-color: white;
+        padding: 40px;
+        border-radius: 10px;
+        box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+        width: 300px;
+      }
+
+      h2 {
+        text-align: center;
+        margin-bottom: 20px;
+      }
+
+      input[type="text"],
+      input[type="password"] {
+        width: 100%;
+        padding: 10px;
+        margin: 10px 0;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+      }
+
+      button {
+        width: 100%;
+        padding: 10px;
+        background-color: #28a745;
+        color: white;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        font-size: 16px;
+      }
+
+      button:hover {
+        background-color: #218838;
+      }
+
+      .error-message {
+        color: red;
+        font-size: 14px;
+        margin-top: 10px;
+        text-align: center;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <div id="header"></div>
+    <div class="login-container">
+      <h2>Đăng nhập</h2>
+      <form id="login-form">
+        <input type="text" id="username" placeholder="Tên đăng nhập" required />
+        <input type="password" id="password" placeholder="Mật khẩu" required />
+        <button type="button" onclick="login()">Đăng nhập</button>
+      </form>
+      <div id="error-message" class="error-message"></div>
+    </div>
+<div id="footer"></div>
+</div>
+<script src="js/Header.js"></script>
+    <script>
+   
+      function login() {
+        const username = document.getElementById("username").value;
+        const password = document.getElementById("password").value;
+
+        // Gọi API để xử lý đăng nhập
+        fetch("/user/login", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ username, password }),
+        })
+          .then((response) => {
+            if (response.ok) {
+              // Nếu đăng nhập thành công, chuyển hướng tới trang trước đó
+              const redirectUrl =
+                new URLSearchParams(window.location.search).get( "redirectUrl") || "TrangChu.html";
+              window.location.href = redirectUrl;
+
+            } else {
+              // Hiển thị lỗi nếu đăng nhập thất bại
+              document.getElementById("error-message").innerText =
+                "Sai tên đăng nhập hoặc mật khẩu!";
+            }
+          })
+          .catch((error) => {
+            console.error("Lỗi khi đăng nhập:", error);
+          });
+      }
+    </script>
+    
+  </body>
+</html>

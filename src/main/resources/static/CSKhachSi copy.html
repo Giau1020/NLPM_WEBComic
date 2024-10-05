@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Your Cart</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+        }
+
+        h2 {
+            text-align: center;
+            margin-top: 20px;
+        }
+
+        .cart-container {
+            max-width: 1000px;
+            margin: 30px auto;
+            padding: 20px;
+            background-color: white;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .cart-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px;
+            border-bottom: 1px solid #ddd;
+        }
+
+        .cart-item img {
+            max-width: 100px;
+            border-radius: 5px;
+        }
+
+        .cart-item-details {
+            flex-grow: 1;
+            margin-left: 20px;
+        }
+
+        .cart-item h3 {
+            font-size: 18px;
+            margin-bottom: 5px;
+        }
+
+        .cart-item p {
+            font-size: 14px;
+            color: #555;
+        }
+
+        .cart-item .price {
+            font-size: 16px;
+            color: #d9534f;
+            font-weight: bold;
+        }
+
+        .cart-item .quantity {
+            display: inline-block;
+            margin-right: 20px;
+            font-size: 14px;
+        }
+
+        .cart-total {
+            text-align: right;
+            font-size: 18px;
+            font-weight: bold;
+            margin-top: 20px;
+        }
+
+        .checkout-btn {
+            display: inline-block;
+            margin-top: 20px;
+            padding: 10px 20px;
+            background-color: #5cb85c;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+    </style>
+</head>
+<body>
+
+    <h2>Your Cart</h2>
+    <div class="cart-container" id="cartItems">
+        <!-- Các mục trong giỏ hàng sẽ được hiển thị tại đây -->
+    </div>
+
+    <div class="cart-total" id="cartTotal">
+        <!-- Tổng giá sẽ được hiển thị tại đây -->
+    </div>
+
+    <button class="checkout-btn" onclick="checkout()">Checkout</button>
+
+    <script>
+        function loadCart() {
+            fetch('/cart/user', {
+                method: 'GET',
+                headers: {
+                    'Content-Type': 'application/json',
+                }
+            })
+            .then(response => response.json())
+            .then(data => {
+                let cartItemsContainer = document.getElementById('cartItems');
+                let cartTotalElement = document.getElementById('cartTotal');
+                cartItemsContainer.innerHTML = '';
+                let total = 0;
+
+                data.forEach(item => {
+                    const cartItemHTML = `
+                        <div class="cart-item">
+                            <img src="${item.comic.url}" alt="${item.comic.name}">
+                            <div class="cart-item-details">
+                                <h3>${item.comic.name}</h3>
+                                <p>${item.comic.description}</p>
+                                <span class="quantity">Quantity: ${item.quantity}</span>
+                                <span class="price">$${item.comic.price}</span>
+                            </div>
+                        </div>
+                    `;
+                    total += item.comic.price * item.quantity;
+                    cartItemsContainer.innerHTML += cartItemHTML;
+                });
+
+                cartTotalElement.innerText = 'Total: $' + total.toFixed(2);
+            })
+            .catch(error => {
+                console.error('Error fetching cart:', error);
+            });
+        }
+
+        function checkout() {
+            alert('Proceeding to checkout!');
+            // Thêm xử lý logic cho thanh toán tại đây
+        }
+
+        // Tải giỏ hàng khi trang được tải
+        window.onload = loadCart;
+    </script>
+
+</body>
+</html>
