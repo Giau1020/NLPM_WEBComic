@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="/css/styles.css" />
+    <title>Trang Thanh Toán</title>
+    <style>
+        .main {
+            display: flex;
+            align-items: center;
+            flex-direction: column;
+            flex-grow: 1;
+            justify-content: center; /* Căn giữa theo chiều ngang */
+        }
+        .search {
+            margin-top: 30px;
+            width: 1200px;
+            background-color: white;
+            height: 1500px;
+        }
+        .search h1 {
+            text-align: center;
+        }
+        .search-results {
+            display: grid;
+            grid-template-columns: repeat(5, 1fr); /* 5 cột */
+            margin-top: 20px;
+        }
+        .i4-comic {
+            height: 320px;
+            width: 230px;
+            background-color: white;
+            margin-top: 10px;
+            margin-left: 5px;
+            display: flex;
+            flex-direction: column; /* Để đảm bảo các phần tử xếp theo cột */
+            align-items: center; /* Căn giữa theo chiều ngang */
+            justify-content: flex-start; /* Giữ các phần tử căn trên cùng */
+            text-align: center; /* Căn giữa nội dung văn bản */
+        }
+        .i4-comic img {
+            margin-top: 10px;
+            max-width: 100%; /* Đảm bảo hình ảnh không vượt quá khung */
+            height: auto;
+        }
+        .name-comics,
+        .price-comics {
+            color: rgb(21, 21, 21);
+            text-align: left;
+            margin-top: 5px;
+        }
+        .price-comics {
+            color: red;
+        }
+        a {
+            text-decoration: none;
+        }
+        .i4-comic:hover {
+            border: 2px solid rgb(235, 229, 229); /* Tạo khung có độ dày 2px */
+        }
+        .name-comics {
+            color: rgb(21, 21, 21);
+            text-align: left;
+            margin-top: 5px;
+            max-width: 190px; /* Giới hạn độ rộng để đảm bảo căn giữa */
+        }
+        #pagination {
+            text-align: center;
+            margin-top: 20px;
+        }
+
+        #pagination button {
+            padding: 10px 15px;
+            margin: 0 5px;
+            cursor: pointer;
+            border: 1px solid #ddd;
+            background-color: #f9f9f9;
+            font-size: 16px;
+        }
+
+        #pagination button:hover {
+            background-color: #f1f1f1;
+        }
+
+        #pagination .page-button[style*="font-weight: bold"] {
+            background-color: #ccc;
+            pointer-events: none;
+        }
+        h1{
+            margin-top: 20px;
+        }
+        #sortOptions{
+            font-size: 22px;
+           
+        }
+        #totalResults{
+            font-size: 25px;
+           margin-left: 30px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div id="header"></div>
+        <main class="main">
+            <div class="search">
+                <h1>Kết quả tìm kiếm</h1>
+
+                <!-- Phần hiển thị tổng số kết quả -->
+                <div id="totalResults" style="margin-bottom: 10px;"></div>
+
+                <!-- Thêm combobox để lựa chọn sắp xếp sản phẩm -->
+                <label for="sortOptions" style="font-size: 25px; margin-left: 30px;">Sắp xếp theo:</label>
+                <select id="sortOptions">
+                    <option value="default">Mặc định</option>
+                    <option value="priceAsc">Giá tăng dần</option>
+                    <option value="priceDesc">Giá giảm dần</option>
+                    <option value="bestSelling">Bán chạy</option>
+                    <option value="newest">Mới nhất</option>
+                </select>
+                <hr style="  border: 1px solid #f7f1f1; margin-top: 20px;" >
+                <div id="searchResults" class="search-results"></div>
+            </div>
+        </main>
+        <div id="pagination"></div> <!-- Nút chuyển trang -->
+        <div id="footer"></div>
+    </div>
+
+    <script src="js/Header.js"></script>
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            const urlParams = new URLSearchParams(window.location.search);
+            const query = urlParams.get('query');
+            const itemsPerPage = 20;
+            let currentPage = 1;
+            let totalPages = 0; // Số trang tổng
+            let currentData = []; // Dữ liệu sản phẩm hiện tại
+
+            const sortOptions = document.getElementById('sortOptions');
+            const totalResultsElement = document.getElementById('totalResults'); // Phần tử để hiển thị tổng số kết quả
+
+            if (query) {
+                fetch(`/comics/search?query=${encodeURIComponent(query)}`)
+                    .then(response => response.json())
+                    .then(data => {
+                        currentData = data; // Lưu dữ liệu ban đầu
+                        totalPages = Math.ceil(currentData.length / itemsPerPage); // Tính số trang ban đầu
+                        
+                        // Hiển thị tổng số kết quả
+                        totalResultsElement.innerText = `Tổng số kết quả: ${currentData.length}`;
+                        
+                        renderPage(currentPage);
+
+                        // Lắng nghe sự thay đổi của combobox
+                        sortOptions.addEventListener('change', function() {
+                            sortData(); // Sắp xếp lại dữ liệu
+                            currentPage = 1; // Sau khi sắp xếp, quay lại trang 1
+                            totalPages = Math.ceil(currentData.length / itemsPerPage); // Tính lại số trang sau khi sắp xếp
+                            renderPage(currentPage);
+                        });
+                    })
+                    .catch(error => console.error('Error:', error));
+            }
+
+            // Hàm sắp xếp dữ liệu
+            function sortData() {
+                const sortValue = sortOptions.value;
+                if (sortValue === 'priceAsc') {
+                    currentData.sort((a, b) => a.price - b.price); // Sắp xếp giá tăng dần
+                } else if (sortValue === 'priceDesc') {
+                    currentData.sort((a, b) => b.price - a.price); // Sắp xếp giá giảm dần
+                } else if (sortValue === 'bestSelling') {
+                    currentData.sort((a, b) => b.sold - a.sold); // Sắp xếp theo bán chạy (dựa trên sold)
+                } else if (sortValue === 'newest') {
+                    currentData.sort((a, b) => b.id - a.id); // Sắp xếp theo id (mới nhất)
+                }
+            }
+
+            // Hàm hiển thị dữ liệu trên trang hiện tại
+            function renderPage(page) {
+                const resultsContainer = document.getElementById('searchResults');
+                resultsContainer.innerHTML = ''; // Xóa kết quả cũ
+
+                const start = (page - 1) * itemsPerPage;
+                const end = start + itemsPerPage;
+                const comicsToDisplay = currentData.slice(start, end);
+
+                comicsToDisplay.forEach((comic, index) => {
+                    const comicElement = document.createElement('div');
+                    comicElement.classList.add('i4-comic');
+                    comicElement.innerHTML = `
+                        <a href="ChiTietSP.html?id=${comic.id}" id="comic-link-${index}">
+                            <img src="${comic.url}" alt="Comic image" id="comic-image-${index}" />
+                            <div class="name-comics" id="comic-name-${index}">${comic.name}</div>
+                            <div class="price-comics" id="comic-price-${index}">${comic.price} VND</div>
+                        </a>
+                    `;
+                    resultsContainer.appendChild(comicElement);
+                });
+
+                renderPagination(); // Gọi lại hàm để cập nhật các nút phân trang
+            }
+
+            // Hàm hiển thị các nút phân trang
+            function renderPagination() {
+                const paginationContainer = document.getElementById('pagination');
+                paginationContainer.innerHTML = ''; // Xóa các nút cũ
+
+                for (let i = 1; i <= totalPages; i++) {
+                    const pageButton = document.createElement('button');
+                    pageButton.innerText = i;
+                    pageButton.classList.add('page-button');
+
+                    if (i === currentPage) {
+                        pageButton.style.fontWeight = 'bold'; // Đánh dấu trang hiện tại
+                    }
+
+                    pageButton.addEventListener('click', () => {
+                        currentPage = i;
+                        renderPage(currentPage); // Hiển thị dữ liệu trang hiện tại
+                    });
+                    paginationContainer.appendChild(pageButton);
+                }
+            }
+        });
+    </script>
+</body>
+</html>

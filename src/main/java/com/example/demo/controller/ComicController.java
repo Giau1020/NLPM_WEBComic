@@ -97,5 +97,17 @@ public ResponseEntity<String> addToCart(@RequestParam("comicId") Long comicId, H
             return ResponseEntity.notFound().build(); // Trả về 404 nếu không tìm thấy hình ảnh
         }
     }
+    // API để tìm kiếm truyện theo từ khóa
+@GetMapping("/search")
+public ResponseEntity<List<Comic>> searchComics(@RequestParam("query") String query) {
+    List<Comic> comics = comicRepository.findByNameContainingIgnoreCase(query);
+    if (!comics.isEmpty()) {
+        return ResponseEntity.ok(comics);
+    } else {
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(comics); // Trả về 404 nếu không có kết quả
+    }
+}
+
+    
   }
     

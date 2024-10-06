@@ -34,6 +34,8 @@ public interface ComicRepository extends JpaRepository<Comic, Long> {
     // Phương thức lấy tên truyện theo id
     @Query("SELECT c.name FROM Comic c WHERE c.id = :id")
     String findNameById(@Param("id") Long id);
+    
+     List<Comic> findByNameContainingIgnoreCase(String name);
 }
 
 

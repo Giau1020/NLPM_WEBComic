@@ -1,14 +1,12 @@
 // Hàm kiểm tra trạng thái đăng nhập
 function checkLoginStatus() {
-    // Kiểm tra trạng thái đăng nhập từ server
     fetch('/user/is-logged-in', { credentials: 'include' })
         .then(response => response.json())
         .then(isLoggedIn => {
-            if (isLoggedIn) {
-                // Ẩn liên kết Đăng nhập/Đăng ký và hiển thị phần thông tin người dùng
-                const authLinks = document.getElementById("authLinks");
-                const loggedInUser = document.getElementById("loggedInUser");
+            const authLinks = document.getElementById("authLinks");
+            const loggedInUser = document.getElementById("loggedInUser");
 
+            if (isLoggedIn) {
                 if (authLinks && loggedInUser) {
                     authLinks.style.display = "none";
                     loggedInUser.style.display = "block";
@@ -26,11 +24,7 @@ function checkLoginStatus() {
                                     event.stopPropagation();
                                     const userMenu = document.getElementById("userMenu");
                                     if (userMenu) {
-                                        if (userMenu.style.display === "none" || userMenu.style.display === "") {
-                                            userMenu.style.display = "block";
-                                        } else {
-                                            userMenu.style.display = "none";
-                                        }
+                                        userMenu.style.display = (userMenu.style.display === "none" || userMenu.style.display === "") ? "block" : "none";
                                     }
                                 });
 
@@ -38,7 +32,7 @@ function checkLoginStatus() {
                                 window.addEventListener("click", function(event) {
                                     const userMenu = document.getElementById("userMenu");
                                     if (userMenu && !usernameDisplay.contains(event.target) && !userMenu.contains(event.target)) {
-                                        userMenu.style.display = "none"; // Ẩn menu
+                                        userMenu.style.display = "none";
                                     }
                                 });
                             }
@@ -47,8 +41,10 @@ function checkLoginStatus() {
                 }
             } else {
                 // Hiển thị liên kết Đăng nhập/Đăng ký nếu chưa đăng nhập
-                document.getElementById("authLinks").style.display = "block";
-                document.getElementById("loggedInUser").style.display = "none";
+                if (authLinks && loggedInUser) {
+                    authLinks.style.display = "block";
+                    loggedInUser.style.display = "none";
+                }
             }
         })
         .catch(error => console.error('Error checking login status:', error));
@@ -58,14 +54,29 @@ function checkLoginStatus() {
     if (logoutLink) {
         logoutLink.addEventListener("click", function(event) {
             event.preventDefault();
-            // Gọi API đăng xuất
             fetch('/user/logout', { method: 'POST', credentials: 'include' })
                 .then(() => {
-                    // Chuyển hướng về trang chủ sau khi đăng xuất
                     window.location.href = 'TrangChu.html';
                 })
                 .catch(error => console.error('Error logging out:', error));
         });
+    }
+}
+
+// Hàm gán sự kiện cho nút tìm kiếm
+function setupSearchEvent() {
+    const searchButton = document.getElementById("btsearch");
+    if (searchButton) {
+        searchButton.addEventListener("click", function() {
+            var query = document.getElementById("khungsearch").value;
+            if (query) {
+                window.location.href = "Search.html?query=" + encodeURIComponent(query);
+            } else {
+                alert("Vui lòng nhập từ khóa tìm kiếm!");
+            }
+        });
+    } else {
+        console.error("Phần tử #btsearch không tồn tại.");
     }
 }
 
@@ -78,7 +89,10 @@ document.addEventListener("DOMContentLoaded", function() {
             const headerElement = document.getElementById('header');
             if (headerElement) {
                 headerElement.innerHTML = data;
-                checkLoginStatus(); // Kiểm tra trạng thái đăng nhập sau khi header được tải
+
+                // Sau khi header được tải, kiểm tra trạng thái đăng nhập và gán sự kiện tìm kiếm
+                checkLoginStatus();
+                setupSearchEvent();
             } else {
                 console.error('Không tìm thấy phần tử #header');
             }
