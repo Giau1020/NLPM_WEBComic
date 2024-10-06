@@ -4,34 +4,40 @@
  */
 package com.example.demo.request; // Đường dẫn package
 
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
 public class CartItemRequest {
     private Long comicId;
     private int quantity;
     private boolean selected; // Thuộc tính mới để lưu trạng thái checkbox
 
     // Getters và Setters
-    public Long getComicId() {
-        return comicId;
-    }
-
-    public void setComicId(Long comicId) {
-        this.comicId = comicId;
-    }
-
-    public int getQuantity() {
-        return quantity;
-    }
-
-    public void setQuantity(int quantity) {
-        this.quantity = quantity;
-    }
-
-    public boolean isSelected() {
-        return selected;
-    }
-
-    public void setSelected(boolean selected) {
-        this.selected = selected;
-    }
+//    public Long getComicId() {
+//        return comicId;
+//    }
+//
+//    public void setComicId(Long comicId) {
+//        this.comicId = comicId;
+//    }
+//
+//    public int getQuantity() {
+//        return quantity;
+//    }
+//
+//    public void setQuantity(int quantity) {
+//        this.quantity = quantity;
+//    }
+//
+//    public boolean isSelected() {
+//        return selected;
+//    }
+//
+//    public void setSelected(boolean selected) {
+//        this.selected = selected;
+//    }
 }
