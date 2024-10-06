@@ -1,0 +1,380 @@
+body{
+    padding: 0;
+    margin: 0;
+    
+ 
+}
+/* CSS FOR ADMIN SIDE BAR (ADMIN MANAGE) */
+
+
+.admin-main-page{
+    width: 80%;
+    margin: 2% 10% ;
+    gap: 20px;
+    display: flex;
+    flex-direction: row;
+}
+.admin-manage{
+    flex-direction: column;
+    width: 26%;
+    height: 60%;
+    border: 3px solid #ff5757;
+    background-color: white;
+    align-items: center;
+    text-align: justify;
+}
+.admin-manage img{
+    width: 12%;
+    height: 12%;
+    margin-right: 10%;
+}
+.admin-manage a{
+    display: flex;
+    margin: 10% 10%;
+    text-decoration: none;
+    color: inherit;
+    cursor: pointer;
+    font-size: 20px;
+    align-items: center;
+    align-self: center;
+}
+.admin-manage-menu,.admin-manage-menu2{
+    all: unset;
+    align-self: flex-start;
+    margin-left: 2%;
+    width: 40px;
+    height: 40px;
+    cursor: pointer;
+}
+.menu-admin {
+    background-color: rgba(255, 87, 87, 0.4);
+    cursor: pointer;
+    width: 100%;
+    height: 40px;
+}
+
+/* CSS FOR OVERVIEW MANAGE (DETAIL-SECTION) WITH SIDE BAR */
+.admin-detail-section{
+    
+    position: relative;
+    width: 74%;
+    height: inherit;
+    border: 3px solid #ff5757;
+    background-color: white;
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    grid-template-rows: 8.5% 45.5% 45.5% ;
+   
+}
+.detail-title{
+    grid-column: span 3;
+    background-color: rgba(255, 87, 87, 0.4);
+    
+}
+.overview{
+    position: relative;
+    border: 2px solid ;
+    background-color: white;
+    box-sizing: border-box;
+    margin:  2%;
+    cursor: pointer;
+    align-content: center;
+}
+.overview span{
+    font-size: 25px;
+    font-weight: bold;
+}
+.overview p:not(.detail), .overview span{
+    margin-left: 7%;
+}
+.detail{
+    position: absolute;
+    height: 50px;
+    width: 100%;
+    align-content: center;
+    text-align: center;
+    bottom: 0;
+    margin-bottom: 0;
+    background-color: rgba(255, 87, 87, 0.4);
+}
+
+/* CSS FOR OVERVIEW MANAGE (DETAIL-SECTION) WITHOUT SIDE BAR */
+/* .admin-detail-section2{
+    position: relative;
+    width: 100%;
+    height: 500px;
+    border: 3px solid #ff5757;
+    background-color: white;
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    grid-template-rows: 8.5% 45.5% 45.5% ;
+   
+}
+.detail-title2{
+    grid-column: span 3;
+    background-color: rgba(255, 87, 87, 0.4);
+
+}
+.underline {
+    text-decoration: underline;
+  } */
+
+
+
+
+/*CSS FOR Quản lý sản phẩm  */
+  .admin-product-section{
+    width: 74%;
+
+  } 
+ 
+  /* CSS của bảng sản phẩm */
+  .table,table {
+    position: relative;
+   width: 100%;
+   flex-grow: 1;
+   max-height:54.4vh;
+   height: fit-content;
+    border: 1.75px solid #ff5757;
+    border-collapse: collapse; /* Gộp các đường viền */
+    overflow-y: auto; /* Cho phép cuộn dọc */
+    overflow-x: auto;
+}
+
+th, td {
+    border: 1px solid #dddddd;
+    text-align: center;
+    padding: 8px;
+
+}
+
+th {
+    background-color: rgba(255, 87, 87, 0.4);
+}
+
+tr:nth-child(even) {
+    background-color: #f9f9f9;
+}
+a img{
+    width: 20px;
+    height: 20px;
+}
+td:last-child{
+    width: 80%;
+}
+td:nth-child(4){
+    width: 15%;
+}
+td:nth-child(5){
+    width: 15%;
+}
+td:nth-child(3){
+    width: 30%;
+}
+tr{
+    height: 40px;
+}
+    /* CSS của phần tool */
+.products-tool{
+    display: flex;
+    margin: 1% 0.5%;
+    width: 100%;
+    height: 7%;
+    align-items: center;
+}
+.products-tool p:not(.select-all-comics){
+    margin-left: auto;
+    color: #ff4d4d; /* Màu đỏ nhạt hơn */
+    font-size: 18px;
+    font-weight: bold;
+    background-color: #ffe6e6; /* Màu nền nhạt */
+    border-radius: 8px;
+    border: 2px solid #ffcccc; /* Viền mềm mại */
+    text-align: center; 
+    width: fit-content;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1); /* Hiệu ứng đổ bóng */
+}
+.btn-admin{
+    width: 13%;
+    height: 90%;
+    border: 2px solid #ff5757;
+    background-color: white;
+    text-align: center;
+    border-radius: 50px;
+    margin-right: 10px;
+    cursor: pointer;
+    font-size: 15px;
+    font-weight: bold;
+}
+.btn-admin:hover{
+    background-color: #333333;
+    color: white;
+    border: 2px solid white
+}
+/* CSS phần ADD NEW COMIC */
+#form-add-new-comic, #form-edit-comic {
+
+    display: none; /* Ẩn popup mặc định */
+   position: fixed; /* Đặt vị trí cố định */
+    top: 0;
+    left: 0;
+    width: 100%; /* Chiều rộng toàn bộ màn hình */
+    height: 100%; /* Chiều cao toàn bộ màn hình */
+    background-color: rgba(0, 0, 0, 0.5); /* Màu nền nửa trong suốt */
+    z-index: 1000;
+    display: flex;
+    justify-content: center; /* Canh giữa theo chiều ngang */
+    align-items: center; 
+ 
+}
+.form-container-add h1{
+    text-align: center;
+    font-family: 'Arial', sans-serif;
+    color: #333;
+    margin-bottom: 20px;
+    font-size: 30px;
+}
+#uploadForm{
+    margin: 0 5%;
+    padding-bottom: 10%;
+}
+.form-container-add, .edit-container {
+    position: relative;
+    border: 3px solid #cccccc;
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+    z-index: 1001;
+    width: 50%;
+    margin-top: 20%;
+    max-height: 90%;
+    align-self: center;
+    margin: 1% auto;
+    overflow-y: auto;
+    background-color: white;
+    border-radius: 8px;
+    
+}
+
+.form-container-add input {
+    width: 100%;
+    padding: 10px; /* Thêm khoảng padding bên trong */
+    margin-bottom: 15px; /* Khoảng cách giữa các input */
+    border: 1px solid #ccc;
+    border-radius: 5px; /* Bo góc input */
+    box-sizing: border-box;
+    transition: border 0.3s ease, box-shadow 0.3s ease;
+}
+.form-container-add input:focus, .form-container-add textarea:focus{
+    border-color: #66afe9;
+    box-shadow: 0 0 8px rgba(102, 175, 233, 0.6);
+    outline: none; /* Loại bỏ viền mặc định */
+}
+.form-container-add p {
+    font-weight: bold;
+}
+.form-container-add input, 
+.form-container-add select, 
+.form-container-add textarea {
+    width: 100%;
+    padding: 8px;
+    margin-bottom: 15px;
+    box-sizing: border-box;
+}
+#preview img, #preview1 img {
+    width: 100px;
+    margin: 10px;
+    border: 2px solid #ddd;
+    padding: 5px;
+}
+#response {
+    margin-top: 20px;
+    color: green;
+}
+.error {
+    color: red;
+}
+.btn-close {
+    position: fixed;
+    right: calc((100% - 50%) / 2);
+    font-size: 40px;
+    width: 4%;
+    cursor: pointer;
+    border: none;
+    background-color: rgba(0, 0, 0, 0);
+}
+.btn-close:hover {
+    background-color: red;
+    color: white;
+}
+#files{
+    width: fit-content;
+}
+.submit-container {
+    display: flex;
+    justify-content: center; /* Căn giữa theo chiều ngang */
+    margin-top: 20px; /* Khoảng cách phía trên */
+}
+
+#btn-submit-add-new{
+    font-weight: bold;
+    background-color: #ff4d4d;
+    cursor: pointer;
+    margin-top: 5%;
+    position: absolute;
+    align-self: center;
+    text-align: center;
+    height: 5%;
+    transition: background-color 0.3s ease;
+}
+#btn-submit-add-new:hover {
+    background-color: #ff3030;
+  
+}
+
+
+.btn-edit-comic{
+    cursor: pointer;
+}
+/* CSS Trước Khi ấn nút `Xóa` */
+.tool-information{
+    display: none;
+    padding: 0;
+    margin: 0;
+}
+.tool-information button{
+    border: none;
+    font-size: 30px;
+    background-color: rgba(0, 0, 0,0);
+
+}
+.tool-information button:hover{
+  color: #ff3030;
+
+}
+
+/* CSS của checkbox trong xóa comics */
+.select-all-comic{
+    width: 100%;
+}
+.checkbox-delete-comic{
+    width: 100%;
+}
+.btn-delete-comic{
+    border: 1px solid black;
+    transition: background-color 0.3s ease;
+    border-radius: 15px;
+    width: fit-content;
+    margin-left: 10px;
+    background-color: rgba(0, 0, 0, 0.0);
+    outline: none;
+    cursor: pointer;
+}
+.btn-delete-comic:hover{
+    background-color: #ff5757;
+    color: white;
+}
+/* CSS phần chỉnh sửa */
+.edit-container{
+    width: 80vw;
+    height: 100vh;
+    z-index: 1001;
+}

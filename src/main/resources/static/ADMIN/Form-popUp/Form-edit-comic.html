@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="./Style-edit-comic.css">
+   
+</head>
+<body>
+    <div class="edit-container">
+        <div class="address-bar">
+            
+            <p>CHẾ ĐỘ CHỈNH SỬA</p>
+            
+            <button class="btn-close-edit-mode">&times;</button>
+        </div> 
+        
+        <div class="content-edit-mode">
+           
+        <div class="table">
+            <div class="search-frame-edit">
+                <input class="search-frame-inp" type="text">
+                <img class="header-btn-search" style="width: 30px; height: 30px;" src="../images-Admin/icon-search.png" alt="icon-search">
+            </div>
+            <div>
+                <table>
+                    <tr>
+                        <th>ID</th>
+                        <th>Tên truyện</th>
+                        <th>Mô tả</th>
+                        <th>Trạng thái</th>
+                        <th>Giá</th>
+                    </tr>
+                    <tr>
+                        <td>1</td>
+                        <td>Doremon</td>
+                        <td>aaaa</td>
+                        <td>Hiện</td>
+                        <td>...</td>
+                    </tr>  
+                    
+                </table></div>
+        </div>
+
+        <div class="form-container-add">
+            <form id="editForm" enctype="multipart/form-data">
+                    
+                  
+                <p>Mã truyện:</p>
+                <input type="text" name="id_comic" id="inp-id-comic" required>
+            
+                <p>Tên truyện:</p>
+                <input type="text" name="name_comic" id="inp-name-comic" required>
+            
+                <p>Tác giả:</p>
+                <input type="text" name="name_author" id="name-author" required>
+            
+                <p>Nhà xuất bản:</p>
+                <input type="text" name="NXB" id="NXB" required>
+            
+            
+                <p>Năm xuất bản:</p>
+                <input type="number" name="year_XB" id="year-XB" min="1000" max="2025" required>
+            
+            
+            <p>Thể loại:</p>
+            <select name="genre" id="genre" required>
+                <option value="">-- Chọn thể loại --</option>
+                <option value="Fun">Hài hước</option>
+                <option value="Romantic">Lãng mạn</option>
+                <option value="Student">Thanh xuân vườn trường</option>
+            </select>
+           <p>Giá</p>
+           <input type="number" name="price-comic" id="price-comic" min="0" required>
+            <p>Mô tả nội dung:</p>
+            <textarea name="content_comic" id="content-comic" rows="5" required></textarea>
+            <p>Tóm tắt truyện:</p>
+            <textarea name="summary_content_comic" id="summary_content-comic" rows="5" required></textarea>
+            <p>Thêm file hình ảnh:</p>
+            <input type="file" name="images[]" id="files" accept="image/*" multiple required>
+
+            <div id="preview"></div>
+            <div id="response"></div>
+
+            
+        </form>
+        
+        </div>
+        
+    </div>
+    <div class="btn-container-edit-comic">
+            <button class="btn-cancel-edit">Hủy</button>
+            <button class="btn-save-edit">Lưu</button>
+        </div>
+    </div>
+</body>
+</html>

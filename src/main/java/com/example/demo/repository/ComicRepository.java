@@ -14,6 +14,8 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+//import java.util.Optional;
+
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.repository.query.Param;
 @Repository
@@ -34,8 +36,13 @@ public interface ComicRepository extends JpaRepository<Comic, Long> {
     // Phương thức lấy tên truyện theo id
     @Query("SELECT c.name FROM Comic c WHERE c.id = :id")
     String findNameById(@Param("id") Long id);
+
     
      List<Comic> findByNameContainingIgnoreCase(String name);
+
+
+
+
 }
 
 

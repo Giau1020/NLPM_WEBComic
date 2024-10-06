@@ -5,9 +5,12 @@
 package com.example.demo.repository;
 
 import com.example.demo.model.ImgComic;
+
+import java.util.List;
 import java.util.Optional;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
+import org.springframework.web.multipart.MultipartFile;
 
 /**
  *
@@ -16,4 +19,5 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface ImgComicRepository extends JpaRepository<ImgComic, Long> {
     Optional<ImgComic> findByComicId(Long comicId);
+
 }
