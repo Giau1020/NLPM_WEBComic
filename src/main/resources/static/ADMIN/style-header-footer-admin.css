@@ -1,0 +1,108 @@
+body{
+    padding: 0;
+    margin: 0;
+    background-color: #f9f0ea;
+    font-size: 20px;
+}
+/* CSS FOR HEADER */
+#header, #footer{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    align-items: center;
+    border: 3px solid #ff5757;
+    background-color: white;
+    border-radius: 50px;
+    width: 80%;
+    height: 10%;
+    margin: 2% 10% ;
+    gap: 20px;
+}
+.logo{
+    width: 10%;
+    height: 10%;
+    cursor: pointer;
+}
+.header-infor-admin img{
+    width: 50px;
+    height: 50px;
+    margin-right: 3%;
+}
+.search-frame {
+    display: flex;
+    justify-content: space-between;
+    border: 3px solid #ff5757;
+    height: 10%;
+    width: 20%;
+    flex:1.5 1 200px;
+    border-radius: 30px;
+    margin-right: 5%;
+}
+.header-infor-admin{
+    display: flex;
+    flex-direction: row;
+    flex:1 1 100px;
+    align-items: center;
+} 
+.header-view-main-page, .header-change-pwd{
+    display: flex;
+    flex-direction: row;
+    flex:0.75 1 100px;
+}
+.search-frame-inp{
+    width: 100%;
+    height: 100%;
+    border: none;
+    outline: none;
+    border-radius: 50px;
+    font-size: 17px;
+    text-align: left;
+    align-self: center;
+    padding-left: 3%;
+}
+.header-btn-search{
+    border-radius: 15px;
+    cursor: pointer;
+}
+#header a, #footer a{
+    text-decoration: none;
+    color: inherit;
+    margin-left: 5%;
+    margin-top: 3%;
+}
+#header i{
+    font-size: 120%;
+    align-self: center;
+    cursor: pointer;
+}
+/* CSS FOR FOOTER */
+#footer{
+    justify-content: space-around;
+    border-radius: 0px;
+}
+
+.footer-customer-view img{
+
+    width: 30px;
+    height: 30px;
+}
+.footer-customer-view{
+    width: 260px;
+    display: flex;
+    flex-direction: row;
+    cursor: pointer;
+}
+/* .footer-customer-view a{
+
+} */
+.footer-log-out{
+    width: 120px;
+    cursor: pointer;
+}
+.footer-log-out i{
+    font-size: 20px;
+    height: inherit;
+}
+
+
+

@@ -10,8 +10,14 @@ package com.example.demo.model;
  */
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
+import jakarta.persistence.Table;
+import lombok.AllArgsConstructor;
+import lombok.NoArgsConstructor;
 
+@Table(name = "Comic")
 @Entity
+@AllArgsConstructor
+@NoArgsConstructor
 public class Comic {
 
     @Id
@@ -20,7 +26,7 @@ public class Comic {
     private double price;
     private String url;
     private int sold;
-    private int quantity;
+    private Integer quantity;
     private String Genre;
     private String Weight;
     private String Author;

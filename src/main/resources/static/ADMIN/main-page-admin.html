@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="./style-header-footer-admin.css">
+    <link rel="stylesheet" href="./style-main-page-admin.css">
+</head>
+<body>
+    <div class="container">
+    <div id="header-admin-page" ></div>
+    <div class="admin-main-page">
+        <div class="admin-manage">
+           <div class="menu-admin"> </div>
+            <a href="#" style="margin-top: 10%;" onclick="on_off_div('.admin-detail-section')"><img src="./images-Admin/home.png" alt="admin-home-page" >Trang chủ</a>
+            <a href="#" onclick="on_off_div('.admin-product-section')"><img src="./images-Admin/grid.png" alt="admin-product-manage" >Sản phẩm</a>
+            <a href="#"><img src="./images-Admin/checkout.png" alt="admin-order-manage">Quản lý đơn hàng</a>
+            <a href="#"><img src="./images-Admin/accountant.png" alt="admin-account-manage">Quản lý tài khoản</a>
+            <a href="#"><img src="./images-Admin/complain.png" alt="admin-complain-manage">Xử lý khiếu nại</a>
+            <a href="#"><img src="./images-Admin/price-tag.png" alt="admin-promotion-manage">Khuyến mãi & giảm giá</a>
+            <a href="#"  style="margin-bottom: 10%;"><img src="./images-Admin/dashboard.png" alt="admin-report-manage">Báo cáo và thống kê</a>
+        </div>
+         <!-- FORM POP UP KHI CLICK BUTTON `THÊM` TRONG QUẢN LÝ SẢN PHẨM -->
+         <div id="form-add-new-comic" >
+            <div class="form-container-add">
+                <button onclick="closePopUpAddNewComic()" class="btn-close">&times;</button>
+                <h1>Thêm Sản Phẩm Mới</h1>
+                
+                <form id="uploadForm" enctype="multipart/form-data">
+                    
+                  
+                        <p>Mã truyện:</p>
+                        <input type="text" name="id_comic" id="inp-id-comic" disabled required placeholder="Mã truyện sẽ được tạo tự động">
+                    
+                        <p>Tên truyện:</p>
+                        <input type="text" name="name_comic" id="inp-name-comic" required>
+                    
+                        <p>Tác giả:</p>
+                        <input type="text" name="name_author" id="name-author" required>
+                        
+                        <p>Giá</p>
+                        <input type="number" name="price-comic" id="price-comic" min="0" required>
+                        
+                        <p>Số lượng bán:</p>
+                        <input type="number" name="slb" id="inp-slb">
+
+                        <p>Nhà xuất bản:</p>
+                        <input type="text" name="NXB" id="NXB" required>
+                        
+                        <p>Kích thước (cm):</p>
+                        <input type="text" name="Size" id="inp-size">
+                        
+                        <p>Số trang:</p>
+                        <input type="number" name="Pages" id="inp-pages">
+
+                        <p>Cân nặng (kg):</p>
+                        <input type="number" name="Weight" id="inp-weight" step="0.01">
+
+
+
+                    
+                    <p>Thể loại:</p>
+                    <select name="genre" id="inp-genre" required>
+                        <option value="">-- Chọn thể loại --</option>
+                        <option value="Fun">Hài hước</option>
+                        <option value="Romantic">Lãng mạn</option>
+                        <option value="Student">Thanh xuân vườn trường</option>
+                    </select>
+                   
+                    <p>Mô tả nội dung:</p>
+                    <textarea name="content_comic" id="content-comic" rows="5" required></textarea>
+                    <p>Tóm tắt truyện:</p>
+                    <textarea name="summary_content_comic" id="summary_content-comic" rows="5" required></textarea>
+                    <p>Thêm ảnh bìa:</p>
+                    <input type="file" name="images[]" id="files-cover-img" accept="image/*"  required>
+                    <div id="preview1"></div>
+                    <p>Thêm file hình ảnh:</p>
+                    <input type="file" name="images[]" id="files-img" accept="image/*" multiple required>
+    
+                    <div id="preview"></div>
+                    <div id="response"></div>
+    
+                    <div class="submit-container">
+                        <button id="btn-submit-add-new" type="button" onclick="addComic();">Thêm Truyện</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+        <!-- Hết FORM thêm truyện tranh -->
+        <!-- DIV của trang chủ -->
+        <div class="admin-detail-section">
+            <div class="detail-title"></div>
+            <div class="overview manage-product">
+                <span class="quantity-products">1</span>
+                <p>Sản phẩm</p>
+                <p class="detail">Chi tiết</p>
+            </div>
+            <div class="overview manage-genre">
+                <span class="quantity-genre"></span>
+                <p>Loại sản phẩm</p>
+                <p class="detail">Chi tiết</p>
+            </div>
+            <div class="overview manage-order">
+                <span class="quantity-order"></span>
+                <p>Xử lý đơn hàng</p>
+                <p class="detail">Chi tiết</p>
+            </div>
+            <div class="overview manage-report">
+                <span class="manage-report-detail"></span>
+                <p>Xử lý khiếu nại</p>
+                <p class="detail">Chi tiết</p></div>
+            <div class="overview manage-flash-sale">
+                <span class="quantitys-flash-sale"></span>
+                <p>Khuyến mãi và giảm giá</p>
+                <p class="detail">Chi tiết</p>
+            </div>
+            <div class="overview manage-contact">
+                <span class="detail-contact"></span>
+                <p>Quản lý tài khoản</p>
+                <p class="detail">Chi tiết</p>
+            </div>
+        </div>
+
+        <!-- DIV Của phần quản lý sản phẩm -->
+        <div class="admin-product-section" style="display: none;">
+            <div class="products-tool">
+                <button class="btn-admin add-product" onclick="popUpAddNewComic();">Thêm</button>
+                <button class="btn-admin search-product" onclick="searchComic();">Tìm kiếm</button>
+                <button class="btn-admin edit-product" onclick="showEditTool('#form-edit-comic', 'css-for-popup')">Chỉnh sửa</button>
+                <button class="btn-admin delete-product" onclick="show_delete_comic()">Xóa</button>
+                
+                <p class="select-all-comic" style="display: none;">Chọn tất cả <input type="checkbox" name="checkbox-delete-comic" id="checkbox-delete-comic">
+                </p>
+                <button class="btn-delete-comic" style="display: none;">Xóa</button>
+
+            </div>
+            <div class="table">
+                <table >
+                    <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Tên truyện</th>
+                        <th>Mô tả</th>
+                        <!-- <th>Trạng thái</th> -->
+                         <th>Giá</th>
+                        <th>Xem chi tiết</th>
+                        <th class="delete-comic" style="display: none;">Xóa</th>
+
+                    </tr>
+                </thead>
+                <tbody class="table_body">
+                    <tr>
+                        <td>1</td>
+                        <td>Doremon</td>
+                        <td>aaaa</td>
+                        <!-- <td>Hiện</td> -->
+                         <td>1đ</td>
+                        <td><a href="#"><img src="./images-Admin/edit-text.png" alt=""></a></td>
+                        <td class="checkbox-delete-comic" style="display: none;"><input type="checkbox" name="checkbox-delete-comic" id="checkbox-delete-comic"></td>
+                    </tr>
+                  </tbody>  
+                  <link rel="stylesheet" href="">
+                    
+                </table>
+            </div>
+        </div>
+        <!-- DIV của phần chỉnh sửa -->
+         <div id="form-edit-comic" style="display: none;">
+        <div class="edit-container" > 
+            <div class="address-bar">
+                <p>CHẾ ĐỘ CHỈNH SỬA</p>
+                <button onclick="showEditTool('#form-edit-comic', 'css-for-popup')" class="btn-close-edit-mode">&times;</button>
+            </div>
+            <div class="content-edit-mode">
+            <div class="table">
+                <div class="search-frame-edit">
+                    <input class="search-frame-inp" type="text">
+                    <img class="header-btn-search" style="width: 30px; height: 30px;" src="./images-Admin/icon-search.png" alt="icon-search">
+                </div>
+                <div>
+                    <table>
+                        <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Tên truyện</th>
+                            <th>Mô tả</th>
+                           
+                            <th>Giá</th>
+                        </tr>
+                    </thead>
+                        <tbody class="table_edit_body">
+                        <tr>
+                            <td>1</td>
+                            <td>Doremon</td>
+                            <td>aaaa</td>
+                          
+                            <td>...</td>
+                        </tr>  </tbody>
+                        
+                    </table></div>
+            </div>
+    
+            <div class="form-container-add">
+                <form id="editForm" enctype="multipart/form-data">
+                        
+                      
+                    <p>Mã truyện:</p>
+                    <input type="text" name="id_comic" id="inp-id-comic2" required disabled>
+                
+                    <p>Tên truyện:</p>
+                    <input type="text" name="name_comic" id="inp-name-comic2" required>
+                
+                    <p>Tác giả:</p>
+                    <input type="text" name="name_author" id="name-author2" required>
+                    
+                    <p>Giá</p>
+                    <input type="number" name="price-comic" id="price-comic2" min="0" required>
+                    
+                    <p>Số lượng bán:</p>
+                    <input type="number" name="slb" id="inp-slb2">
+
+                    <p>Nhà xuất bản:</p>
+                    <input type="text" name="NXB" id="NXB2" required>
+                    
+                    <p>Kích thước (cm):</p>
+                    <input type="text" name="Size" id="inp-size2">
+                    
+                    <p>Số trang:</p>
+                    <input type="number" name="Pages" id="inp-pages2">
+
+                    <p>Cân nặng (kg):</p>
+                    <input type="number" name="Weight" id="inp-weight2" step="0.01" min="0">
+
+
+
+                
+                <p>Thể loại:</p>
+                <select name="genre"  required>
+                    <option id="inp-genre2" value="">-- Chọn thể loại --</option>
+                    <option value="Fun">Hài hước</option>
+                    <option value="Romantic">Lãng mạn</option>
+                    <option value="Student">Thanh xuân vườn trường</option>
+                </select>
+               
+                <p>Mô tả nội dung:</p>
+                <textarea name="content_comic" id="content-comic2" rows="5" required></textarea>
+                <p>Tóm tắt truyện:</p>
+                <textarea name="summary_content_comic" id="summary_content-comic2" rows="5" required></textarea>
+                <p>Ảnh bìa:</p> <img id="cover-img2" src="" alt="" style="display: none; width: 100px; height: 100px;">
+                <input type="file" name="images[]" id="files-cover-img2" accept="image/*" multiple required>
+                <div id="preview1"></div>
+                <p>Thêm file hình ảnh:</p>
+                <input type="file" name="images[]" id="files-img2" accept="image/*" multiple required>
+
+                <div id="preview"></div>
+                <div id="response"></div>
+    
+                
+            </form>
+            
+            </div>
+            
+        </div>
+        <div class="btn-container-edit-comic">
+                <button class="btn-cancel-edit">Hủy</button>
+                <button class="btn-save-edit">Lưu</button>
+            </div>
+        </div>
+    </div>
+    </div>
+
+
+    
+    <div id="footer-admin-page"  ></div>
+</div>
+    <script src="./import-header-footer-AD.js"></script>
+    <script src="./script-for-main-page.js"></script>
+    <script src="https://kit.fontawesome.com/86ec971ab9.js" crossorigin="anonymous"></script>
+    <script src="./script-csdl-admin.js"></script>
+</body>
+</html>
