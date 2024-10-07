@@ -46,7 +46,16 @@ public class ComicController {
     }
     // **API mới** để lấy thông tin chi tiết của một truyện dựa trên ID
    
-      @GetMapping("/{id}")
+//      @GetMapping("/{id}")
+//    public ResponseEntity<Comic> getComicById(@PathVariable Long id) {
+//        Optional<Comic> comic = comicRepository.findById(id);
+//        if (comic.isPresent()) {
+//            return ResponseEntity.ok(comic.get());
+//        } else {
+//            return ResponseEntity.notFound().build();  // Trả về 404 nếu không tìm thấy truyện
+//        }
+//    }
+     @GetMapping("/{id}")
     public ResponseEntity<Comic> getComicById(@PathVariable Long id) {
         Optional<Comic> comic = comicRepository.findById(id);
         if (comic.isPresent()) {

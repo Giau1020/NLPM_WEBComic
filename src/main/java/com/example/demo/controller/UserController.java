@@ -4,7 +4,7 @@ import com.example.demo.model.Cart;
 import com.example.demo.model.User;
 import com.example.demo.repository.CartRepository;
 import com.example.demo.repository.UserRepository;
-import jakarta.servlet.http.Cookie;
+
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 import java.io.IOException;
