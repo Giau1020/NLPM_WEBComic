@@ -98,7 +98,7 @@ async function getComicById(id) {
         if(response.ok){
             
             const comic = await response.json();
-            console.log(comic);
+            
             inp_id.value = comic.id;
             inp_name.value = comic.name;
             inp_author.value = comic.author;

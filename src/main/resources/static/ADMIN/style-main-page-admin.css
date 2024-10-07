@@ -147,6 +147,12 @@ th, td {
     padding: 8px;
 
 }
+td{
+    white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 300px;
+}
 
 th {
     background-color: rgba(255, 87, 87, 0.4);
