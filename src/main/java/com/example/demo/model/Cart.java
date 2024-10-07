@@ -15,11 +15,8 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.OneToOne;
-
-
 import java.util.List;
 @Entity
-
 public class Cart {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
