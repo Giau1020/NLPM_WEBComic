@@ -7,15 +7,13 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.ManyToMany;
 import jakarta.persistence.Table;
-import lombok.AllArgsConstructor;
-import lombok.NoArgsConstructor;
+
 
 import java.util.List;
 
 @Entity
 @Table(name = "Genre")
-@AllArgsConstructor
-@NoArgsConstructor
+
 @JsonIgnoreProperties("comics")
 public class Genre {
 

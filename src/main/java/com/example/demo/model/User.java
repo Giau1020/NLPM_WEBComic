@@ -1,12 +1,11 @@
 package com.example.demo.model;
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
+
 
 @Entity
 @Table(name = "users1")  // Sử dụng dấu ngoặc vuông để tránh xung đột với từ khóa của SQL Server
@@ -46,11 +45,6 @@ public class User {
         this.password = password;
     }
 
-    
-
-  
-
-    // getter, setter
 
     public String getRole() {
         return role;

@@ -3,7 +3,7 @@ package com.example.demo.ServiceImpl;
 import com.example.demo.Service.ComicService;
 import com.example.demo.model.Comic;
 import com.example.demo.repository.ComicRepository;
-import lombok.RequiredArgsConstructor;
+
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -16,9 +16,14 @@ import java.util.List;
 import java.util.Optional;
 
 @Service
-@RequiredArgsConstructor
+
 public class ComicServiceImpl implements ComicService {
     private final ComicRepository comicRepository;
+
+    public ComicServiceImpl(ComicRepository comicRepository) {
+        this.comicRepository = comicRepository;
+    }
+
     @Override
     public List<Comic> getAllComics() {
         return comicRepository.findAll();

@@ -2,7 +2,6 @@ package com.example.demo.controller;
 
 import com.example.demo.ServiceImpl.ComicServiceImpl;
 import com.example.demo.model.Comic;
-import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -15,9 +14,13 @@ import java.util.Optional;
 
 @Controller
 @RequestMapping("api/v1/sng/admin")
-@RequiredArgsConstructor
+
 public class AdminComicController {
     private final ComicServiceImpl comicService;
+
+    public AdminComicController(ComicServiceImpl comicService) {
+        this.comicService = comicService;
+    }
 
     //    Hàm thêm vào một truyện mới
     @PostMapping("")

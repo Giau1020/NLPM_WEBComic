@@ -2,7 +2,6 @@ package com.example.demo.controller;
 
 import com.example.demo.ServiceImpl.ImgComicServiceImpl;
 import com.example.demo.model.ImgComic;
-import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -14,10 +13,15 @@ import java.util.Optional;
 
 @Controller
 @RequestMapping("api/v1/sng/admin/imgcomic")
-@RequiredArgsConstructor
+
 @CrossOrigin(origins = "http://127.0.0.1:5501")
 public class AdminImgComicController {
     private final ImgComicServiceImpl imgComicService;
+
+    public AdminImgComicController(ImgComicServiceImpl imgComicService) {
+        this.imgComicService = imgComicService;
+    }
+
     @PostMapping("/add")
     public ResponseEntity<?> saveImgComic(@RequestBody ImgComic imgComic) {
         try {

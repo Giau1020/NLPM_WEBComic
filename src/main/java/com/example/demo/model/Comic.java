@@ -14,14 +14,13 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.JoinTable;
 import jakarta.persistence.ManyToMany;
 import jakarta.persistence.Table;
+
 import java.util.List;
-import lombok.AllArgsConstructor;
-import lombok.NoArgsConstructor;
+
 
 @Table(name = "Comic")
 @Entity
-@AllArgsConstructor
-@NoArgsConstructor
+
 public class Comic {
 
     @Id
@@ -37,6 +36,7 @@ public class Comic {
     private String Size;
     private String Publisher;
     private String Summarize;
+
     
      @ManyToMany
     @JoinTable(
@@ -51,10 +51,14 @@ public class Comic {
       joinColumns = @JoinColumn(name = "comic_id"), 
       inverseJoinColumns = @JoinColumn(name = "genre_id"))
     private List<Genre> genres;
+
+
+
     // Getters và Setters
     public Long getId() {
         return id;
     }
+
 
     public void setId(Long id) {
         this.id = id;
