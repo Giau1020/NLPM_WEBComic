@@ -507,48 +507,43 @@ a:hover{
         <div id="footer"></div>
         <script src="js/Header.js"></script>
         <script>
-          //-------------------------------
-
-          //--------------------------------------
-          
-           
-                //----------------------
                // Hàm định dạng giá với dấu chấm thay vì dấu phẩy
                function formatPrice(price) {
     return price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
 }
-//------------------------
-
-
-
-/////////////////////////////////////////////
     // Lấy ID từ URL
     const urlParams = new URLSearchParams(window.location.search);
     const productId = urlParams.get('id');
 
     // Gọi API để lấy thông tin chi tiết của truyện dựa vào ID
     if (productId) {
-      fetch(`http://localhost:8080/comics/${productId}`) // Gọi API chi tiết của truyện
+    fetch(`http://localhost:8080/comics/${productId}`) // Gọi API chi tiết của truyện
         .then(response => response.json())
         .then(data => {
-          
-          document.getElementById('img-id').src = data.url || 'default-image.png';
-          document.getElementById('Name1').innerText = data.name || 'Tên không có sẵn';
-          document.getElementById('Price').innerText = formatPrice(data.price) +' Vnđ'|| 'Tên không có sẵn';
-          document.getElementById('publisher').innerText = data.publisher
-          document.getElementById('tloai').innerText = data.genre
-          document.getElementById('tg').innerText = data.author
-          document.getElementById('tl').innerText = data.weight
-          document.getElementById('mt').innerText = data.description || 'Tên không có sẵn';
-          document.getElementById('st').innerText = data.pages
-          document.getElementById('kt').innerText = data.size
+            document.getElementById('img-id').src = data.url || 'default-image.png';
+            document.getElementById('Name1').innerText = data.name || 'Tên không có sẵn';
+            document.getElementById('Price').innerText = formatPrice(data.price) + ' VND' || 'Không có sẵn';
+            document.getElementById('publisher').innerText = data.publisher;
+
+            // Hiển thị danh sách tác giả (Authors)
+            const authorsList = data.authors.map(author => author.name).join(', ');
+            document.getElementById('tg').innerText = authorsList || 'Tác giả không có sẵn';
+
+            // Hiển thị danh sách thể loại (Genres)
+            const genresList = data.genres.map(genre => genre.name).join(', ');
+            document.getElementById('tloai').innerText = genresList || 'Thể loại không có sẵn';
+
+            document.getElementById('tl').innerText = data.weight;
+            document.getElementById('mt').innerText = data.description || 'Mô tả không có sẵn';
+            document.getElementById('st').innerText = data.pages;
+            document.getElementById('kt').innerText = data.size;
         })
         .catch(error => {
-          console.error("Lỗi khi lấy chi tiết truyện:", error);
+            console.error("Lỗi khi lấy chi tiết truyện:", error);
         });
-    } else {
-      console.error("Không có ID của truyện trong URL");
-    }
+} else {
+    console.error("Không có ID của truyện trong URL");
+}
   /*----------------------------------*/
   document.addEventListener("DOMContentLoaded", function () {
   // Gọi API để lấy dữ liệu các truyện tranh bán chạy nhất

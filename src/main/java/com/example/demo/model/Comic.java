@@ -10,7 +10,11 @@ package com.example.demo.model;
  */
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.JoinTable;
+import jakarta.persistence.ManyToMany;
 import jakarta.persistence.Table;
+import java.util.List;
 import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
 
@@ -27,15 +31,26 @@ public class Comic {
     private String url;
     private int sold;
     private Integer quantity;
-    private String Genre;
     private String Weight;
-    private String Author;
     private String Description;
     private String Pages;
     private String Size;
     private String Publisher;
     private String Summarize;
     
+     @ManyToMany
+    @JoinTable(
+      name = "comic_author", 
+      joinColumns = @JoinColumn(name = "comic_id"), 
+      inverseJoinColumns = @JoinColumn(name = "author_id"))
+    private List<Author> authors;
+
+    @ManyToMany
+    @JoinTable(
+      name = "comic_genre", 
+      joinColumns = @JoinColumn(name = "comic_id"), 
+      inverseJoinColumns = @JoinColumn(name = "genre_id"))
+    private List<Genre> genres;
     // Getters và Setters
     public Long getId() {
         return id;
@@ -78,13 +93,7 @@ public class Comic {
     }
 
 
-    public String getGenre() {
-        return Genre;
-    }
-
-    public void setGenre(String Genre) {
-        this.Genre = Genre;
-    }
+  
 
     public String getWeight() {
         return Weight;
@@ -94,13 +103,7 @@ public class Comic {
         this.Weight = Weight;
     }
 
-    public String getAuthor() {
-        return Author;
-    }
-
-    public void setAuthor(String Author) {
-        this.Author = Author;
-    }
+   
 
     public String getDescription() {
         return Description;
@@ -148,6 +151,21 @@ public class Comic {
 
     public void setQuantity(int quantity) {
         this.quantity = quantity;
+    }
+    public List<Author> getAuthors() {
+        return authors;
+    }
+
+    public void setAuthors(List<Author> authors) {
+        this.authors = authors;
+    }
+
+    public List<Genre> getGenres() {
+        return genres;
+    }
+
+    public void setGenres(List<Genre> genres) {
+        this.genres = genres;
     }
     
 }
