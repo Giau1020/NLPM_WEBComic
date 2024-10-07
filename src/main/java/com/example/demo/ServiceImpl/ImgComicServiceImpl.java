@@ -3,7 +3,7 @@ package com.example.demo.ServiceImpl;
 import com.example.demo.Service.ImgComicService;
 import com.example.demo.model.ImgComic;
 import com.example.demo.repository.ImgComicRepository;
-import lombok.RequiredArgsConstructor;
+
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -17,9 +17,13 @@ import java.util.List;
 import java.util.Optional;
 
 @Service
-@RequiredArgsConstructor
+
 public class ImgComicServiceImpl implements ImgComicService {
     private final ImgComicRepository imgComicRepository;
+
+    public ImgComicServiceImpl(ImgComicRepository imgComicRepository) {
+        this.imgComicRepository = imgComicRepository;
+    }
 
     private static final String UPLOAD_DIR = "C:/Users/NgocG/Documents/NLPM_WebComic_SNG/NLPM_WEBComic/src/main/resources/static/images/";
     public String uploadImage(MultipartFile file) throws IOException {
