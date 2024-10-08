@@ -9,6 +9,7 @@ package com.example.demo.repository;
  * @author ADMIN
  */
 import com.example.demo.model.Comic;
+import com.example.demo.model.Genre;
 import org.springframework.data.jpa.repository.Query;
 
 import org.springframework.stereotype.Repository;
@@ -39,6 +40,8 @@ public interface ComicRepository extends JpaRepository<Comic, Long> {
 
     
      List<Comic> findByNameContainingIgnoreCase(String name);
+
+    public List<Comic> findByGenres(Genre genre);
 
 
 

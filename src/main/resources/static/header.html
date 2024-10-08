@@ -48,6 +48,41 @@
     cursor: pointer;
 }
 
+#categoryMenu {
+    display: none; /* Ẩn menu theo mặc định */
+    position: absolute;
+    background-color: white;
+    top: 100%; /* Hiển thị ngay bên dưới "Danh mục sản phẩm" */
+    left: 0;
+    z-index: 10000;
+    border: 1px solid #ccc;
+    width: 150px;
+}
+
+#genreList {
+    list-style-type: none; /* Xóa dấu đầu dòng của danh sách */
+    padding: 0;
+    margin: 0;
+}
+
+#genreList li {
+    padding: 10px;
+    border-bottom: 1px solid #ccc;
+}
+
+#genreList li a {
+    text-decoration: none;
+    color: black;
+    display: block;
+    width: 100%;
+}
+
+#genreList li a:hover {
+    background-color: #f0f0f0;
+}
+
+
+
 
 </style>
 
@@ -55,9 +90,16 @@
     <div class="s1" style="width: 100%; height: 70px; align-items: center;">
         <img src="images/top1.webp" alt="" style="width: 1263%; height: 60px;">
     </div>
-    <div class="s3">
-        <img src="images/3Gach.svg" alt="Sample Image" id="danhmuc">
-        <span id="sp"><b>DANH MỤC SẢN PHẨM</b></span>
+    <div class="s3" >
+        <img src="images/3Gach.svg" alt="Sample Image" id="danhmuc"> <!-- Phần tử bạn nhấn vào -->
+        <div style="position: relative;"> <div id="sp"><b>DANH MỤC SẢN PHẨM</b></div>
+        <div id="categoryMenu" style="display: none; position: absolute; top: 100%; left: 0; background-color: white; border: 1px solid #ccc; width: 150px; z-index: 1;">
+            <!-- Sử dụng thẻ <ul> hoặc trực tiếp các thẻ <a> để hiển thị các thể loại -->
+            <ul id="genreList"></ul> <!-- Danh sách các thể loại -->
+        </div>
+</div>
+   
+
         <div class="search-container">
             <input type="text" placeholder="Tìm kiếm sản phẩm..." id="khungsearch">
             <button type="submit" id="btsearch">Tìm kiếm</button>
