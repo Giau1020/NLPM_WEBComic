@@ -5,9 +5,11 @@
 package com.example.demo.controller;
 
 import com.example.demo.model.Comic;
+import com.example.demo.model.Genre;
 import com.example.demo.model.ImgComic;
 import com.example.demo.model.User;
 import com.example.demo.repository.ComicRepository;
+import com.example.demo.repository.GenreRepository;
 import com.example.demo.repository.ImgComicRepository;
 import jakarta.servlet.http.HttpSession;
 import java.util.HashMap;
@@ -28,7 +30,8 @@ public class ComicController {
     private ComicRepository comicRepository;
      @Autowired
     private ImgComicRepository imgComicRepository;
-
+@Autowired
+    private GenreRepository genreRepository;
     // API để lấy 10 truyện có số lượt bán cao nhất
     @GetMapping("/top10byslb")
     public List<Comic> getTop10ComicsBySold() {
@@ -116,7 +119,23 @@ public ResponseEntity<List<Comic>> searchComics(@RequestParam("query") String qu
         return ResponseEntity.status(HttpStatus.NOT_FOUND).body(comics); // Trả về 404 nếu không có kết quả
     }
 }
-
+  // API để lấy tất cả thể loại
+    @GetMapping("/genres")
+    public ResponseEntity<List<Genre>> getAllGenres() {
+        List<Genre> genres = genreRepository.findAll(); // Lấy tất cả thể loại từ cơ sở dữ liệu
+        return ResponseEntity.ok(genres); // Trả về danh sách thể loại
+    }
     
+     // Lấy danh sách truyện theo thể loại
+    @GetMapping("/genre/{genreId}")
+    public List<Comic> getComicsByGenre(@PathVariable Long genreId) {
+        // Tìm thể loại theo genreId
+        Genre genre = genreRepository.findById(genreId).orElse(null);
+        if (genre != null) {
+            // Lấy danh sách truyện thuộc thể loại này
+            return comicRepository.findByGenres(genre);
+        }
+        return null; // Hoặc trả về thông báo lỗi nếu cần
+    }
   }
     

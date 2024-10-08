@@ -79,8 +79,6 @@ function setupSearchEvent() {
         console.error("Phần tử #btsearch không tồn tại.");
     }
 }
-
-// Tải header và footer khi trang đã sẵn sàng
 document.addEventListener("DOMContentLoaded", function() {
     // Tải header
     fetch('header.html')
@@ -93,21 +91,61 @@ document.addEventListener("DOMContentLoaded", function() {
                 // Sau khi header được tải, kiểm tra trạng thái đăng nhập và gán sự kiện tìm kiếm
                 checkLoginStatus();
                 setupSearchEvent();
+
+                const categoryMenuToggle = document.getElementById("danhmuc");
+                const categoryMenu = document.getElementById("categoryMenu");
+                const genreList = document.getElementById("genreList");
+            
+                // Hiển thị hoặc ẩn menu khi nhấn vào "Danh mục sản phẩm"
+                categoryMenuToggle.addEventListener("click", function(event) {
+                    event.stopPropagation();
+                    categoryMenu.style.display = (categoryMenu.style.display === "none" || categoryMenu.style.display === "") ? "block" : "none";
+            
+                    // Chỉ gọi API và thêm thể loại khi lần đầu nhấn vào danh mục sản phẩm
+                    if (genreList.children.length === 0) { // Kiểm tra nếu danh sách chưa có thể loại
+                        fetch("http://localhost:8080/comics/genres")
+                            .then(response => response.json())
+                            .then(data => {
+                                // Xóa các thể loại cũ (nếu có)
+                                genreList.innerHTML = '';
+                                // Duyệt qua các thể loại và thêm các thẻ <a> vào danh sách
+                                data.forEach(genre => {
+                                    const listItem = document.createElement("li");
+                                    const link = document.createElement("a");
+                                    
+                                    link.textContent = `Truyện ${genre.name}`;
+                                    link.href = `httl.html?genreId=${genre.id}`;
+                                    listItem.appendChild(link);
+                                    genreList.appendChild(listItem);
+                                });
+                            })
+                            .catch(error => console.error('Error fetching genres:', error));
+                    }
+                });
+            
+                // Ẩn menu khi nhấn ra ngoài
+                window.addEventListener("click", function(event) {
+                    if (!categoryMenuToggle.contains(event.target) && !categoryMenu.contains(event.target)) {
+                        categoryMenu.style.display = "none";
+                    }
+                });
             } else {
                 console.error('Không tìm thấy phần tử #header');
             }
         })
         .catch(error => console.error('Error loading header:', error));
-
-    // Tải footer
-    fetch("footer.html")
+        
+        fetch('footer.html')
         .then(response => response.text())
         .then(data => {
-            const footerElement = document.getElementById("footer");
+            const footerElement = document.getElementById('footer');
             if (footerElement) {
                 footerElement.innerHTML = data;
             } else {
                 console.error('Không tìm thấy phần tử #footer');
             }
-        });
+        })
+        .catch(error => console.error('Error loading footer:', error));
 });
+
+
