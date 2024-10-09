@@ -61,19 +61,21 @@ flex-grow: 1;            /* Chiếm không gian còn lại của trang */
     width: 100%;
     margin: auto;
 }
-#danhmuc {
+ #danhmuc {
     height: 40%;
     width: auto;
     margin-right: 10px;
+    justify-content: center;
+    align-items: center;
 }
-#sp {
+/* #sp {
     display: flex;
     align-items: center;
     line-height: 1;
     font-size: 130%;
     margin-right: 30px;
     white-space: nowrap;
-}
+}  */
 .search-container {
     display: flex;
     align-items: center;

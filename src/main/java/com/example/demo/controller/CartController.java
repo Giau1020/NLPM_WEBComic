@@ -58,12 +58,13 @@ public class CartController {
         }
 
         Comic comic = comicOptional.get();
-
         // Kiểm tra xem sản phẩm đã có trong giỏ hàng chưa
         Optional<CartItem> existingCartItem = cartItemRepository.findByCartAndComic(cart, comic);
         if (existingCartItem.isPresent()) {
             // Nếu sản phẩm đã có trong giỏ hàng, tăng số lượng
             CartItem cartItem = existingCartItem.get();
+             if(comic.getQuantity()== cartItem.getQuantity())
+                 request.setQuantity(0);
             cartItem.setQuantity(cartItem.getQuantity() + request.getQuantity());
             cartItemRepository.save(cartItem);
         } else {

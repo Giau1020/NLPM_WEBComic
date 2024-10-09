@@ -80,7 +80,9 @@
 #genreList li a:hover {
     background-color: #f0f0f0;
 }
-
+#danhmuc:hover{
+    cursor: pointer;
+}
 
 
 
@@ -91,11 +93,12 @@
         <img src="images/top1.webp" alt="" style="width: 1263%; height: 60px;">
     </div>
     <div class="s3" >
-        <img src="images/3Gach.svg" alt="Sample Image" id="danhmuc"> <!-- Phần tử bạn nhấn vào -->
-        <div style="position: relative;"> <div id="sp"><b>DANH MỤC SẢN PHẨM</b></div>
+        <div style="position: relative; display: flex;  height: 50px;" id="danhmuc"  >
+        <img src="images/3Gach.svg" alt="Sample Image" style="height: 50%;" > 
+       
+        <div id="sp" style="font-size: 20px;"><b>DANH MỤC SẢN PHẨM</b></div>
         <div id="categoryMenu" style="display: none; position: absolute; top: 100%; left: 0; background-color: white; border: 1px solid #ccc; width: 150px; z-index: 1;">
-            <!-- Sử dụng thẻ <ul> hoặc trực tiếp các thẻ <a> để hiển thị các thể loại -->
-            <ul id="genreList"></ul> <!-- Danh sách các thể loại -->
+            <ul id="genreList"></ul> 
         </div>
 </div>
    

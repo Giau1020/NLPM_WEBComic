@@ -399,15 +399,7 @@
     
     quantityInput.value = newQuantity;
 
-    // Xử lý checkbox nếu số lượng bằng 0
-    // const checkbox = quantityInput.closest('.cart-item').querySelector('.checkbox');
-    // if (newQuantity === 0) {
-    //     checkbox.checked = false; // Bỏ check nếu số lượng là 0
-    //     checkbox.disabled = true; // Vô hiệu hóa checkbox
-    //     updateCheckboxStatus(comicId, false);
-    // } else {
-    //     checkbox.disabled = false; // Kích hoạt lại checkbox nếu số lượng lớn hơn 0
-    // }
+    
 
     fetch('/cart/update', {
         method: 'POST',
