@@ -8,25 +8,26 @@ async function showAllComics() {
 
     const table_list_comic = document.querySelector('.table_body');
     table_list_comic.innerHTML = "";
-    console.log("Hi");
-    console.log(comics);
+    
     if (!Array.isArray(comics)) {
         throw new TypeError('Dữ liệu không phải là một mảng');
     }
     comics.forEach(comic => {
-        console.log(comic);
+       
         const row = document.createElement('tr');
         row.innerHTML = `
-        <td>${comic.id}</td>
+        <td class="id_comic_detail">${comic.id}</td>
         <td>${comic.name}</td>
         <td>${comic.description}</td>
         <td>${comic.price}</td>
-        <td><a href="#"><img src="./images-Admin/edit-text.png" alt=""></a></td>
+        <td><img style="width: 30px; height: 30px;"  class="btn-detail-comic" src="./images-Admin/edit-text.png" alt=""></td>
         <td class="checkbox-delete-comic" style="display: none;" ><input type="checkbox" name="checkbox-delete-comic" id="checkbox-delete-comic"></td>
     `;
     table_list_comic.appendChild(row);
         
-    });}
+    });
+        setupDetailComicButtons();
+}
     catch (error) {
         console.error('Lỗi khi lấy dữ liệu:', error);
     }
@@ -34,8 +35,30 @@ async function showAllComics() {
 
     
 }
-document.addEventListener('DOMContentLoaded', showAllComics);
-showAllComics();
+document.addEventListener('DOMContentLoaded', function(){
+    showAllComics();
+    // showDetailComicButtons.js
+
+   
+});
+
+function setupDetailComicButtons() {
+    const buttonsDetail = document.querySelectorAll('.btn-detail-comic');
+
+    buttonsDetail.forEach((button, index) => {
+        button.addEventListener('click', function() {
+            const paragraphs = document.querySelectorAll('.id_comic_detail');
+
+            if (index < paragraphs.length) {
+                const innerText = paragraphs[index].innerText;
+                Show_Detail_Comic(innerText);
+            } else {
+                console.error('Index không hợp lệ:', index);
+            }
+        });
+    });
+}
+
 
 
 // Hàm hiển thị toàn bộ truyện
@@ -48,13 +71,12 @@ async function showAllComicsEditTable() {
 
     const table_list_comic = document.querySelector('.table_edit_body');
     table_list_comic.innerHTML = "";
-    console.log("Hi");
-    console.log(comics);
+   
     if (!Array.isArray(comics)) {
         throw new TypeError('Dữ liệu không phải là một mảng');
     }
     comics.forEach(comic => {
-        console.log(comic);
+        
         const row = document.createElement('tr');
         row.innerHTML = `
         <td>${comic.id}</td>
@@ -72,8 +94,25 @@ async function showAllComicsEditTable() {
     }
 
 }
-document.addEventListener('DOMContentLoaded', showAllComicsEditTable);
-showAllComicsEditTable();
+
+
+// hàm lấy dữ liệu từ CSDL
+async function getData(url) {
+    try {
+      const response = await fetch(url); 
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+      }
+      const data = await response.json(); // Chờ dữ liệu được chuyển đổi thành JSON
+      return data; // Trả về dữ liệu JSON
+    } catch (error) {
+      console.error('Error fetching data:', error);
+      throw error; // Ném lỗi để xử lý ở nơi gọi hàm
+    }
+  }
+
+// document.addEventListener('DOMContentLoaded', showAllComicsEditTable);
+// showAllComicsEditTable();
 
 // Hàm lấy dữ liệu của 1 truyện bằng id
 async function getComicById(id) {

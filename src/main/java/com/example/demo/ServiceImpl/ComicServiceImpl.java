@@ -1,7 +1,10 @@
 package com.example.demo.ServiceImpl;
 
+import com.example.demo.CORS.ResourceNotFoundException;
 import com.example.demo.Service.ComicService;
+import com.example.demo.model.Author;
 import com.example.demo.model.Comic;
+import com.example.demo.model.Genre;
 import com.example.demo.repository.ComicRepository;
 
 import org.springframework.stereotype.Service;
@@ -37,6 +40,25 @@ public class ComicServiceImpl implements ComicService {
     @Override
     public Comic createComic(Comic comic) {
         return null;
+    }
+
+    @Override
+    public List<Genre> getComicsByComicId(Long comicId) {
+        // Tìm truyện theo ID
+        Comic comic = comicRepository.findById(comicId)
+                .orElseThrow(() -> new ResourceNotFoundException("Comic không tồn tại với ID: " + comicId));
+
+        // Lấy danh sách các thể loại từ truyện
+        return comic.getGenres();
+    }
+
+    @Override
+    public List<Author> getAuthorByComiId(Long comicId) {
+        Comic comic = comicRepository.findById(comicId)
+                .orElseThrow(() -> new ResourceNotFoundException("Comic không tồn tại với ID: " + comicId));
+
+        // Lấy danh sách các thể loại từ truyện
+        return comic.getAuthors();
     }
 
     // Upload img

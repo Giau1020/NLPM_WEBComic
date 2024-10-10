@@ -15,4 +15,6 @@ public interface ImgComicService {
 
     //Hàm lấy Hình ảnh comic bằng id
     Optional<ImgComic> findByComicId(Long comicId);
+
+
 }

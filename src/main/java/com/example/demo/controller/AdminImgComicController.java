@@ -32,9 +32,9 @@ public class AdminImgComicController {
         }
     }
 
-    @GetMapping("/{id}")
-    public ResponseEntity<ImgComic> getImgComicById(@PathVariable Long id) {
-        Optional<ImgComic> imgComic = imgComicService.findByComicId(id);
+    @GetMapping("/{comic_id}")
+    public ResponseEntity<ImgComic> getImgComicById(@PathVariable("comic_id") Long comic_id) {
+        Optional<ImgComic> imgComic = imgComicService.findByComicId(comic_id);
         return imgComic.map(ResponseEntity::ok)
                 .orElseGet(() -> ResponseEntity.notFound().build());
     }
