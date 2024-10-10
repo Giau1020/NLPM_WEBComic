@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Danh sách truyện</title>
+</head>
+<body>
+    <h1>Danh sách truyện</h1>
+    <ul id="comicList">
+        <!-- Các truyện sẽ được thêm vào đây -->
+    </ul>
+
+    <script >
+        document.addEventListener("DOMContentLoaded", function() {
+    // Lấy genreId từ URL
+    const urlParams = new URLSearchParams(window.location.search);
+    const genreId = urlParams.get('genreId');
+
+    if (genreId) {
+        // Gọi API để lấy danh sách truyện theo thể loại
+        fetch(`http://localhost:8080/comics/genre/${genreId}`)
+            .then(response => response.json())
+            .then(comics => {
+                const comicList = document.getElementById("comicList");
+                // Xóa các truyện cũ (nếu có)
+                comicList.innerHTML = '';
+                // Hiển thị danh sách truyện
+                comics.forEach(comic => {
+                    const listItem = document.createElement("li");
+                    listItem.textContent = comic.name; // Hiển thị tên truyện
+                    comicList.appendChild(listItem);
+                });
+            })
+            .catch(error => console.error('Error fetching comics:', error));
+    } else {
+        console.error("No genreId found in URL");
+    }
+});
+
+    </script>
+</body>
+</html>

@@ -110,15 +110,27 @@ public ResponseEntity<String> addToCart(@RequestParam("comicId") Long comicId, H
         }
     }
     // API để tìm kiếm truyện theo từ khóa
-@GetMapping("/search")
-public ResponseEntity<List<Comic>> searchComics(@RequestParam("query") String query) {
-    List<Comic> comics = comicRepository.findByNameContainingIgnoreCase(query);
-    if (!comics.isEmpty()) {
-        return ResponseEntity.ok(comics);
-    } else {
-        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(comics); // Trả về 404 nếu không có kết quả
+//@GetMapping("/search")
+//public ResponseEntity<List<Comic>> searchComics(@RequestParam("query") String query) {
+//    List<Comic> comics = comicRepository.findByNameContainingIgnoreCase(query);
+//    if (!comics.isEmpty()) {
+//        return ResponseEntity.ok(comics);
+//    } else {
+//        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(comics); // Trả về 404 nếu không có kết quả
+//    }
+//}
+      @GetMapping("/search")
+    public ResponseEntity<List<Comic>> searchComics(@RequestParam("query") String query) {
+        // Tìm kiếm theo cả tên truyện, tác giả, và thể loại
+        List<Comic> comics = comicRepository.searchByKeyword(query);
+        
+        // Kiểm tra kết quả tìm kiếm
+        if (!comics.isEmpty()) {
+            return ResponseEntity.ok(comics); // Trả về danh sách kết quả
+        } else {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(comics); // Trả về 404 nếu không có kết quả
+        }
     }
-}
   // API để lấy tất cả thể loại
     @GetMapping("/genres")
     public ResponseEntity<List<Genre>> getAllGenres() {

@@ -39,13 +39,17 @@ public interface ComicRepository extends JpaRepository<Comic, Long> {
     String findNameById(@Param("id") Long id);
 
     
-     List<Comic> findByNameContainingIgnoreCase(String name);
+//     List<Comic> findByNameContainingIgnoreCase(String name);
 
     public List<Comic> findByGenres(Genre genre);
 
 
-
-
+// Tìm kiếm theo tất cả các tiêu chí (tên truyện, tác giả, thể loại)
+    @Query("SELECT DISTINCT c FROM Comic c LEFT JOIN c.authors a LEFT JOIN c.genres g WHERE "
+            + "LOWER(c.name) LIKE LOWER(CONCAT('%', :keyword, '%')) OR "
+            + "LOWER(a.name) LIKE LOWER(CONCAT('%', :keyword, '%')) OR "
+            + "LOWER(g.name) LIKE LOWER(CONCAT('%', :keyword, '%'))")
+    List<Comic> searchByKeyword(@Param("keyword") String keyword);
 }
 
 
