@@ -4,6 +4,39 @@ function popUpAddNewComic(){
     let e = document.querySelector('#form-add-new-comic');
     e.style.display = "block";
 
+    let select_genre = document.querySelector('#inp-genre');
+    let api_getListGenre = "http://localhost:8080/api/v1/sng/admin/genres";
+    getData(api_getListGenre)
+    .then(listGenre => {
+        listGenre.forEach(genre => {console.log("Đang xử lý dữ liệu json");
+            const option = document.createElement('option');
+            option.value = genre.id;
+            option.textContent = genre.name;
+            select_genre.appendChild(option);// Khởi tạo Select2
+       select_genre.select2({
+        placeholder: "-- Chọn hoặc nhập thể loại --",
+        allowClear: true,
+        tags: true, // Cho phép nhập liệu tùy ý
+        tokenSeparators: [',', ' '],
+        // Định dạng để người dùng có thể thêm tùy chọn mới
+        createTag: function (params) {
+            var term = $.trim(params.term);
+            if (term === '') {
+                return null;
+            }
+            return {
+                id: term,
+                text: term,
+                newOption: true
+            };
+        }
+    });
+        });
+       
+
+    })
+
+
 }
 function closePopUpAddNewComic(){
     let e = document.querySelector('#form-add-new-comic');
@@ -13,6 +46,7 @@ function closePopUpAddNewComic(){
 //ĐÓng popup
 let btn_close = document.querySelector('.btn-close');
 btn_close.addEventListener('click', closePopUpAddNewComic());
+
 
 // Csript upload hình và form điền
 const uploadForm = document.getElementById('uploadForm');

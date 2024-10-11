@@ -1,7 +1,9 @@
 package com.example.demo.controller;
 
 import com.example.demo.ServiceImpl.ComicServiceImpl;
+import com.example.demo.model.Author;
 import com.example.demo.model.Comic;
+import com.example.demo.model.Genre;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -69,4 +71,17 @@ public class AdminComicController {
         }
     }
 
+//    Hàm lấy thể loại bằng comic ID
+    @GetMapping("/{comicId}/genres")
+    public ResponseEntity<List<Genre>> getGenresByComicId(@PathVariable Long comicId) {
+        List<Genre> genres = comicService.getComicsByComicId(comicId);
+        return ResponseEntity.ok(genres);
+    }
+
+//    Hàm lấy danh sách tác giả bằng comic ID
+    @GetMapping("/{comicId}/authors")
+    public ResponseEntity<List<Author>> getAuthorByComicId(@PathVariable Long comicId){
+        List<Author> authors = comicService.getAuthorByComiId((comicId));
+        return ResponseEntity.ok(authors);
+    }
 }

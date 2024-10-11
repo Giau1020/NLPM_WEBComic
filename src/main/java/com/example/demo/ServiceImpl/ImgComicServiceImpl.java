@@ -78,6 +78,6 @@ public class ImgComicServiceImpl implements ImgComicService {
 
     @Override
     public Optional<ImgComic> findByComicId(Long comicId) {
-        return imgComicRepository.findById(comicId);
+        return imgComicRepository.findByComicId(comicId);
     }
 }

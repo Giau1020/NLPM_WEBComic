@@ -6,6 +6,8 @@
     <title>Document</title>
     <link rel="stylesheet" href="./style-header-footer-admin.css">
     <link rel="stylesheet" href="./style-main-page-admin.css">
+    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+
 </head>
 <body>
     <div class="container">
@@ -21,6 +23,81 @@
             <a href="#"><img src="./images-Admin/price-tag.png" alt="admin-promotion-manage">Khuyến mãi & giảm giá</a>
             <a href="#"  style="margin-bottom: 10%;"><img src="./images-Admin/dashboard.png" alt="admin-report-manage">Báo cáo và thống kê</a>
         </div>
+        <!-- FORM POP UP KHI CLICK VÀO CHI TIẾT TRUYỆN -->
+         
+    <div class="container-detail-backround" style="display: none;">
+        <div class="detail-comic" >
+            <div class="head-close-bar">
+                <h1 style="font-size: 28px;">Chi tiết sản phẩm</h1>
+                <button class="close-btn">
+                    &times;
+                </button>
+            </div>
+            <div class="detail-container">
+                <div class="left-container">
+                    <img class="img-cover" src="" alt="">
+                    <h2 class="name">Arya Bàn Bên Lại Trêu Ghẹo Tôi Bằng Tiếng Nga - Tập 5</h2>
+                    <div style="display: flex; flex-direction: row;justify-content: center; align-items: center; text-align: center; "><p class="price" style="color: red; font-size: 30px;">12000</p><p style="color: red; font-size: 30px;">&#160; VND</p></div>
+                    
+                </div>
+                <div class="right-container">
+                    <h2>Thông tin của truyện:</h2>
+                    <table class="table-detail">
+                        <tr >
+                            <th class="table-detail">Mã hàng</th>
+                            <td  class="table-detail id">89353532614082</td>
+                        </tr>
+                        <tr>
+                            <th class="table-detail">Số lượng bán </th>
+                            <td class="table-detail sold">20</td>
+                        </tr>
+                        <tr>
+                            <th class="table-detail">Thể loại</th>
+                            <td class="table-detail genre">tình cảm lãng mạn</td>
+                        </tr>
+                        <tr>
+                            <th class="table-detail">Tên Nhà Cung Cấp</th>
+                            <td class="table-detail nxb">Nhà Xuất Bản Kim Đồng</td>
+                        </tr>
+                        <tr>
+                            <th class="table-detail">Tác giả</th>
+                            <td class="table-detail author">Sunsunsun, Momoco</td>
+                        </tr>
+                        
+                        <tr>
+                            <th class="table-detail">Trọng lượng (g)</th>
+                            <td class= "table-detail table-detail weight">400</td>
+                        </tr>
+                        <tr>
+                            <th class="table-detail">Kích Thước Bao Bì</th>
+                            <td class="table-detail size">19 x 13 x 1.9 cm</td>
+                        </tr>
+                        <tr>
+                            <th class="table-detail">Số trang</th>
+                            <td class="table-detail pages">384</td>
+                        </tr>
+                        <tr>
+                            <th class="table-detail">Số lượng trong kho</th>
+                            <td class="table-detail quantity">200</td>
+                        </tr>
+                    </table>
+                    <div class="describe-in-detail">
+                        <h2>Mô tả sản phẩm</h2>
+                        <p class="content"></p>
+                    </div>
+                    <div >
+                        <h2>Tóm tắt nội dung</h2>
+                        <p class="summary-content">Arya Bàn Bên Lại Trêu Ghẹo Tôi Bằng Tiếng Nga - Tập 5</p>
+                    </div>
+                    <h2>Xem thử vài trang</h2>
+                    <div class="imgs-comic">
+                        
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
          <!-- FORM POP UP KHI CLICK BUTTON `THÊM` TRONG QUẢN LÝ SẢN PHẨM -->
          <div id="form-add-new-comic" >
             <div class="form-container-add">
@@ -60,12 +137,13 @@
 
 
                     
+
                     <p>Thể loại:</p>
-                    <select name="genre" id="inp-genre" required>
-                        <option value="">-- Chọn thể loại --</option>
+                    <select name="genre" id="inp-genre" required multiple="multiple">
+                        <!-- <option value="">-- Chọn thể loại --</option>
                         <option value="Fun">Hài hước</option>
                         <option value="Romantic">Lãng mạn</option>
-                        <option value="Student">Thanh xuân vườn trường</option>
+                        <option value="Student">Thanh xuân vườn trường</option> -->
                     </select>
                    
                     <p>Mô tả nội dung:</p>
@@ -151,12 +229,12 @@
                 </thead>
                 <tbody class="table_body">
                     <tr>
-                        <td>1</td>
-                        <td>Doremon</td>
-                        <td>aaaa</td>
+                        <td class="id_comic_detail">1</td>
+                        <td></td>
+                        <td></td>
                         <!-- <td>Hiện</td> -->
-                         <td>1đ</td>
-                        <td><a href="#"><img src="./images-Admin/edit-text.png" alt=""></a></td>
+                         <td></td>
+                        <td><img style="width: 100px; height: 100px;"  class="btn-detail-comic" src="./images-Admin/edit-text.png" alt=""></td>
                         <td class="checkbox-delete-comic" style="display: none;"><input type="checkbox" name="checkbox-delete-comic" id="checkbox-delete-comic"></td>
                     </tr>
                   </tbody>  
@@ -270,7 +348,6 @@
     </div>
     </div>
 
-
     
     <div id="footer-admin-page"  ></div>
 </div>
@@ -278,5 +355,12 @@
     <script src="./script-for-main-page.js"></script>
     <script src="https://kit.fontawesome.com/86ec971ab9.js" crossorigin="anonymous"></script>
     <script src="./script-csdl-admin.js"></script>
+
+     <!-- Bao gồm jQuery và Select2 JS -->
+     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+     <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+
+
+   
 </body>
 </html>

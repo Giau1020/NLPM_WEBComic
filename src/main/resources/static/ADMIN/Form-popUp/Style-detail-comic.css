@@ -1,0 +1,130 @@
+table.table-detail{
+    border: none;
+}
+.container-detail-backround{
+    width: 100%;
+    height: 100%;
+    padding: 0;
+    margin: 0;
+    background-color: rgba(211, 211, 211, 0.99) ;
+    z-index: 1000;
+    overflow-y: auto;
+}
+.detail-comic{
+    height: 100%;
+    font-family: 'Arial', sans-serif;
+    width: 80%;
+    display: flex;
+    flex-direction: column;
+    align-self: center;
+    margin: 0 auto;
+    background-color: rgba(255, 255, 255, 1);
+    z-index: 1001;
+    
+    
+}
+.head-close-bar{
+    width: calc(100% - 40px);
+    height: 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #f8d7da;
+    color: black;
+    padding: 10px 20px;
+    font-size: 18px;
+    font-weight: bold;
+    /* border-top-left-radius: 10px;
+    border-top-right-radius: 10px; */
+    border: 1px solid #f5c2c7;
+    margin-bottom: 1%;
+}
+.close-btn {
+    background-color: transparent;
+    border: none;
+    font-size: 40px;
+    color: black;
+    cursor: pointer;
+}
+.close-btn:hover {
+    color: red;
+}
+table.table-detail{
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px; /* Khoảng cách giữa tiêu đề và bảng */
+}
+
+th.table-detail, td.table-detail{
+    border: 1px solid #dee2e6; /* Đường viền cho ô */
+    padding: 10px; /* Khoảng cách bên trong ô */
+    text-align: left; /* Căn trái cho nội dung ô */
+}
+
+th.table-detail{
+    background-color: #f1f1f1; /* Màu nền cho tiêu đề */
+    color: #333;
+}
+h2 {
+    margin-top: 20px;
+    color: #333;
+}
+
+p {
+    color: #495057;
+}
+
+.detail-container{
+    width: 100%;
+   height: 100%;
+    display: flex;
+    flex-direction: row;
+    gap: 2%;
+    
+}
+.left-container{
+    flex: 3.5;
+    text-align: center;
+    position: sticky;
+    max-height: fit-content;
+    position: -webkit-sticky;
+    background-color: white;
+    margin-left: 10px;
+}
+.right-container{
+    flex: 6;
+    text-align: justify;
+    align-items: center;
+    padding-left: 20px;
+    overflow-y: auto;
+    max-height: 100vh;
+    background-color: white;
+    height: 92vh;
+    padding-right: 15px;
+
+}
+.right-container::-webkit-scrollbar,.container-detail-backround::-webkit-scrollbar {
+    display: none;
+}
+.img-cover {
+    width: 80%;
+    height: auto;
+    border-radius: 5px;
+    margin-bottom: 15px;
+}
+.name {
+    font-size: 20px;
+    font-weight: bold;
+    margin-bottom: 20px;
+}
+.right-container h2 {
+    font-size: 18px;
+    color: #333;
+    margin-bottom: 10px;
+}
+.imgs-comic{
+    display: inline-flex;
+    max-width: 100%;
+    flex-direction: row;
+    overflow-x: auto;
+}
