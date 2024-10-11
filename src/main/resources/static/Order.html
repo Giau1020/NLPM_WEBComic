@@ -1,0 +1,374 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="/css/styles.css" />
+    <title>Danh sách Đơn Hàng</title>
+    <style>
+        .main {
+            display: flex;
+            align-items: center;
+            flex-direction: column;
+            flex-grow: 1;
+            justify-content: center;
+        }
+
+        /* Đặt chiều rộng và chiều cao cố định cho phần chứa đơn hàng */
+        .order-list {
+            margin: 20px;
+            padding: 20px;
+            border: 1px solid #ccc;
+            background-color: #f9f9f9;
+            width: 80%; /* Đặt chiều rộng lớn hơn để luôn lớn ngay từ đầu */
+            max-width: 800px; /* Giới hạn chiều rộng tối đa */
+            min-height: 900px; /* Chiều cao tối thiểu */
+        }
+
+        .order-item {
+            margin-bottom: 10px;
+            padding: 10px;
+            border-bottom: 2px solid black;
+        }
+
+        .order-item:last-child {
+            border-bottom: none;
+        }
+
+        .order-details {
+            margin-bottom: 10px;
+        }
+
+        .order-status {
+            color: green;
+        }
+
+        .details-button {
+            margin-top: 10px;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            padding: 8px;
+            cursor: pointer;
+        }
+
+        .order-detail-info {
+            display: none;
+            margin-top: 15px;
+            border-top: 1px solid #ddd;
+            padding-top: 10px;
+        }
+
+        /* Thiết lập kiểu hiển thị sản phẩm */
+        .product-item {
+            display: flex;
+            align-items: center;
+            margin: 10px 0;
+            border-bottom: 1px solid #ccc;
+            padding-bottom: 10px;
+        }
+
+        .product-image {
+            width: 100px;
+            height: 100px;
+            margin-right: 15px;
+            object-fit: contain;
+        }
+
+        .product-info {
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .product-name {
+            font-weight: bold;
+            margin-bottom: 5px;
+            text-align: left;
+        }
+
+        .product-price, .product-total {
+            color: green;
+            text-align: left;
+        }
+
+        .product-total {
+            color: blue;
+        }
+
+        .product-item-total {
+            color: red;
+            font-weight: bold;
+            text-align: left;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div id="header"></div>
+        <main class="main">
+            <div id="orderList" class="order-list">
+                <h1>Danh sách Đơn Hàng của Bạn</h1> <!-- Di chuyển h1 vào trong order-list -->
+            </div>
+        </main>
+        <div id="footer"></div>
+    </div>
+
+    <script src="js/Header.js"></script>
+    <script>
+        // Hàm tải danh sách đơn hàng của người dùng
+        function loadUserOrders() {
+            fetch('/api/orders/user-orders', { // Gọi API lấy danh sách đơn hàng
+                method: 'GET',
+                credentials: 'include'
+            })
+            .then(response => response.json())
+            .then(orders => {
+                const orderList = document.getElementById('orderList');
+                orderList.innerHTML = '<h1>Danh sách Đơn Hàng của Bạn</h1>'; // Đặt lại tiêu đề
+
+                if (orders.length === 0) {
+                    orderList.innerHTML += '<p>Chưa có đơn hàng nào.</p>';
+                } else {
+                    orders.forEach(order => {
+                        const orderDiv = document.createElement('div');
+                        orderDiv.classList.add('order-item');
+                        
+                        const orderDetails = `
+                            <div class="order-details">
+                                <strong>Mã đơn hàng:</strong> ${order.id}<br>
+                                <strong>Ngày đặt hàng:</strong> ${new Date(order.orderTime).toLocaleString()}<br>
+                                <strong>Trạng thái:</strong> <span class="order-status">${order.orderStatus}</span><br>
+                                <strong>Tổng tiền:</strong> ${order.totalPrice} VNĐ
+                            </div>
+                            <button class="details-button" onclick="viewOrderDetails(${order.id})">Xem chi tiết</button>
+                            <div id="orderDetail_${order.id}" class="order-detail-info"></div>
+                        `;
+
+                        orderDiv.innerHTML = orderDetails;
+                        orderList.appendChild(orderDiv);
+                    });
+                }
+            })
+            .catch(error => console.error('Lỗi:', error));
+        }
+
+        // Hàm để xem chi tiết đơn hàng
+        function viewOrderDetails(orderId) {
+            const detailDiv = document.getElementById(`orderDetail_${orderId}`);
+            
+            if (detailDiv.style.display === 'block') {
+                detailDiv.style.display = 'none'; // Ẩn chi tiết nếu đã mở
+                return;
+            }
+
+            fetch(`/api/orders/details/${orderId}`, {
+                method: 'GET',
+                credentials: 'include'
+            })
+            .then(response => response.json())
+            .then(order => {
+                const detailsHtml = `
+                    <strong>Họ và Tên:</strong> ${order.fullName}<br>
+                    <strong>Số điện thoại:</strong> ${order.phoneNumber}<br>
+                    <strong>Địa chỉ:</strong> ${order.address}, ${order.ward}, ${order.district}, ${order.province}<br>
+                    <strong>Sản phẩm:</strong><br>
+                    <ul>
+                        ${order.items.map(item => {
+                            const totalItemPrice = item.price * item.quantity;
+                            return `
+                                <li class="product-item">
+                                    <img src="${item.comic.url}" class="product-image" />
+                                    <div class="product-info">
+                                        <span class="product-name">${item.comic.name}</span>
+                                        <span class="product-price">Giá: ${item.price} VNĐ</span>
+                                        <span class="product-total">Số lượng: ${item.quantity}</span>
+                                        <span class="product-item-total">Tổng thành tiền: ${totalItemPrice} VNĐ</span>
+                                    </div>
+                                </li>
+                            `;
+                        }).join('')}
+                    </ul>
+                `;
+                
+                detailDiv.innerHTML = detailsHtml;
+                detailDiv.style.display = 'block'; // Hiển thị chi tiết
+            })
+            .catch(error => console.error('Lỗi:', error));
+        }
+
+        window.onload = function() {
+            loadUserOrders();  // Gọi hàm tải danh sách đơn hàng khi trang được tải
+        };
+    </script>
+</body>
+</html>
+
+
+
+
+<!-- <!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Danh sách Đơn Hàng</title>
+    <style>
+        .order-list {
+            margin: 20px;
+            padding: 20px;
+            border: 1px solid #ccc;
+            background-color: #f9f9f9;
+        }
+        .order-item {
+            margin-bottom: 10px;
+            padding: 10px;
+            border-bottom: 1px solid #ddd;
+        }
+        .order-item:last-child {
+            border-bottom: none;
+        }
+        .order-details {
+            margin-bottom: 10px;
+        }
+        .order-status {
+            color: green;
+        }
+        .details-button {
+            margin-top: 10px;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            padding: 8px;
+            cursor: pointer;
+        }
+        .order-detail-info {
+            display: none;
+            margin-top: 15px;
+            border-top: 1px solid #ddd;
+            padding-top: 10px;
+        }
+        .product-item {
+    display: flex;
+    align-items: center; /* Căn giữa theo chiều dọc cả hình ảnh và chữ */
+    margin: 10px 0;
+    border-bottom: 1px solid #ccc;
+    padding-bottom: 10px;
+}
+
+.product-image {
+    width: 100px; /* Kích thước hình ảnh */
+    height: 100px; /* Tạo chiều cao cố định để dễ căn giữa */
+    margin-right: 15px;
+    object-fit: contain; /* Đảm bảo hình ảnh không bị biến dạng */
+}
+
+.product-info {
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center; /* Căn giữa nội dung chữ theo chiều dọc */
+}
+
+.product-name {
+    font-weight: bold;
+    margin-bottom: 5px;
+    text-align: left; /* Giữ chữ về bên trái */
+}
+
+.product-price, .product-total {
+    color: green;
+    text-align: left; /* Giữ chữ về bên trái */
+}
+
+.product-total {
+    color: blue;
+}
+
+
+    </style>
+</head>
+<body>
+    <h1>Danh sách Đơn Hàng của Bạn</h1>
+    <div id="orderList" class="order-list"></div>
+
+    <script>
+        function loadUserOrders() {
+            fetch('/api/orders/user-orders', { // Gọi API lấy danh sách đơn hàng
+                method: 'GET',
+                credentials: 'include'
+            })
+            .then(response => response.json())
+            .then(orders => {
+                const orderList = document.getElementById('orderList');
+                orderList.innerHTML = '';
+
+                if (orders.length === 0) {
+                    orderList.innerHTML = '<p>Chưa có đơn hàng nào.</p>';
+                } else {
+                    orders.forEach(order => {
+                        const orderDiv = document.createElement('div');
+                        orderDiv.classList.add('order-item');
+                        
+                        const orderDetails = `
+                            <div class="order-details">
+                                <strong>Mã đơn hàng:</strong> ${order.id}<br>
+                                <strong>Ngày đặt hàng:</strong> ${new Date(order.orderTime).toLocaleString()}<br>
+                                <strong>Trạng thái:</strong> <span class="order-status">${order.orderStatus}</span><br>
+                                <strong>Tổng tiền:</strong> ${order.totalPrice} VNĐ
+                            </div>
+                            <button class="details-button" onclick="viewOrderDetails(${order.id})">Xem chi tiết</button>
+                            <div id="orderDetail_${order.id}" class="order-detail-info"></div>
+                        `;
+
+                        orderDiv.innerHTML = orderDetails;
+                        orderList.appendChild(orderDiv);
+                    });
+                }
+            })
+            .catch(error => console.error('Lỗi:', error));
+        }
+
+        // Hàm để xem chi tiết đơn hàng
+        function viewOrderDetails(orderId) {
+            const detailDiv = document.getElementById(`orderDetail_${orderId}`);
+            
+            if (detailDiv.style.display === 'block') {
+                detailDiv.style.display = 'none'; // Ẩn chi tiết nếu đã mở
+                return;
+            }
+
+            fetch(`/api/orders/details/${orderId}`, {
+                method: 'GET',
+                credentials: 'include'
+            })
+            .then(response => response.json())
+            .then(order => {
+                const detailsHtml = `
+                    <strong>Họ và Tên:</strong> ${order.fullName}<br>
+                    <strong>Số điện thoại:</strong> ${order.phoneNumber}<br>
+                    <strong>Địa chỉ:</strong> ${order.address}, ${order.ward}, ${order.district}, ${order.province}<br>
+                    <strong>Sản phẩm:</strong><br>
+                    <ul>
+                        ${order.items.map(item => `
+                            <li>
+                                <img src="${item.comic.url}" width="50" height="50" />
+                                ${item.comic.name} - Số lượng: ${item.quantity} - Giá: ${item.price} VNĐ
+                            </li>
+                        `).join('')}
+                    </ul>
+                `;
+                
+                detailDiv.innerHTML = detailsHtml;
+                detailDiv.style.display = 'block'; // Hiển thị chi tiết
+            })
+            .catch(error => console.error('Lỗi:', error));
+        }
+
+        window.onload = function() {
+            loadUserOrders();  // Gọi hàm tải danh sách đơn hàng khi trang được tải
+        };
+    </script>
+</body>
+</html> -->
