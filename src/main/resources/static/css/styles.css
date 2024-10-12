@@ -96,7 +96,7 @@ flex-grow: 1;            /* Chiếm không gian còn lại của trang */
 #btsearch {
     height: 100%;
     padding: 0 20px;
-    background-color: #007BFF;
+    background-color: rgb(204, 12, 12);
     color: white;
     border: none;
     border-radius: 0 25px 25px 0;
@@ -196,7 +196,7 @@ margin-bottom: 10px;
 
 .footer-section button {
 padding: 5px 10px;
-background-color: #007BFF;
+background-color: rgb(204, 12, 12);
 color: white;
 border: none;
 cursor: pointer;

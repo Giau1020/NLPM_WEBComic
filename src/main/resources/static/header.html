@@ -10,7 +10,7 @@
     #usernameDisplay {
         font-size: 18px; /* Kích thước chữ cho username */
         font-weight: bold;
-        color: #007BFF; /* Màu sắc cho username */
+        color: rgb(204, 12, 12); /* Màu sắc cho username */
         
     }
     #usernameDisplay:hover {
@@ -80,9 +80,18 @@
 #genreList li a:hover {
     background-color: #f0f0f0;
 }
-#danhmuc:hover{
+#danhmuc:hover #sp, 
+#danhmuc:hover img {
+    text-shadow: 0 0 15px red; /* Phát sáng chữ màu xanh dương */
+    transition: text-shadow 0.3s ease; /* Hiệu ứng chuyển mềm mại */
     cursor: pointer;
 }
+
+#danhmuc:hover img {
+    filter: drop-shadow(0 0 15px red); /* Phát sáng cho dấu 3 gạch */
+    transition: filter 0.3s ease;
+}
+
 
 
 

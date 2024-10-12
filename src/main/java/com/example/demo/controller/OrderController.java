@@ -2,11 +2,13 @@ package com.example.demo.controller;
 
 import com.example.demo.model.Cart;
 import com.example.demo.model.CartItem;
+import com.example.demo.model.Comic;
 import com.example.demo.model.Order;
 import com.example.demo.model.OrderItem;
 import com.example.demo.model.User;
 import com.example.demo.repository.CartItemRepository;
 import com.example.demo.repository.CartRepository;
+import com.example.demo.repository.ComicRepository;
 import com.example.demo.repository.OrderItemRepository;
 import com.example.demo.repository.OrderRepository;
 import com.example.demo.repository.UserRepository;
@@ -38,6 +40,8 @@ public class OrderController {
     private OrderItemRepository orderItemRepository;
      @Autowired
     private CartItemRepository cartItemRepository;
+    @Autowired
+    private ComicRepository comicRepository;
     @PostMapping("/create")
 public ResponseEntity<?> createOrder(@RequestBody Order order, HttpSession session) {
     Long userId = (Long) session.getAttribute("userId");
@@ -73,6 +77,10 @@ public ResponseEntity<?> createOrder(@RequestBody Order order, HttpSession sessi
 List<CartItem> cartItems = cartItemRepository.findByCartAndSelectedTrue(cart);
     
     for (CartItem cartItem : cartItems) {
+         Comic comic = cartItem.getComic();
+           // Trừ số lượng tồn kho
+        comic.setQuantity(comic.getQuantity() - cartItem.getQuantity());
+        comicRepository.save(comic); // Cập nhật lại thông tin sản phẩm trong cơ sở dữ liệu
         // Tạo một OrderItem mới
         OrderItem orderItem = new OrderItem();
         orderItem.setOrder(savedOrder); // Gán đơn hàng đã lưu vào OrderItem
@@ -86,6 +94,43 @@ List<CartItem> cartItems = cartItemRepository.findByCartAndSelectedTrue(cart);
     return ResponseEntity.ok(savedOrder); // Trả về đối tượng Order đã lưu
 }
 ///////////////////////////////////
+@PutMapping("/cancel/{orderId}")
+public ResponseEntity<?> cancelOrder(@PathVariable Long orderId, HttpSession session) {
+    Long userId = (Long) session.getAttribute("userId");
+
+    // Kiểm tra xem người dùng có đăng nhập hay không
+    if (userId == null) {
+        return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("User not logged in");
+    }
+
+    // Tìm đơn hàng theo orderId và userId
+    Optional<Order> orderOpt = orderRepository.findByIdAndUserId(orderId, userId);
+    if (!orderOpt.isPresent()) {
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Order not found");
+    }
+
+    Order order = orderOpt.get();
+
+    // Kiểm tra xem trạng thái đơn hàng có phải là "Chờ xác nhận" hay không
+    if (!order.getOrderStatus().equals("Chờ xác nhận")) {
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Order cannot be cancelled");
+    }
+
+    // Cập nhật trạng thái đơn hàng thành "Đã hủy"
+    order.setOrderStatus("Đã hủy");
+    orderRepository.save(order);
+
+    // Phục hồi số lượng sản phẩm trong kho
+    List<OrderItem> orderItems = orderItemRepository.findByOrder(order);
+    for (OrderItem orderItem : orderItems) {
+        Comic comic = orderItem.getComic();
+        comic.setQuantity(comic.getQuantity() + orderItem.getQuantity());
+        comicRepository.save(comic); // Cập nhật lại số lượng sản phẩm
+    }
+
+    return ResponseEntity.ok("Order cancelled and stock updated");
+}
+/////////////////////////////////////
 @GetMapping("/user-orders")
 public ResponseEntity<List<Order>> getUserOrders(HttpSession session) {
     Long userId = (Long) session.getAttribute("userId");
