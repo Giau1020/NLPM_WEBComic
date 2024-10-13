@@ -120,7 +120,7 @@
         overflow: hidden; /* Thêm dòng này để tránh tràn nội dung */
       }
       .p3s1 {
-        background-color:rgb(220, 41, 41);
+        background-color:rgb(204, 12, 12);
         height: 50px;
         width: 1200px;
         display: flex;
@@ -346,6 +346,52 @@ a:hover{
 #nextImageButton {
     right: 15px; /* Điều chỉnh vị trí của nút Next */
 }
+/**/
+.review-section {
+  margin-top: 20px;
+  background-color: white;
+  border: 1px solid #ccc;
+  padding: 0px;
+  border-radius: 10px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  width: 1200px;
+}
+
+.review-item {
+  margin-bottom: 10px;
+  border-bottom: 1px solid #ddd;
+  padding-bottom: 10px;
+ 
+  padding: 20px;
+}
+
+.review-item:last-child {
+  border-bottom: none;
+}
+
+.review-rating {
+  color: gold;
+}
+
+.review-text {
+  font-size: 16px;
+}
+
+.review-date {
+  font-size: 12px;
+  color: gray;
+}
+.review-section-title {
+  background-color: rgb(204, 12, 12); /* Màu nền giống sản phẩm tương tự */
+  color: white; /* Màu chữ trắng */
+  height: 50px; /* Chiều cao giống phần sản phẩm tương tự */
+  display: flex;
+  align-items: center;
+  padding-left: 10px; /* Căn lề trái cho tiêu đề */
+  font-size: 25px; /* Kích thước chữ giống tiêu đề */
+  border-top-left-radius: 10px; /* Bo góc trên trái */
+  border-top-right-radius: 10px; /* Bo góc trên phải */
+}
 
     </style>
 </head>
@@ -490,7 +536,14 @@ a:hover{
               </div>
             </div>
           </div>
-          
+          <!-- Phần hiển thị đánh giá sản phẩm -->
+<div class="review-section">
+  <div class="review-section-title">Đánh giá sản phẩm</div>
+  <div id="reviews-container">
+    <!-- Các đánh giá sẽ được thêm động ở đây -->
+  </div>
+</div>
+
                 <!-- Modal -->
     <div id="myModal" class="modal">
       <div class="modal-content">
@@ -803,6 +856,49 @@ function buyNow() {
                 showImage(currentImageIndex); // Hiển thị ảnh tương ứng
             }
         }
+
+
+
+
+        function loadReviews() {
+          fetch(`http://localhost:8080/api/reviews/comic/${productId}`)
+    .then(response => response.json())
+    .then(data => {
+        const reviewsContainer = document.getElementById('reviews-container');
+        reviewsContainer.innerHTML = '';  // Xóa nội dung cũ
+
+        if (data.message) {
+            // Hiển thị thông báo nếu không có đánh giá
+            reviewsContainer.innerHTML = `<p>${data.message}</p>`;
+            reviewsContainer.style.height='100px';
+            reviewsContainer.style.color='grey';
+            reviewsContainer.style.display = 'flex';
+    reviewsContainer.style.justifyContent = 'center';  // Căn giữa theo chiều ngang
+    reviewsContainer.style.alignItems = 'center';  
+        } else {
+            // Hiển thị đánh giá nếu có
+            data.forEach(review => {
+                const reviewDiv = document.createElement('div');
+                reviewDiv.classList.add('review-item');
+                reviewDiv.innerHTML = `
+                    <div><strong>Người dùng:</strong> ${review.userName}</div>
+                    <div class="review-rating">${'★'.repeat(review.rating)}${'☆'.repeat(5 - review.rating)}</div>
+                    <div class="review-text">${review.reviewText}</div>
+                    <div class="review-date"><small>${new Date(review.createdAt).toLocaleString()}</small></div>
+                `;
+                reviewsContainer.appendChild(reviewDiv);
+            });
+        }
+    })
+    .catch(error => {
+        console.error("Lỗi khi lấy đánh giá:", error);
+    });
+
+}
+
+
+// Gọi hàm loadReviews khi trang được tải
+loadReviews();
         </script>
         
     </div>
