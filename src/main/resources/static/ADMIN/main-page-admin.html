@@ -114,25 +114,27 @@
                         <input type="text" name="name_comic" id="inp-name-comic" required>
                     
                         <p>Tác giả:</p>
-                        <input type="text" name="name_author" id="name-author" required>
-                        
+                        <!-- <input type="text" name="name_author" id="name-author" required> -->
+                        <select name="name_author" id="name-author" required multiple="multiple">
+                           
+                        </select>
                         <p>Giá</p>
                         <input type="number" name="price-comic" id="price-comic" min="0" required>
                         
-                        <p>Số lượng bán:</p>
-                        <input type="number" name="slb" id="inp-slb">
+                        <p>Số lượng trong kho:</p>
+                        <input type="number" name="slb" id="inp-slb"  required  min='0'>
 
                         <p>Nhà xuất bản:</p>
                         <input type="text" name="NXB" id="NXB" required>
                         
                         <p>Kích thước (cm):</p>
-                        <input type="text" name="Size" id="inp-size">
+                        <input type="text" name="Size" id="inp-size" required  min='0'>
                         
                         <p>Số trang:</p>
-                        <input type="number" name="Pages" id="inp-pages">
+                        <input type="number" name="Pages" id="inp-pages"  required  min='0'>
 
-                        <p>Cân nặng (kg):</p>
-                        <input type="number" name="Weight" id="inp-weight" step="0.01">
+                        <p>Cân nặng (g):</p>
+                        <input type="number" name="Weight" id="inp-weight" step="0.01"  required  min='0'>
 
 
 
@@ -155,6 +157,7 @@
                     <div id="preview1"></div>
                     <p>Thêm file hình ảnh:</p>
                     <input type="file" name="images[]" id="files-img" accept="image/*" multiple required>
+                    
     
                     <div id="preview"></div>
                     <div id="response"></div>

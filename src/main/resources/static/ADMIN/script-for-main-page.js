@@ -3,7 +3,9 @@
 function popUpAddNewComic(){
     let e = document.querySelector('#form-add-new-comic');
     e.style.display = "block";
+    document.getElementById("uploadForm").reset();
 
+    // Hiển thị danh sách thể loại (trong form thêm)
     let select_genre = document.querySelector('#inp-genre');
     let api_getListGenre = "http://localhost:8080/api/v1/sng/admin/genres";
     getData(api_getListGenre)
@@ -13,31 +15,77 @@ function popUpAddNewComic(){
             option.value = genre.id;
             option.textContent = genre.name;
             select_genre.appendChild(option);// Khởi tạo Select2
-       select_genre.select2({
-        placeholder: "-- Chọn hoặc nhập thể loại --",
-        allowClear: true,
-        tags: true, // Cho phép nhập liệu tùy ý
-        tokenSeparators: [',', ' '],
-        // Định dạng để người dùng có thể thêm tùy chọn mới
-        createTag: function (params) {
-            var term = $.trim(params.term);
-            if (term === '') {
-                return null;
-            }
-            return {
-                id: term,
-                text: term,
-                newOption: true
-            };
-        }
-    });
+
+        });
+        $('#inp-genre').select2({
+            placeholder: "Chọn thể loại",
+            allowClear: true, // Cho phép xóa thể loại đã chọn
+            // tags: true // Cho phép thêm tag mới nếu cần
         });
        
 
-    })
+    }).catch(error => {
+        console.error("Lỗi khi lấy danh sách thể loại:", error);
+    });
 
+
+    // Hiển thị danh sách tác giả (trong form thêm)
+    let select_author = document.querySelector('#name-author');
+    let api_getListAuthor = 'http://localhost:8080/api/v1/sng/admin/authors';
+    getData(api_getListAuthor)
+    .then(listAuthors => {
+        listAuthors.forEach(author => {
+            console.log("Dang xu ly du lieu cua tac gia");
+            const option_author = document.createElement('option');
+            option_author.value = author.id;
+            option_author.textContent = author.name;   
+            select_author.appendChild(option_author);
+        });
+        $('#name-author').select2({
+                placeholder: "Nhập vào tác giả",
+                allowClear: true,
+                tags: true,
+                
+        });  
+    });
+
+
+    $('#name-author').on('select2:select', function(e) {
+        var newTag = e.params.data.id; // Lấy giá trị tag mới
+        
+        // Kiểm tra nếu tag này là tag mới (không phải từ danh sách có sẵn)
+            if (e.params.data.id === e.params.data.text) {
+                console.log("Tag mới được thêm vào danh sách chờ: " + newTag);
+                
+                // Lưu tag mới vào mảng `newTags` để xử lý sau khi nhấn submit
+                newTags.push(newTag);
+            
+            } else {
+                console.log("Tag đã có: " + e.params.data.text + " với ID: " + e.params.data.id);
+            }
+    
+    });
+    console.log(newTags.length);
+    // Hiển thị mã truyện 
+    let comicId = document.querySelector('.inp-id-comic');
+
+    document.getElementById('files-img').addEventListener('change', function(event) {
+        const files = event.target.files;
+        const fileCountMessage = document.getElementById('fileCountMessage');
+        
+        if (files.length !== 5) {
+          fileCountMessage.textContent = "You can only upload up to 5 images.";
+          alert("You can only upload up to 5 images");
+          document.getElementById('preview').innerHTML = '';
+          event.target.value = ''; // Reset the input so no files are uploaded
+        } else {
+          fileCountMessage.textContent = ''; // Clear the error message if file count is valid
+        }
+      });
 
 }
+var newTags = [];
+
 function closePopUpAddNewComic(){
     let e = document.querySelector('#form-add-new-comic');
     e.style.display = "none";
@@ -60,6 +108,8 @@ const responseDiv = document.getElementById('response');
 filesInput.addEventListener('change', () => {
     preview.innerHTML = '';
     const files = filesInput.files;
+
+    if(files.length === 5){
     for (let i = 0; i < files.length; i++) {
         const file = files[i];
         if (file.type.startsWith('image/')) {
@@ -71,7 +121,7 @@ filesInput.addEventListener('change', () => {
             };
             reader.readAsDataURL(file);
         }
-    }
+    }}
 });
 filesInputCover.addEventListener('change', () => {
     preview1.innerHTML = '';

@@ -59,6 +59,7 @@ public class ImgComicServiceImpl implements ImgComicService {
         // Kiểm tra số lượng tệp tải lên
         if (files.size() > 5) {
             throw new IllegalArgumentException("Bạn chỉ có thể tải lên tối đa 5 tệp.");
+
         }
 
         for (MultipartFile file : files) {
@@ -71,6 +72,9 @@ public class ImgComicServiceImpl implements ImgComicService {
                 System.err.println("Lỗi khi tải lên tệp: " + e.getMessage());
                 // Bạn có thể ném lại ngoại lệ hoặc xử lý theo cách khác tùy thuộc vào yêu cầu
             }
+        }
+        if (uploadedUrls.isEmpty()) {
+            throw new RuntimeException("Không thể tải lên bất kỳ hình ảnh nào.");
         }
 
         return uploadedUrls;
