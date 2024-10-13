@@ -66,20 +66,19 @@ function popUpAddNewComic(){
     
     });
     console.log(newTags.length);
-    // Hiển thị mã truyện 
-    let comicId = document.querySelector('.inp-id-comic');
+    
 
     document.getElementById('files-img').addEventListener('change', function(event) {
         const files = event.target.files;
-        const fileCountMessage = document.getElementById('fileCountMessage');
+       
         
         if (files.length !== 5) {
-          fileCountMessage.textContent = "You can only upload up to 5 images.";
+          
           alert("You can only upload up to 5 images");
           document.getElementById('preview').innerHTML = '';
           event.target.value = ''; // Reset the input so no files are uploaded
         } else {
-          fileCountMessage.textContent = ''; // Clear the error message if file count is valid
+            document.getElementById('files-img').value = '0';// Clear the error message if file count is valid
         }
       });
 

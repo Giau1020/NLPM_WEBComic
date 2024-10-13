@@ -337,18 +337,7 @@ async function addComic(){
 }
 
 
-document.getElementById('files-img').addEventListener('change', function(event) {
-    const files = event.target.files;
-    const fileCountMessage = document.getElementById('fileCountMessage');
-    
-    if (files.length > 5) {
-      fileCountMessage.textContent = "You can only upload up to 5 images.";
-      alert("You can only upload up to 5 images");
-      event.target.value = ''; // Reset the input so no files are uploaded
-    } else {
-      fileCountMessage.textContent = ''; // Clear the error message if file count is valid
-    }
-  });
+
 
 
 // Hàm gửi 5 url lên server và lưu 5 url vào csdl
