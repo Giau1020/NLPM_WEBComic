@@ -63,22 +63,62 @@ function checkLoginStatus() {
     }
 }
 
+// // Hàm gán sự kiện cho nút tìm kiếm
+// function setupSearchEvent() {
+//     const searchButton = document.getElementById("btsearch");
+//     if (searchButton) {
+//         searchButton.addEventListener("click", function() {
+//             var query = document.getElementById("khungsearch").value;
+//             if (query) {
+//                 window.location.href = "Search.html?query=" + encodeURIComponent(query);
+//             } else {
+//                 alert("Vui lòng nhập từ khóa tìm kiếm!");
+//             }
+//         });
+//     } else {
+//         console.error("Phần tử #btsearch không tồn tại.");
+//     }
+// }
 // Hàm gán sự kiện cho nút tìm kiếm
 function setupSearchEvent() {
     const searchButton = document.getElementById("btsearch");
-    if (searchButton) {
+    const searchInput = document.getElementById("khungsearch");
+
+    // Gán giá trị từ URL vào khung tìm kiếm khi trang tải
+    const urlParams = new URLSearchParams(window.location.search);
+    const query = urlParams.get('query');
+    if (query) {
+        searchInput.value = query; // Gán lại giá trị vào khung tìm kiếm
+    }
+
+    if (searchButton && searchInput) {
+        // Sự kiện cho nút click
         searchButton.addEventListener("click", function() {
-            var query = document.getElementById("khungsearch").value;
-            if (query) {
-                window.location.href = "Search.html?query=" + encodeURIComponent(query);
-            } else {
-                alert("Vui lòng nhập từ khóa tìm kiếm!");
+            performSearch();
+        });
+
+        // Sự kiện khi nhấn phím Enter
+        searchInput.addEventListener("keydown", function(event) {
+            if (event.key === "Enter") {
+                performSearch();
             }
         });
+
     } else {
-        console.error("Phần tử #btsearch không tồn tại.");
+        console.error("Phần tử #btsearch hoặc #khungsearch không tồn tại.");
     }
 }
+
+// Hàm thực hiện tìm kiếm
+function performSearch() {
+    var query = document.getElementById("khungsearch").value.trim(); // Loại bỏ khoảng trắng
+    if (query) {
+        window.location.href = "Search.html?query=" + encodeURIComponent(query);
+    } else {
+        alert("Vui lòng nhập từ khóa tìm kiếm!");
+    }
+}
+
 document.addEventListener("DOMContentLoaded", function() {
     // Tải header
     fetch('header.html')
