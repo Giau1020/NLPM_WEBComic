@@ -74,6 +74,7 @@ public void logout(HttpSession session, HttpServletResponse response) throws IOE
         User newUser = new User();
         newUser.setUsername(registrationRequest.getUsername());
         newUser.setPassword(registrationRequest.getPassword()); // Mã hóa mật khẩu nếu cần
+        newUser.setRole("user");
         userRepository.save(newUser);
 
         // Tạo giỏ hàng rỗng cho người dùng mới

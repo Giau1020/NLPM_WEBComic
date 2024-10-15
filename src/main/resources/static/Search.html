@@ -53,9 +53,6 @@
         .price-comics {
             color: red;
         }
-        a {
-            text-decoration: none;
-        }
         .i4-comic:hover {
             border: 2px solid rgb(235, 229, 229); /* Tạo khung có độ dày 2px */
         }
@@ -98,6 +95,14 @@
             font-size: 25px;
            margin-left: 30px;
         }
+        a{
+          color: black;
+          cursor: pointer;
+          text-decoration: none;
+        }
+         a:hover{
+          color: red;
+        }
     </style>
 </head>
 <body>
@@ -129,6 +134,9 @@
 
     <script src="js/Header.js"></script>
     <script>
+        function formatPrice(price) {
+        return price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
+      }
         document.addEventListener("DOMContentLoaded", function () {
             const urlParams = new URLSearchParams(window.location.search);
             const query = urlParams.get('query');
@@ -189,11 +197,12 @@
                 comicsToDisplay.forEach((comic, index) => {
                     const comicElement = document.createElement('div');
                     comicElement.classList.add('i4-comic');
+                    const stockStatus = comic.quantity === 0 ? '<span style="color:blue; ">(HẾT HÀNG)</span>' : ''
                     comicElement.innerHTML = `
                         <a href="ChiTietSP.html?id=${comic.id}" id="comic-link-${index}">
                             <img src="${comic.url}" alt="Comic image" id="comic-image-${index}" />
                             <div class="name-comics" id="comic-name-${index}">${comic.name}</div>
-                            <div class="price-comics" id="comic-price-${index}">${comic.price} VND</div>
+                            <div class="price-comics" id="comic-price-${index}">${formatPrice(comic.price)} VND ${stockStatus}</div> 
                         </a>
                     `;
                     resultsContainer.appendChild(comicElement);

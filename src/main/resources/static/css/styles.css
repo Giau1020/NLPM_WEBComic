@@ -81,7 +81,7 @@ flex-grow: 1;            /* Chiếm không gian còn lại của trang */
     align-items: center;
     height: 70%;
     margin-right: 5px;
-    margin-left: 70px;
+    margin-left: 150px;
 }
 #khungsearch {
     height: 100%;

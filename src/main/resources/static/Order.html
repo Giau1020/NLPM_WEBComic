@@ -62,6 +62,7 @@
             border: none;
             padding: 8px;
             cursor: pointer;
+            
         }
 
         .order-detail-info {
@@ -122,7 +123,7 @@
         }
 
         .status-button {
-            padding: 10px 20px;
+            padding: 10px 40px;
             border: 2px solid rgb(220, 41, 41);
             background-color: white;
             color:rgb(220, 41, 41);
@@ -268,6 +269,10 @@
         let currentComicId;  // Lưu ID của truyện đang đánh giá
         let selectedRating = 0;  // Lưu số sao được chọn
 
+        // Hàm định dạng giá với dấu chấm thay vì dấu phẩy
+        function formatPrice(price) {
+                 return price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
+            }
         // Hàm để kích hoạt nút đang được chọn
         function setActiveButton(status) {
             const buttons = document.querySelectorAll('.status-button');
@@ -313,7 +318,7 @@
                             <strong>Mã đơn hàng:</strong> ${order.id}<br>
                             <strong>Ngày đặt hàng:</strong> ${new Date(order.orderTime).toLocaleString()}<br>
                             <strong>Trạng thái:</strong> <span class="order-status">${order.orderStatus}</span><br>
-                            <strong>Tổng tiền:</strong> ${order.totalPrice} VNĐ
+                            <strong>Tổng tiền:</strong> ${formatPrice(order.totalPrice)}VNĐ
                         </div>
                         <button class="details-button" onclick="viewOrderDetails(${order.id})">Xem chi tiết</button>
                         <div id="orderDetail_${order.id}" class="order-detail-info"></div>
@@ -362,9 +367,9 @@
                                     <img src="${item.comic.url}" class="product-image" />
                                     <div class="product-info">
                                         <span class="product-name">${item.comic.name}</span>
-                                        <span class="product-price">Giá: ${item.price} VNĐ</span>
+                                        <span class="product-price">Giá: ${formatPrice(item.price)} VNĐ</span>
                                         <span class="product-total">Số lượng: ${item.quantity}</span>
-                                        <span class="product-item-total">Tổng thành tiền: ${totalItemPrice} VNĐ</span>
+                                        <span class="product-item-total">Tổng thành tiền: ${formatPrice(totalItemPrice)} VNĐ</span>
                                         ${
                                             order.orderStatus === 'Đã hoàn thành'
                                             ? `<button class="review-button" onclick="openModal(${item.comic.id})">Đánh giá</button>`
