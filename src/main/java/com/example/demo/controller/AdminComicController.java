@@ -1,9 +1,15 @@
 package com.example.demo.controller;
 
+import com.example.demo.DTO.ComicDTO;
 import com.example.demo.ServiceImpl.ComicServiceImpl;
 import com.example.demo.model.Author;
 import com.example.demo.model.Comic;
+import com.example.demo.model.ComicAuthor;
 import com.example.demo.model.Genre;
+import com.example.demo.repository.AuthorRepository;
+import com.example.demo.repository.ComicAuthorRepository;
+import com.example.demo.request.ComicAuthorId;
+import com.example.demo.request.ComicAuthorRequest;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -20,22 +26,27 @@ import java.util.Optional;
 public class AdminComicController {
     private final ComicServiceImpl comicService;
 
-    public AdminComicController(ComicServiceImpl comicService) {
+    public AdminComicController(ComicServiceImpl comicService, ComicAuthorRepository comicAuthorRepository, AuthorRepository authorRepository) {
         this.comicService = comicService;
+        this.comicAuthorRepository = comicAuthorRepository;
+        this.authorRepository = authorRepository;
     }
-
+private final ComicAuthorRepository comicAuthorRepository;
+    private final AuthorRepository authorRepository;
     //    Hàm thêm vào một truyện mới
-    @PostMapping("")
-    public ResponseEntity<?> createComic(
-            @RequestBody Comic comic
-    ){
+
+    @PostMapping("/addNewComic")
+    public ResponseEntity<?> addComic(@RequestBody ComicDTO comicDTO) {
         try {
-            Comic comic1 = comicService.createComic(comic);
-            return ResponseEntity.ok().body(comic1);
-        }catch (Exception e){
+            System.out.println("Dữ liệu nhận được: " + comicDTO);
+            System.out.println("Dữ liệu nhận được: " + comicDTO.getSummarize());
+            Comic savedComic = comicService.addComic(comicDTO);
+            return ResponseEntity.ok(savedComic);
+        } catch (Exception e) {
             return ResponseEntity.badRequest().body(e.getMessage());
         }
     }
+
 
     //    Hàm hiển thị toàn bộ tuyện
     @GetMapping("/comics")

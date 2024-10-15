@@ -168,22 +168,23 @@ async function getComicById(id) {
     }
 }
 
+
+
+
 // Hàm thêm 1 truyện mới vào
 async function addComic(){
-    const addAPI  = "http://localhost:8080/api/v1/sng/admin";
-    let id = document.querySelector('#inp-id-comic').value;
+  //  await sendAuthorDatatoAuthor();
+    const addAPI  = "http://localhost:8080/api/v1/sng/admin/addNewComic";
     let name = document.querySelector('#inp-name-comic').value;
-    let author = document.querySelector('#name-author').value;
-    let price = document.querySelector('#price-comic').value;
-    let slb = document.querySelector('#inp-slb').value;
-    let nxb = document.querySelector('#NXB').value;
-    let size = document.querySelector('#inp-size').value;
-    let pages = document.querySelector('#inp-pages').value;
-    let genre = document.querySelector('#inp-genre').value;
-    let content = document.querySelector('#content-comic').value;
-    let summary = document.querySelector('#summary_content-comic').value;
-    // let url = document.querySelector('#files-img').value;
-    let weight = document.querySelector('#inp-weight').value;
+    let price = parseFloat(document.querySelector('#price-comic').value); 
+    let slb = parseInt(document.querySelector('#inp-slb').value); 
+    //let urls = document.querySelector('#cover-url').value; 
+    let Weight = document.querySelector('#inp-weight').value; 
+    let Description = document.querySelector('#content-comic').value; 
+    let Pages = document.querySelector('#inp-pages').value; 
+    let Size = document.querySelector('#inp-size').value; 
+    let Publisher = document.querySelector('#NXB').value; 
+    let Summarize = document.querySelector('#summary_content-comic').value; 
     console.log("chỗ này thêm truyện èn")
 
     let fileInput  = document.querySelector('#files-cover-img');
@@ -203,7 +204,15 @@ async function addComic(){
         if (uploadResponse.ok) {
             url = await uploadResponse.text(); // Nhận URL của file
             // Gửi dữ liệu comic sau khi có URL
-            await sendComicData();
+           // await sendAuthorDatatoAuthor();
+            let idofauthor =await getIdAuthors();
+           let comiccId = await sendComicData(idofauthor);
+        if (comiccId) {
+            await addImgComic(comiccId); // Chỉ gọi hàm thêm ảnh nếu comicId hợp lệ
+        } else {
+            console.error("Không thể lấy ID của comic để thêm hình ảnh");
+        }
+           
         } else {
             alert("Không thể tải lên hình ảnh");
         }
@@ -211,22 +220,94 @@ async function addComic(){
         alert("Vui lòng chọn hình ảnh");
     }
 
-    async function sendComicData() {
+ 
+    
+    async function sendAuthorDatatoAuthor() {
+        if (newTags.length > 0) {
+            try {
+                const response = await fetch('http://localhost:8080/api/v1/sng/admin/authors/addnew', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({ names: newTags }) // Gửi danh sách tác giả mới
+                });
+    
+                if (response.ok) {
+                    const data = await response.json(); // Nhận phản hồi từ server
+                    console.log("Phản hồi từ server:", data);
+    
+                    // Kiểm tra xem có nhận được phản hồi từ server và có ID hợp lệ
+                    const validIds = data.map(author => {
+                        const id = parseInt(author.id); // Chuyển ID sang số
+                        if (isNaN(id)) {
+                            console.error("ID không hợp lệ:", author);
+                            return null; // Bỏ qua nếu ID không hợp lệ
+                        }
+                        return id; // Trả về ID hợp lệ
+                    }).filter(id => id !== null); // Lọc ra các ID hợp lệ
+    
+                    console.log("ID của các tác giả mới:", validIds);
+    
+                    newTags = []; // Xóa danh sách các tag mới sau khi thêm thành công
+                    return validIds; // Trả về các ID hợp lệ của tác giả mới
+                } else {
+                    console.error("Lỗi từ server khi thêm tác giả:", response.statusText);
+                    return [];
+                }
+            } catch (error) {
+                console.error("Lỗi khi thêm tác giả:", error);
+                return [];
+            }
+        } else {
+            console.log("Không có tác giả mới cần thêm.");
+            return [];
+        }
+    }
+    
+    
+    async function getIdAuthors() {
+        let selectedAuthors = $('#name-author').select2('data');
+        let authorIds = selectedAuthors.map(author => parseInt(author.id));
+
+        const validAuthorIds = await sendAuthorDatatoAuthor();
+        
+
+        // Gộp 2 mảng authorIds và validAuthorIds
+        let mergedAuthorIds = authorIds.concat(validAuthorIds).filter(id => !Number.isNaN(id));
+        console.log("id tác giả mới đc return lại là: ", mergedAuthorIds);
+      return mergedAuthorIds; // Trả về mảng ID hợp lệ
+    }
+    async function sendComicData(authorIds) {
+
+
+    if (!name || name.trim() === "") {
+        alert("Tên truyện không được để trống!");
+        return;
+    }
+        let selectedGenres = $('#inp-genre').select2('data'); 
+        let genreIds = selectedGenres.map(genre => parseInt(genre.id));
         const addData = {
             "name": name,
             "price": price,
-            "url": url, // Sử dụng URL đã nhận
-            "slb": slb,
-            "nxb": nxb,
-            "size": size,
-            "description": content,
-            "pages": pages,
-            "author": author,
-            "weight": weight,
-            "genre": genre,
-            "summerize": summary
+            "url": url, // URL của ảnh sau khi upload
+            "sold": 0, 
+            "quantity": slb,
+            "weight": Weight, 
+            "description": Description, 
+            "pages": Pages, 
+            "size": Size, 
+            "publisher": Publisher, //
+            "summarize": Summarize,
+            "authorIds": authorIds,
+            "genreIds": genreIds 
         };
-
+        console.log("Selected authors:", authorIds);
+        console.log("Selected genres:", genreIds);
+        
+        
+        
+        console.log("Dữ liệu gửi lên server:", addData);
         const updateOptions = {
             method: 'POST',
             headers: {
@@ -236,23 +317,35 @@ async function addComic(){
         };
 
         let add = await fetch(addAPI, updateOptions);
-        addImgComic();
-        showAllComics();
         if (add.ok) {
             alert(`Thêm truyện thành công!`);
-            showAllComics()
+            const comicc = await add.json(); // Lấy phản hồi từ server, chứa thông tin của comic vừa tạo
+         const comiccId = comicc.id; 
+            showAllComics();
+            let e = document.querySelector('#form-add-new-comic');
+            e.style.display = "none";
+            console.log("nó rì tun nè");
+            return comiccId;
+
         } else {
-            alert("Không thể thêm truyện");
+            let errorText = await add.text(); // Lấy chi tiết lỗi từ server
+            console.error("Không thể thêm truyện: " + errorText);
+            let e = document.querySelector('#form-add-new-comic');
+            e.style.display = "none";
         }
     }
 }
 
+
+
+
+
 // Hàm gửi 5 url lên server và lưu 5 url vào csdl
-async function addImgComic() {
-    let addAPI = "http://localhost:8080/api/v1/sng/admin/imgcomic/add";
+async function addImgComic(comiccId) {
+    let addImgAPI = "http://localhost:8080/api/v1/sng/admin/imgcomic/add";
     let fileInput  = document.querySelector('#files-img');
     let urls = [];
-    if (fileInput.files.length > 0) {
+    if (fileInput.files.length===5 ) {
         
 
         // Tạo FormData để gửi file
@@ -271,24 +364,27 @@ async function addImgComic() {
         if (uploadResponse.ok) {
             urls = await uploadResponse.json(); // Nhận URL của file
             // Gửi dữ liệu comic sau khi có URL
-            await sendImgComicData();
+            
+            await sendImgComicData(comiccId);
         } else {
             alert("Không thể tải lên hình ảnh");
         }
     } else {
-        alert("Vui lòng chọn hình ảnh");
+        alert("Vui lòng chọn 5 hình ảnh");
     }
     
-    async function sendImgComicData() {
+    async function sendImgComicData(comiccId) {
+        
         const addData = {
-            "comic_id": '1',
+            
+            "comicId": comiccId,
             "url1": `${urls[0]}`,
             "url2": `${urls[1]}`,
             "url3": `${urls[2]}`,
             "url4": `${urls[3]}`,
             "url5": `${urls[4]}`
         };
-
+        console.log("id cua comic", comiccId);
         const updateOptions = {
             method: 'POST',
             headers: {
@@ -297,14 +393,14 @@ async function addImgComic() {
             body: JSON.stringify(addData)
         };
 
-        let add = await fetch(addAPI, updateOptions);
+        let add = await fetch(addImgAPI, updateOptions);
         
         if (add.ok) {
-            alert(`Thêm truyện thành công!!!!`);
+            alert(`Tải ảnh lên thành công`);
             
         } else {
-            alert("Không thể thêm truyện");
+            alert("Không thể tải ảnh lên");
         }
-    }
     
+}
 }

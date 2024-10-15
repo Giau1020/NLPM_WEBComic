@@ -175,6 +175,6 @@ public class Comic {
     public void setGenres(List<Genre> genres) {
         this.genres = genres;
     }
-    
+
 }
 

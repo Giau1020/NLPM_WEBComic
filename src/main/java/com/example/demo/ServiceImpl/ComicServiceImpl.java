@@ -1,12 +1,18 @@
 package com.example.demo.ServiceImpl;
 
 import com.example.demo.CORS.ResourceNotFoundException;
+import com.example.demo.DTO.ComicDTO;
 import com.example.demo.Service.ComicService;
 import com.example.demo.model.Author;
 import com.example.demo.model.Comic;
+import com.example.demo.model.ComicAuthor;
 import com.example.demo.model.Genre;
+import com.example.demo.repository.AuthorRepository;
+import com.example.demo.repository.ComicAuthorRepository;
 import com.example.demo.repository.ComicRepository;
 
+import com.example.demo.repository.GenreRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -25,6 +31,7 @@ public class ComicServiceImpl implements ComicService {
 
     public ComicServiceImpl(ComicRepository comicRepository) {
         this.comicRepository = comicRepository;
+
     }
 
     @Override
@@ -41,6 +48,50 @@ public class ComicServiceImpl implements ComicService {
     public Comic createComic(Comic comic) {
         return null;
     }
+//    @Autowired
+//    private ComicRepository comicRepository;
+
+    @Autowired
+    private AuthorRepository authorRepository;
+
+    @Autowired
+    private GenreRepository genreRepository;
+
+    public Comic addComic(ComicDTO comicDTO) throws Exception {
+        Comic comic = new Comic();
+        comic.setName(comicDTO.getName());
+        comic.setPrice(comicDTO.getPrice());
+        comic.setUrl(comicDTO.getUrl());
+        comic.setSold(comicDTO.getSold());
+        comic.setQuantity(comicDTO.getQuantity());
+        comic.setWeight(comicDTO.getWeight());
+        comic.setDescription(comicDTO.getDescription());
+        comic.setPages(comicDTO.getPages());
+        comic.setSize(comicDTO.getSize());
+        comic.setPublisher(comicDTO.getPublisher());
+        comic.setSummarize(comicDTO.getSummarize());
+
+        // Liên kết các tác giả
+        if (comicDTO.getAuthorIds() != null && !comicDTO.getAuthorIds().isEmpty()) {
+            List<Author> authors = authorRepository.findAllById(comicDTO.getAuthorIds());
+            if (authors.size() != comicDTO.getAuthorIds().size()) {
+                throw new Exception("Một hoặc nhiều Author IDs không hợp lệ.");
+            }
+            comic.setAuthors(authors);
+        }
+
+        // Liên kết các thể loại
+        if (comicDTO.getGenreIds() != null && !comicDTO.getGenreIds().isEmpty()) {
+            List<Genre> genres = genreRepository.findAllById(comicDTO.getGenreIds());
+            if (genres.size() != comicDTO.getGenreIds().size()) {
+                throw new Exception("Một hoặc nhiều Genre IDs không hợp lệ.");
+            }
+            comic.setGenres(genres);
+        }
+
+        return comicRepository.save(comic);
+    }
+
 
     @Override
     public List<Genre> getComicsByComicId(Long comicId) {

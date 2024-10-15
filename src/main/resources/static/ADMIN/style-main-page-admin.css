@@ -218,18 +218,64 @@ tr{
     border: 2px solid white
 }
 /* CSS phần ADD NEW COMIC */
+#inp-genre {
+    width: 100%; /* Đảm bảo hộp chọn giãn theo chiều rộng */
+    border: 1px solid #ccc; /* Đường viền nhẹ */
+    border-radius: 4px; /* Bo tròn góc */
+    padding: 5px; /* Khoảng cách bên trong */
+    font-family: Arial, sans-serif; /* Phông chữ mượt mà */
+    text-align: center;
+    align-items: center;
+   
+}
+
+#inp-genre option {
+    padding: 5px; /* Tăng khoảng cách bên trong */
+    background-color: #f1f1f1; /* Màu nền nhẹ */
+    border: 1px solid #ddd; /* Đường viền cho từng mục chọn */
+    border-radius: 3px; /* Bo tròn */
+    margin: 2px; /* Khoảng cách giữa các tag */
+}
+.select2-container--default .select2-selection--multiple {
+    border: 2px solid #ddd;
+    border-radius: 6px;
+    padding: 6px;
+    background-color: #fe6868;
+    transition: border-color 0.3s ease-in-out;
+}
+
+
+.select2-container--default .select2-selection--multiple .select2-selection__choice {
+    background-color: #4CAF50; /* Màu xanh nổi bật */
+    border: none; /* Loại bỏ viền mặc định */
+    color: black; /* Chữ màu trắng */
+    padding: 6px 12px; /* Tăng khoảng cách bên trong */
+    border-radius: 20px; /* Bo tròn góc cho các tag */
+    font-size: 20px; /* Kích thước chữ vừa phải */
+    margin: 4px 4px 0 0; /* Khoảng cách giữa các tag */
+    box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.15); /* Đổ bóng mềm */
+    cursor: pointer; /* Đổi biểu tượng khi hover */
+}
+.select2-container--default .select2-selection--multiple:focus {
+    border-color: #4CAF50; /* Đổi màu viền khi được focus */
+    box-shadow: 0px 0px 6px rgba(76, 175, 80, 0.5); /* Hiệu ứng ánh sáng khi chọn */
+}
+.select2-container--default .select2-search--inline .select2-search__field {
+    font-size: 20px;
+    height: 30px;
+}
+
 #form-add-new-comic, #form-edit-comic {
 
-    display: none; /* Ẩn popup mặc định */
-   position: fixed; /* Đặt vị trí cố định */
+    display: none; 
+   position: fixed; 
     top: 0;
     left: 0;
-    width: 100%; /* Chiều rộng toàn bộ màn hình */
-    height: 100%; /* Chiều cao toàn bộ màn hình */
-    background-color: rgba(0, 0, 0, 0.5); /* Màu nền nửa trong suốt */
+    width: 100%; 
+    height: 100%; 
+    background-color: rgba(0, 0, 0, 0.5); 
     z-index: 1000;
     display: flex;
-    justify-content: center; /* Canh giữa theo chiều ngang */
     align-items: center; 
  
 }
@@ -384,3 +430,6 @@ tr{
     height: 100vh;
     z-index: 1001;
 }
+
+
+/* CSS cho  */
