@@ -3,7 +3,6 @@ package com.example.demo.controller;
 import com.example.demo.model.Author;
 import com.example.demo.repository.AuthorRepository;
 import com.example.demo.request.AuthorRequest;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;

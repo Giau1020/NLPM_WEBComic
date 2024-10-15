@@ -1,14 +1,15 @@
 <style>
     #loggedInUser {
-        width: 240px; /* Đặt độ rộng cố định tương tự như phần Đăng nhập/Đăng ký */
+        /*  Đặt độ rộng cố định tương tự như phần Đăng nhập/Đăng ký */
         display: flex;
-        justify-content: space-between; /* Căn chỉnh đều giữa các phần tử */
         
+        justify-content: space-between; /* Căn chỉnh đều giữa các phần tử */
+        margin-left: 120px;
     }
 
 
     #usernameDisplay {
-        font-size: 18px; /* Kích thước chữ cho username */
+        font-size: 22px; /* Kích thước chữ cho username */
         font-weight: bold;
         color: rgb(204, 12, 12); /* Màu sắc cho username */
         
@@ -38,6 +39,8 @@
     padding: 10px;
     text-decoration: none;
     color: black;
+    font-size: 18px;
+    border-bottom: 1px solid #ccc;
 }
 
 #userMenu a:hover {
@@ -106,7 +109,7 @@
         <img src="images/3Gach.svg" alt="Sample Image" style="height: 50%;" > 
        
         <div id="sp" style="font-size: 20px;"><b>DANH MỤC SẢN PHẨM</b></div>
-        <div id="categoryMenu" style="display: none; position: absolute; top: 100%; left: 0; background-color: white; border: 1px solid #ccc; width: 150px; z-index: 1;">
+        <div id="categoryMenu" style="display: none; position: absolute; top: 100%; left: 0; background-color: white; border: 1px solid #ccc; width: 220px; z-index: 1;">
             <ul id="genreList"></ul> 
         </div>
 </div>
@@ -124,9 +127,9 @@
             <span style="margin-left: 10px;"><b>|</b></span>
             <a href="dki.html">Đăng ký</a>
         </div>
-        <div id="loggedInUser" style="display: none; position: relative; ">
+        <div id="loggedInUser" style="display: none; position: relative; font-size: 22px;">
             Xin chào <span id="usernameDisplay"></span>
-            <div id="userMenu" style="display: none; position: absolute; top: 100%; left: 0; background-color: white; border: 1px solid #ccc; width: 150px; z-index: 1;">
+            <div id="userMenu" style="display: none; position: absolute; top: 100%; left: 0; background-color: white; border: 1px solid #ccc; width: 220px; z-index: 1;">
                 <a href="TrangChu.html">Trang chủ</a>
                 <a href="#">Thông tin tài khoản</a>
                 <a href="GioHang.html">Giỏ hàng của tôi</a>

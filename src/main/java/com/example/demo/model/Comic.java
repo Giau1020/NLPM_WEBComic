@@ -8,7 +8,14 @@ package com.example.demo.model;
  *
  * @author ADMIN
  */
-import jakarta.persistence.*;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.JoinTable;
+import jakarta.persistence.ManyToMany;
+import jakarta.persistence.Table;
 
 import java.util.List;
 
@@ -19,8 +26,9 @@ import java.util.List;
 public class Comic {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+    
     private String name;
     private double price;
     private String url;
@@ -167,9 +175,6 @@ public class Comic {
     public void setGenres(List<Genre> genres) {
         this.genres = genres;
     }
-
-
-
 
 }
 

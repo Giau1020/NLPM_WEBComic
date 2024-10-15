@@ -330,23 +330,61 @@ h2 {
         totalPrice: totalPrice // Hàm tính tổng giá trị giỏ hàng
     };
 
+    // fetch('/api/orders/create', {
+    //     method: 'POST',
+    //     headers: {
+    //         'Content-Type': 'application/json; charset=UTF-8',
+    //     },
+    //     body: JSON.stringify(orderData),
+    // })
+    // .then(response => response.json())
+    // .then(data => {
+    //     alert('Đặt hàng thành công!');
+    //     console.log('Success:', data);
+    //     window.location.href = "Order.html";
+    // })
+    // .catch((error) => {
+    //     console.error('Error:', error);
+    // });
+    
     fetch('/api/orders/create', {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json; charset=UTF-8',
-        },
-        body: JSON.stringify(orderData),
-    })
-    .then(response => response.json())
-    .then(data => {
-        alert('Đặt hàng thành công!');
-        console.log('Success:', data);
-        window.location.href = "Order.html";
-    })
-    .catch((error) => {
-        console.error('Error:', error);
-    });
+    method: 'POST',
+    headers: {
+        'Content-Type': 'application/json; charset=UTF-8',
+    },
+    body: JSON.stringify(orderData),
+})
+.then(response => {
+    if (!response.ok) {
+        // Kiểm tra nếu phản hồi là 409 (xung đột do số lượng không đủ)
+        if (response.status === 409) {
+            return response.text().then(errorMessage => {
+                alert('Số lượng sản phẩm trong kho đã có sự thay đổi, vui lòng thử lại.'); // Hiển thị thông báo lỗi
+                // Không chuyển trang, chỉ thông báo cho người dùng
+                window.location.href = "GioHang.html";
+                throw new Error('Inventory issue: ' + errorMessage); // Dừng chuỗi promise và không thực hiện các lệnh tiếp theo
+            });
+        } else {
+            throw new Error('Đã xảy ra lỗi khi đặt hàng');
+        }
+    }
+    return response.json();  // Nếu thành công, tiếp tục xử lý đơn hàng
+})
+.then(data => {
+    // Chỉ khi response.ok là true mới thực hiện phần này
+    alert('Đặt hàng thành công!');
+    console.log('Success:', data);
+    window.location.href = "Order.html";  // Chuyển về trang Order nếu đặt hàng thành công
+})
+.catch((error) => {
+    console.error('Error:', error);
 });
+
+
+
+});
+
+
 
 
     </script>

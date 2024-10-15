@@ -5,18 +5,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="stylesheet" href="/css/styles.css" />
     <style>
-      /* Phần CSS hiện có */
-
-      /* Phần chính của nội dung để đẩy footer xuống */
-
-      /*main*/
       .main {
         display: flex;
-        /* justify-content: center; /* Căn giữa theo chiều ngang */
         align-items: center;
         flex-direction: column;
-        flex-grow: 1; /* Chiếm không gian còn lại của trang */
-        /* Căn giữa văn bản trong các phần tử */
+        flex-grow: 1;
       }
       .p1 {
         margin-top: 10px;
@@ -40,101 +33,96 @@
       }
       .ps2 img {
         display: block;
-        margin: 0; /* Xóa khoảng cách margin mặc định */
-        padding: 0; /* Xóa khoảng cách padding mặc định */
+        margin: 0;
+        padding: 0;
       }
       .p2 {
         margin-top: 30px;
-        background-color:  rgb(204, 12, 12);
-        flex-direction: column;
+        background-color: rgb(204, 12, 12);
         height: 300px;
         width: 1200px;
-        display: flex; /* Kích hoạt Flexbox cho .p2 */
-        justify-content: center; /* Căn giữa theo chiều dọc khi không thay đổi flex-direction */
-        text-align: center; /* Căn giữa theo chiều ngang */
+        display: flex;
+        justify-content: center;
+        text-align: center;
       }
       .p3 {
         margin-top: 10px;
-         background-color: white; 
-        border: 1px solid color(grey);
-        height: 750px;
+        background-color: white;
         width: 1200px;
         border-radius: 10px;
         box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-        overflow: hidden; /* Thêm dòng này để tránh tràn nội dung */
+        overflow: hidden;
       }
-      .p3s1 {
-         background-color: rgb(204, 12, 12); 
+      .title {
+        background-color: rgb(204, 12, 12);
         height: 50px;
-        width: 1200px;    
         display: flex;
         justify-content: space-between;
-      }
-      .p3s1 div {
-        display: flex;
         align-items: center;
-        height: 100%;
-        font-size: 25px;
       }
-      .p3s11 {
+      .title1 {
         margin-left: 10px;
         color: white;
+        font-size: 25px;
       }
-      
 
-      .p3s2 {
+      .row {
         background-color: white;
-        width: 1200px;
-        height: 340px;
         display: flex;
-        margin-top: 2px;
+        flex-wrap: wrap;
+        justify-content: space-between;
+        gap: 10px;
+        padding: 10px;
       }
 
+      /* Thiết lập kích thước đồng nhất cho các sản phẩm */
       .i4-comic {
-        height: 320px;
-        width: 230px;
-        background-color: white;
-        margin-top: 10px;
-        margin-left: 8px;
-        display: flex;
-        flex-direction: column; /* Để đảm bảo các phần tử xếp theo cột */
-        align-items: center; /* Căn giữa theo chiều ngang */
-        justify-content: center; /* Căn giữa theo chiều dọc */
-        justify-content: flex-start; /* Giữ các phần tử căn trên cùng */
-        text-align: center; /* Căn giữa nội dung văn bản */
-      }
-      .i4-comic img {
-        margin-top: 10px;
-      }
+  flex: 0 1 calc(20% - 10px); /* Hiển thị 5 sản phẩm trên một hàng */
+  background-color: white;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  text-align: center;
+  height: 300px; /* Đặt chiều cao cố định */
+  width: 220px; /* Đặt chiều rộng cố định */
+  border: 1px solid transparent; /* Đặt viền mặc định là trong suốt */
+  transition: border 0.3s ease; /* Hiệu ứng khi hover */
+}
+
+.i4-comic img {
+  margin-top: 10px;
+  height: 180px; /* Đặt chiều cao cố định cho hình ảnh */
+  width: 120px;  /* Đặt chiều rộng cố định cho hình ảnh */
+  object-fit: cover; /* Đảm bảo hình ảnh không bị biến dạng */
+}
+
+/* Hiển thị viền khi hover */
+.i4-comic:hover {
+  border: 2px solid rgb(235, 229, 229); /* Tạo khung có độ dày 2px màu khi hover */
+}
+
       .name-comics,
       .price-comics {
         color: rgb(21, 21, 21);
         text-align: left;
         margin-top: 5px;
+        width: 100%; /* Đảm bảo nội dung căn lề theo chiều rộng */
+        padding: 0 10px; /* Thêm khoảng cách cho nội dung */
       }
       .price-comics {
         color: red;
       }
+      .name-comics {
+        max-width: 190px;
+      }
+      a:hover {
+        color: red;
+      }
       a {
         text-decoration: none;
+        color: black;
       }
-      .i4-comic:hover {
-        border: 2px solid rgb(235, 229, 229); /* Tạo khung có độ dày 2px màu xanh */
-      }
-      .name-comics {
-        color: rgb(21, 21, 21);
-        text-align: left;
-        margin-top: 5px;
-        max-width: 190px; /* Giới hạn độ rộng để đảm bảo căn giữa */
-      }
-      a{
-          color: black;
-          cursor: pointer;
-          text-decoration: none;
-        }
-         a:hover{
-          color: red;
-        }
     </style>
   </head>
   <body>
@@ -156,260 +144,74 @@
           </div>
         </div>
         <div class="p2">Flash Sale</div>
+
+        <!-- Phần sản phẩm bán chạy -->
         <div class="p3">
-          <div class="p3s1">
-            <div class="p3s11">Bán chạy</div>
-            
+          <div class="title">
+            <div class="title1">Bán chạy</div>
           </div>
-          <div class="p3s2">
-            <div class="i4-comic">
-              <a id="comic-link-1">
-                <img src="" alt="Comic image" id="comic-image-1" />
-                <div class="name-comics" id="comic-name-1"></div>
-                <div class="price-comics" id="comic-price-1"></div>
-               
-              </a>
-            </div>
-            <div class="i4-comic">
-              <a id="comic-link-2">
-                <img src="" alt="Comic image" id="comic-image-2" />
-                <div class="name-comics" id="comic-name-2"></div>
-                <div class="price-comics" id="comic-price-2"></div>
-                
-              </a>
-            </div>
-            <div class="i4-comic">
-              <a id="comic-link-3">
-                <img src="" alt="Comic image" id="comic-image-3" />
-                <div class="name-comics" id="comic-name-3"></div>
-                <div class="price-comics" id="comic-price-3"></div>
-              
-              </a>
-            </div>
-            <div class="i4-comic">
-              <a id="comic-link-4">
-                <img src="" alt="Comic image" id="comic-image-4" />
-                <div class="name-comics" id="comic-name-4"></div>
-                <div class="price-comics" id="comic-price-4"></div>
-              </a>
-            </div>
-            <div class="i4-comic">
-              <a id="comic-link-5">
-                <img src="" alt="Comic image" id="comic-image-5" />
-                <div class="name-comics" id="comic-name-5"></div>
-                <div class="price-comics" id="comic-price-5"></div>
-              </a>
-            </div>
-          </div>
-          <div class="p3s2">
-            <div class="i4-comic" id="img1">
-              <a id="comic-link-6">
-                <img src="" alt="Comic image" id="comic-image-6" />
-                <div class="name-comics" id="comic-name-6"></div>
-                <div class="price-comics" id="comic-price-6"></div>
-              </a>
-            </div>
-            <div class="i4-comic">
-              <a id="comic-link-7">
-                <img src="" alt="Comic image" id="comic-image-7" />
-                <div class="name-comics" id="comic-name-7"></div>
-                <div class="price-comics" id="comic-price-7"></div>
-              </a>
-            </div>
-            <div class="i4-comic">
-              <a id="comic-link-8">
-                <img src="" alt="Comic image" id="comic-image-8" />
-                <div class="name-comics" id="comic-name-8"></div>
-                <div class="price-comics" id="comic-price-8"></div>
-              </a>
-            </div>
-            <div class="i4-comic">
-              <a id="comic-link-9">
-                <img src="" alt="Comic image" id="comic-image-9" />
-                <div class="name-comics" id="comic-name-9"></div>
-                <div class="price-comics" id="comic-price-9"></div>
-              </a>
-            </div>
-            <div class="i4-comic">
-              <a id="comic-link-10">
-                <img src="" alt="Comic image" id="comic-image-10" />
-                <div class="name-comics" id="comic-name-10"></div>
-                <div class="price-comics" id="comic-price-10"></div>
-              </a>
-            </div>
-          </div>
+          <div class="row" id="best-sellers"></div>
         </div>
+
+        <!-- Phần truyện tranh mới -->
         <div class="p3" style="margin-top: 10px">
-          <div class="p3s1">
-            <div class="p3s11">Truyện tranh mới</div>
-            
+          <div class="title">
+            <div class="title1">Truyện tranh mới</div>
           </div>
-          <div class="p3s2">
-            <div class="i4-comic">
-              <a id="comic-link-11">
-                <img src="" alt="Comic image" id="comic-image-11" />
-                <div class="name-comics" id="comic-name-11"></div>
-                <div class="price-comics" id="comic-price-11"></div>
-              </a>
-            </div>
-            <div class="i4-comic">
-              <a id="comic-link-12">
-                <img src="" alt="Comic image" id="comic-image-12" />
-                <div class="name-comics" id="comic-name-12"></div>
-                <div class="price-comics" id="comic-price-12"></div>
-              </a>
-            </div>
-            <div class="i4-comic">
-              <a id="comic-link-13">
-                <img src="" alt="Comic image" id="comic-image-13" />
-                <div class="name-comics" id="comic-name-13"></div>
-                <div class="price-comics" id="comic-price-13"></div>
-              </a>
-            </div>
-            <div class="i4-comic">
-              <a id="comic-link-14">
-                <img src="" alt="Comic image" id="comic-image-14" />
-                <div class="name-comics" id="comic-name-14"></div>
-                <div class="price-comics" id="comic-price-14"></div>
-              </a>
-            </div>
-            <div class="i4-comic">
-              <a id="comic-link-15">
-                <img src="" alt="Comic image" id="comic-image-15" />
-                <div class="name-comics" id="comic-name-15"></div>
-                <div class="price-comics" id="comic-price-15"></div>
-              </a>
-            </div>
-          </div>
-          <div class="p3s2">
-            <div class="i4-comic">
-              <a id="comic-link-16">
-                <img src="" alt="Comic image" id="comic-image-16" />
-                <div class="name-comics" id="comic-name-16"></div>
-                <div class="price-comics" id="comic-price-16"></div>
-              </a>
-            </div>
-            <div class="i4-comic">
-              <a id="comic-link-17">
-                <img src="" alt="Comic image" id="comic-image-17" />
-                <div class="name-comics" id="comic-name-17"></div>
-                <div class="price-comics" id="comic-price-17"></div>
-              </a>
-            </div>
-            <div class="i4-comic">
-              <a id="comic-link-18">
-                <img src="" alt="Comic image" id="comic-image-18" />
-                <div class="name-comics" id="comic-name-18"></div>
-                <div class="price-comics" id="comic-price-18"></div>
-              </a>
-            </div>
-            <div class="i4-comic">
-              <a id="comic-link-19">
-                <img src="" alt="Comic image" id="comic-image-19" />
-                <div class="name-comics" id="comic-name-19"></div>
-                <div class="price-comics" id="comic-price-19"></div>
-              </a>
-            </div>
-            <div class="i4-comic">
-              <a id="comic-link-20">
-                <img src="" alt="Comic image" id="comic-image-20" />
-                <div class="name-comics" id="comic-name-20"></div>
-                <div class="price-comics" id="comic-price-20"></div>
-              </a>
-            </div>
-          </div>
+          <div class="row" id="new-comics"></div>
         </div>
       </main>
-      <!-- Footer -->
+
       <div id="footer"></div>
     </div>
-    
+
     <script>
-     
+      // Hàm định dạng giá
+      function formatPrice(price) {
+        return price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
+      }
 
-function formatPrice(price) {
-    return price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
-}
+      // Hàm tạo phần tử HTML sản phẩm
+      function createComicItem(comic) {
+        const comicDiv = document.createElement("div");
+        comicDiv.classList.add("i4-comic");
+        // Kiểm tra nếu quantity bằng 0 thì hiển thị chữ "Hết hàng"
+  const stockStatus = comic.quantity === 0 ? '<span style="color:blue; ">(HẾT HÀNG)</span>' : ''
 
-    //////////////////////////
-      /*------------------*/
-    
-   
-      document.addEventListener("DOMContentLoaded", function () {
-  // Gọi API để lấy dữ liệu các truyện tranh bán chạy nhất
-  fetch("http://localhost:8080/comics/top10byslb") // Đường dẫn tới API Spring Boot của bạn
-    .then((response) => response.json()) // API trả về dữ liệu dạng JSON
-    .then((data) => {
-      console.log("Dữ liệu từ API:", data); // Kiểm tra dữ liệu trong console
+        comicDiv.innerHTML = `
+          <a href="ChiTietSP.html?id=${comic.id}">
+            <img src="${comic.url || 'default-image.png'}" alt="Comic image" />
+            <div class="name-comics">${comic.name}</div>
+            <div class="price-comics">${formatPrice(comic.price)} VND ${stockStatus}</div>
+          </a>
+        `;
 
-      // Duyệt qua dữ liệu truyện tranh trả về từ API
-      data.forEach((comic, index) => {
-        if (index < 10) {
-          // Gán các phần tử HTML dựa trên `id`
-          const comicImage = document.getElementById(`comic-image-${index + 1}`);
-          const comicName = document.getElementById(`comic-name-${index + 1}`);
-          const comicPrice = document.getElementById(`comic-price-${index + 1}`);
-          const comicLink = document.getElementById(`comic-link-${index + 1}`);
+        return comicDiv;
+      }
 
-          // Đảm bảo các phần tử tồn tại
-          if (comicImage && comicName && comicPrice && comicLink) {
-            comicImage.src = comic.url || "default-image.png"; // Nếu không có URL, dùng ảnh mặc định
-            comicName.innerText = comic.name;
-            comicPrice.innerText = `${formatPrice(comic.price)} VND`;
-
-            // Thêm ID của truyện vào URL để chuyển hướng đúng sản phẩm
-            comicLink.href = `ChiTietSP.html?id=${comic.id}`;
-          }
-        }
-      });
-    })
-    .catch((error) => {
-      console.error("Lỗi khi lấy dữ liệu từ API:", error);
-    });
-});
-
-      /*---------------------------------------------------------------------------*/
-      document.addEventListener("DOMContentLoaded", function () {
-        // Gọi API để lấy dữ liệu các truyện tranh bán chạy nhất
-        fetch("http://localhost:8080/comics/top10byid") // Đường dẫn tới API Spring Boot của bạn
-          .then((response) => response.json()) // API trả về dữ liệu dạng JSON
+      // Hàm tải và hiển thị sản phẩm
+      function loadComics(apiUrl, containerId) {
+        fetch(apiUrl)
+          .then((response) => response.json())
           .then((data) => {
-            console.log("Dữ liệu từ API:", data); // Kiểm tra dữ liệu trong console
+            const comicContainer = document.getElementById(containerId);
+            comicContainer.innerHTML = ""; // Xóa nội dung cũ
 
-            // Duyệt qua dữ liệu truyện tranh trả về từ API
-            data.forEach((comic, index) => {
-              // Giới hạn chỉ lấy 8 comic
-              if (index < 10) {
-                // Đảm bảo phần tử có tồn tại để tránh lỗi
-                const comicImage = document.getElementById(
-                  `comic-image-${index + 11}`
-                );
-                const comicName = document.getElementById(
-                  `comic-name-${index + 11}`
-                );
-                const comicPrice = document.getElementById(
-                  `comic-price-${index + 11}`
-                );
-                const comicLink = document.getElementById(`comic-link-${index + 11}`);
-                if (comicImage && comicName && comicPrice) {
-                  // Gán giá trị từ API vào các thẻ HTML
-                  comicImage.src = comic.url || "default-image.png"; // Nếu không có URL, dùng ảnh mặc định
-                  comicName.innerText = comic.name;
-                  comicPrice.innerText = `${formatPrice(comic.price)} VND`;
-                  // Thêm ID của truyện vào URL để chuyển hướng sang trang CTSP
-                  comicLink.href = `ChiTietSP.html?id=${comic.id}`;
-                }
-              }
+            data.forEach((comic) => {
+              const comicDiv = createComicItem(comic);
+              comicContainer.appendChild(comicDiv);
             });
           })
           .catch((error) => {
             console.error("Lỗi khi lấy dữ liệu từ API:", error);
           });
-      });
-      /*---------------------------------*/
-   
+      }
 
-      //------------------------
+      // Gọi hàm khi trang được tải
+      document.addEventListener("DOMContentLoaded", function () {
+        loadComics("http://localhost:8080/comics/top10byslb", "best-sellers");
+        loadComics("http://localhost:8080/comics/top10byid", "new-comics");
+      });
     </script>
     <script src="js/Header.js"></script>
   </body>
