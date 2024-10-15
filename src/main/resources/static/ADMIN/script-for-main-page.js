@@ -78,7 +78,7 @@ function popUpAddNewComic(){
           document.getElementById('preview').innerHTML = '';
           event.target.value = ''; // Reset the input so no files are uploaded
         } else {
-            document.getElementById('files-img').value = '0';// Clear the error message if file count is valid
+            document.getElementById('files-img').value = '';// Clear the error message if file count is valid
         }
       });
 
