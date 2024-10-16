@@ -3,8 +3,11 @@ package com.example.demo.Service;
 import com.example.demo.model.Author;
 import com.example.demo.model.Comic;
 import com.example.demo.model.Genre;
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 import org.springframework.web.bind.annotation.PathVariable;
 
+import javax.swing.text.html.Option;
 import java.util.List;
 import java.util.Optional;
 
@@ -23,5 +26,17 @@ public interface ComicService {
 
     //Phương thức lấy danh sách tác giả bằng ID comic
     List<Author> getAuthorByComiId(@PathVariable Long ComicId);
+
+    // Tìm kiếm truyện
+    @Query("SELECT DISTINCT c FROM Comic c LEFT JOIN c.authors a LEFT JOIN c.genres g WHERE "
+            + "LOWER(c.name) LIKE LOWER(CONCAT('%', :keyword, '%')) OR "
+            + "LOWER(a.name) LIKE LOWER(CONCAT('%', :keyword, '%')) OR "
+            + "LOWER(g.name) LIKE LOWER(CONCAT('%', :keyword, '%'))")
+    List<Comic> searchByKeyword(@Param("keyword") String keyword);
+
+    //Hàm hiển thị danh sách truyện theo danh sách id
+    List<Optional<Comic>> getComicByListId(@PathVariable List<Long> id);
+
+
 
 }

@@ -84,4 +84,8 @@ public class ImgComicServiceImpl implements ImgComicService {
     public Optional<ImgComic> findByComicId(Long comicId) {
         return imgComicRepository.findByComicId(comicId);
     }
+
+
+//    Tìm kiếm truyện theo tên hoặc tác giả
+
 }

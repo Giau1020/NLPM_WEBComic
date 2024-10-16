@@ -404,3 +404,90 @@ async function addImgComic(comiccId) {
     
 }
 }
+
+
+// Tìm kiếm truyện
+async function search_comic(query) {
+    let api_search_comic = `http://localhost:8080/api/v1/sng/admin/comic/search?query=${encodeURIComponent(query)}`;
+    fetch(api_search_comic)
+    .then(response => {
+        // console.log(response.status);
+        // if (!response.ok) {
+        //     throw new Error('Không tìm thấy kết quả');
+        // }
+        return response.json(); // Chuyển đổi phản hồi thành JSON
+    })
+    .then(comics => {
+        // Hiển thị danh sách kết quả tìm kiếm
+       console.log(comics);
+
+
+    // Hiển thị count KQTK
+    
+    document.querySelector('.KQTK').style.display = "block";
+    document.querySelector('.count_search').style.display = "block";
+    document.querySelector('.close_search').style.display = 'block';
+    if(comics.length === 0){
+        document.querySelector('.count_search').innerText= '0';
+    }
+    else document.querySelector('.count_search').innerHTML = comics.length;
+
+    // Hiển thị danh sách truyện đã tìm kiếm
+    
+    const table_list_comic = document.querySelector('.table_body');
+    table_list_comic.innerHTML = "";
+    
+    if (!Array.isArray(comics)) {
+        throw new TypeError('Dữ liệu không phải là một mảng');
+    }
+    comics.forEach(comic => {
+       
+        const row = document.createElement('tr');
+        row.innerHTML = `
+        <td class="id_comic_detail">${comic.id}</td>
+        <td>${comic.name}</td>
+        <td>${comic.description}</td>
+        <td>${comic.price}</td>
+        <td><img style="width: 30px; height: 30px;"  class="btn-detail-comic" src="./images-Admin/edit-text.png" alt=""></td>
+        <td class="checkbox-delete-comic" style="display: none;" ><input type="checkbox" name="checkbox-delete-comic" id="checkbox-delete-comic"></td>
+    `;
+    table_list_comic.appendChild(row);
+   
+    }); setupDetailComicButtons();
+    
+    document.querySelector('.close_search').addEventListener('click', function() {
+       close_edit_mode();
+    });
+        
+
+    })
+    .catch(error => {
+        console.error('Lỗi:', error);
+        
+    });
+}
+
+
+// Sự kiện khi click nút tìm kiếm hoặc enter
+document.querySelector('.search-frame-inp').addEventListener('keydown', function(event) {
+    if (event.key === 'Enter'|| event.keyCode === 13) {
+        search_comic(document.querySelector('.search-frame-inp').value);
+        // alert('Bạn đã nhấn Enter!');
+    }
+});
+document.querySelector('.header-btn-search').addEventListener('click', function(event) {
+        search_comic(document.querySelector('.search-frame-inp').value);
+    
+});// Sự kiện khi click nút tìm kiếm hoặc enter
+
+
+function close_edit_mode(){
+    document.querySelector('.KQTK').style.display = 'none';
+        document.querySelector('.count_search').style.display = 'none';
+        document.querySelector('.close_search').style.display = 'none';
+        document.querySelector('.search-frame-inp').disabled = true;
+        document.querySelector('.search-frame-inp').value ='';
+        document.querySelector('.search-frame-inp').placeholder =" ";
+
+        showAllComics();
+}

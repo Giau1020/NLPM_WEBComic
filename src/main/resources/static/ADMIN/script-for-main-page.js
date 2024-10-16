@@ -78,7 +78,7 @@ function popUpAddNewComic(){
           document.getElementById('preview').innerHTML = '';
           event.target.value = ''; // Reset the input so no files are uploaded
         } else {
-            document.getElementById('files-img').value = '';// Clear the error message if file count is valid
+            //document.getElementById('files-img').value = ' ';// Clear the error message if file count is valid
         }
       });
 
@@ -150,6 +150,8 @@ function searchComic() {
     } else {
         console.error("Không tìm thấy phần tử với class 'search-frame-inp'");
     }
+
+    document.querySelector('.search-frame-inp').disabled = false;
     
 }
 
@@ -198,6 +200,7 @@ function removeCSSFile(id){
 function showEditTool(className, id){
     let element = document.querySelector(`${className}`);
     if(element.style.display === 'none'){
+        close_edit_mode();
         element.style.display = 'block';
         addCSSFile('./Form-popUp/Style-edit-comic.css', `${id}`);
          document.querySelector('#inp-id-comic2').value = "";
@@ -223,8 +226,8 @@ function showEditTool(className, id){
 function edit_mode(){
     const table = document.querySelector('.table_edit_body');
 
-// Gắn sự kiện click vào bảng
-table.addEventListener('click', function(event) {
+    // Gắn sự kiện click vào bảng
+    table.addEventListener('click', function(event) {
   // Kiểm tra xem click có phải vào một thẻ <tr> (hàng) không
   const clickedRow = event.target.closest('tr');
 

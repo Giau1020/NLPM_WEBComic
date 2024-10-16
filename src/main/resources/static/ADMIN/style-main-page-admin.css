@@ -432,4 +432,31 @@ tr{
 }
 
 
-/* CSS cho  */
+/* CSS sau khi nhấn nút tìm kíem */
+.KQTK {
+    font-size: 16px;
+    font-weight: bold;
+    color: red;
+    display: inline-block;
+    margin-right: 0; /* Loại bỏ khoảng cách không cần thiết */
+    vertical-align: middle; /* Căn giữa theo chiều dọc */
+}
+
+.count_search {
+    font-size: 16px;
+    color: red; /* Màu đỏ cho số kết quả */
+    display: inline-block;
+    margin-left: 5px; /* Khoảng cách nhỏ giữa chữ và số */
+    vertical-align: middle; /* Căn giữa theo chiều dọc */
+}
+
+.close_search {
+    font-size: 20px;
+    color: black; /* Màu của dấu đóng */
+    background-color: transparent;
+    border: none;
+    cursor: pointer;
+    display: inline-block;
+    margin-left: 10px; /* Điều chỉnh khoảng cách nhỏ giữa số lượng và nút đóng */
+    vertical-align: middle; /* Căn giữa theo chiều dọc */
+}

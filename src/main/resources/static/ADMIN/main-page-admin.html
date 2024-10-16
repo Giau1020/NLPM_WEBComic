@@ -206,10 +206,11 @@
         <!-- DIV Của phần quản lý sản phẩm -->
         <div class="admin-product-section" style="display: none;">
             <div class="products-tool">
-                <button class="btn-admin add-product" onclick="popUpAddNewComic();">Thêm</button>
+                <button class="btn-admin add-product" onclick="popUpAddNewComic(); close_edit_mode();">Thêm</button>
                 <button class="btn-admin search-product" onclick="searchComic();">Tìm kiếm</button>
-                <button class="btn-admin edit-product" onclick="showEditTool('#form-edit-comic', 'css-for-popup')">Chỉnh sửa</button>
-                <button class="btn-admin delete-product" onclick="show_delete_comic()">Xóa</button>
+                <button class="btn-admin edit-product" onclick="showEditTool('#form-edit-comic', 'css-for-popup'); close_edit_mode();">Chỉnh sửa</button>
+                <button class="btn-admin delete-product" onclick="show_delete_comic(); close_edit_mode();">Xóa</button>
+                <p class="KQTK" style="display: none;">Kết quả tìm kiếm: <p style="display: none;" class="count_search"></p> <button class="close_search" style="display: none;">&times;</button></p>
                 
                 <p class="select-all-comic" style="display: none;">Chọn tất cả <input type="checkbox" name="checkbox-delete-comic" id="checkbox-delete-comic">
                 </p>

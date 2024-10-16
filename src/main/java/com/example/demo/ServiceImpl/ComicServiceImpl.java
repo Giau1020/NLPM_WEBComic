@@ -5,10 +5,8 @@ import com.example.demo.DTO.ComicDTO;
 import com.example.demo.Service.ComicService;
 import com.example.demo.model.Author;
 import com.example.demo.model.Comic;
-import com.example.demo.model.ComicAuthor;
 import com.example.demo.model.Genre;
 import com.example.demo.repository.AuthorRepository;
-import com.example.demo.repository.ComicAuthorRepository;
 import com.example.demo.repository.ComicRepository;
 
 import com.example.demo.repository.GenreRepository;
@@ -21,6 +19,7 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -110,6 +109,25 @@ public class ComicServiceImpl implements ComicService {
 
         // Lấy danh sách các thể loại từ truyện
         return comic.getAuthors();
+    }
+
+    @Override
+    public List<Comic> searchByKeyword(String keyword) {
+        List<Comic> listComic = comicRepository.searchByKeyword(keyword);
+
+        return listComic;
+    }
+
+    @Override
+    public List<Optional<Comic>> getComicByListId(List<Long> id) {
+        List<Optional<Comic>> comics =  new ArrayList<>();
+        for(Long comic_id : id){
+            Optional<Comic> comicObj = comicRepository.findById(comic_id);
+            if (comicObj.isPresent()) {
+                comics.add(comicObj); // Thêm Comic vào danh sách nếu tồn tại
+            }
+        }
+        return comics;
     }
 
     // Upload img
