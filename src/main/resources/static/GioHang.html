@@ -293,7 +293,7 @@
     // Cập nhật lại số lượng bằng số lượng còn lại
     item.quantity = item.comic.quantity;
     quantityInput.value = item.comic.quantity;
-
+    calculateTotal();
     // Gửi yêu cầu cập nhật số lượng trong cơ sở dữ liệu
     fetch('/cart/update', {
         method: 'POST',
