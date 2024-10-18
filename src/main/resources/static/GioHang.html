@@ -329,8 +329,14 @@
             deleteButton.innerHTML = "🗑️";
             deleteButton.classList.add("delete-button");
             deleteButton.onclick = function() {
-                removeFromCart(item.comic.id);
-            };
+             const confirmed = confirm("Bạn có chắc chắn muốn xóa sản phẩm này khỏi giỏ hàng không?");
+             if (confirmed) {
+             // Nếu người dùng nhấn "OK", thì tiến hành xóa
+             removeFromCart(item.comic.id);
+             }
+   
+};
+
 
             quantityContainer.appendChild(decreaseButton);
             quantityContainer.appendChild(quantityInput);
@@ -464,15 +470,6 @@
         }
 
         // Xử lý sự kiện cho checkbox "Chọn tất cả"
-        // document.getElementById("selectAllCheckbox").addEventListener("change", function() {
-        //     const checkboxes = document.querySelectorAll('.checkbox');
-        //     checkboxes.forEach(checkbox => {
-        //         checkbox.checked = this.checked;
-        //         const comicId = checkbox.closest('.cart-item').querySelector('.item-info input').dataset.comicId;
-        //         updateCheckboxStatus(comicId, checkbox.checked);
-        //     });
-        //     updateTotal();
-        // });
         document.getElementById("selectAllCheckbox").addEventListener("change", function() {
     const checkboxes = document.querySelectorAll('.checkbox');
     checkboxes.forEach(checkbox => {
