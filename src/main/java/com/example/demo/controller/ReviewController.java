@@ -75,6 +75,52 @@ public ResponseEntity<Object> getReviewsByComic(@PathVariable Long comicId) {
     return new ResponseEntity<>(reviewResponseList, HttpStatus.OK);
 }
 
+// API để trả về thống kê số lượt đánh giá theo từng mức sao
+@GetMapping("/comic/{comicId}/ratings-summary")
+public ResponseEntity<Map<String, Object>> getRatingsSummary(@PathVariable Long comicId) {
+    // Lấy danh sách các đánh giá theo comicId
+    List<Review> reviews = reviewRepository.findByComicId(comicId);
+
+    // Khởi tạo các biến đếm số lượt đánh giá cho từng mức sao
+    int totalReviews = reviews.size();
+    int oneStarCount = 0;
+    int twoStarCount = 0;
+    int threeStarCount = 0;
+    int fourStarCount = 0;
+    int fiveStarCount = 0;
+
+    // Duyệt qua danh sách đánh giá để đếm số lượt đánh giá theo từng mức sao
+    for (Review review : reviews) {
+        switch (review.getRating()) {
+            case 1:
+                oneStarCount++;
+                break;
+            case 2:
+                twoStarCount++;
+                break;
+            case 3:
+                threeStarCount++;
+                break;
+            case 4:
+                fourStarCount++;
+                break;
+            case 5:
+                fiveStarCount++;
+                break;
+        }
+    }
+
+    // Tạo map để trả về kết quả
+    Map<String, Object> response = new HashMap<>();
+    response.put("totalReviews", totalReviews);
+    response.put("oneStar", oneStarCount);
+    response.put("twoStar", twoStarCount);
+    response.put("threeStar", threeStarCount);
+    response.put("fourStar", fourStarCount);
+    response.put("fiveStar", fiveStarCount);
+
+    return new ResponseEntity<>(response, HttpStatus.OK);
+}
 
 
     // Lớp ReviewResponseDTO được tạo bên trong controller

@@ -10,6 +10,7 @@ package com.example.demo.repository;
  */
 import com.example.demo.model.Comic;
 import com.example.demo.model.Genre;
+import java.awt.print.Pageable;
 import org.springframework.data.jpa.repository.Query;
 
 import org.springframework.stereotype.Repository;
@@ -33,6 +34,10 @@ public interface ComicRepository extends JpaRepository<Comic, Long> {
     // Phương thức lấy 5 truyện có id cao nhất
     @Query(value = "SELECT TOP 5 * FROM Comic ORDER BY id DESC", nativeQuery = true)
     List<Comic> findTop5ByOrderByIdDesc();
+    
+       // Tìm các truyện có hai chữ đầu trong tên giống với hai chữ đầu của truyện chính và loại trừ truyện có ID đã cho
+    @Query("SELECT c FROM Comic c WHERE LOWER(c.name) LIKE LOWER(CONCAT(:firstTwoWords, '%')) AND c.id <> :id ORDER BY c.id DESC")
+List<Comic> findByFirstTwoWordsAndExcludeId(@Param("firstTwoWords") String firstTwoWords, @Param("id") Long id);
 
     // Phương thức lấy tên truyện theo id
     @Query("SELECT c.name FROM Comic c WHERE c.id = :id")

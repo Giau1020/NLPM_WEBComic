@@ -156,24 +156,6 @@
       <!-- Footer -->
       <div id="footer"></div>
     </div>
-
-    <script>
-      // Tải header
-      fetch("header.html")
-        .then((response) => response.text())
-        .then((data) => {
-          document.getElementById("header").innerHTML = data;
-        });
-
-      // Tải footer
-      fetch("footer.html")
-        .then((response) => response.text())
-        .then((data) => {
-          document.getElementById("footer").innerHTML = data;
-        });
-      /*------------------*/
-
-      /*---------------------------------*/
-    </script>
+    <script src="js/Header.js"></script>
   </body>
 </html>

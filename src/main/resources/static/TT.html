@@ -348,6 +348,18 @@
       document
         .getElementById("checkoutButton")
         .addEventListener("click", function () {
+          // Kiểm tra xem tất cả các trường đều được nhập
+  const fullName = document.getElementById("fullName").value.trim();
+  const phoneNumber = document.getElementById("phoneNumber").value.trim();
+  const province = document.getElementById("province").value.trim();
+  const district = document.getElementById("district").value.trim();
+  const ward = document.getElementById("ward").value.trim();
+  const address = document.getElementById("address").value.trim();
+
+  if (!fullName || !phoneNumber || !province || !district || !ward || !address) {
+    alert("Vui lòng điền đầy đủ thông tin.");
+    return;
+  }
           const totalElement =
             document.getElementById("finalTotal").textContent;
           const totalPrice = parseFloat(totalElement.replace(/\D/g, "")); // Lấy giá trị tổng, loại bỏ các ký tự không phải số
@@ -369,22 +381,7 @@
             totalPrice: totalPrice, // Hàm tính tổng giá trị giỏ hàng
           };
 
-          // fetch('/api/orders/create', {
-          //     method: 'POST',
-          //     headers: {
-          //         'Content-Type': 'application/json; charset=UTF-8',
-          //     },
-          //     body: JSON.stringify(orderData),
-          // })
-          // .then(response => response.json())
-          // .then(data => {
-          //     alert('Đặt hàng thành công!');
-          //     console.log('Success:', data);
-          //     window.location.href = "Order.html";
-          // })
-          // .catch((error) => {
-          //     console.error('Error:', error);
-          // });
+          
 
           fetch("/api/orders/create", {
             method: "POST",

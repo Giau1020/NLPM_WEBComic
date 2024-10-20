@@ -1,132 +1,45 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Comic Store Banner with Fade Effect</title>
-
-  <style>
-    * {
-      box-sizing: border-box;
-    }
-
-    .slideshow-container {
-      max-width: 1000px;
-      position: relative;
-      margin: auto;
-    }
-
-    .mySlides {
-      display: none;
-      width: 100%;
-      height: 400px;
-      position: absolute;
-      top: 0;
-      left: 0;
-    }
-
-    img {
-      width: 100%;
-      height: 100%;
-    }
-
-    .fade {
-      opacity: 0;
-      transition: opacity 1s ease-in-out;
-    }
-
-    .activeSlide {
-      opacity: 1;
-      display: block;
-      transition: opacity 1s ease-in-out;
-    }
-
-    .prev, .next {
-      cursor: pointer;
-      position: absolute;
-      top: 50%;
-      width: auto;
-      padding: 16px;
-      margin-top: -22px;
-      color: white;
-      font-weight: bold;
-      font-size: 18px;
-      transition: 0.6s ease;
-      user-select: none;
-      z-index: 10;
-    }
-
-    .next {
-      right: 0;
-    }
-
-    .prev {
-      left: 0;
-    }
-
-    .prev:hover, .next:hover {
-      background-color: rgba(0, 0, 0, 0.8);
-    }
-
-  </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Thanh Toán</title>
 </head>
 <body>
-
-  <!-- Slideshow container -->
-  <div class="slideshow-container">
-    <div class="mySlides activeSlide">
-      <img src="images/cm1.jpg" alt="Comic 1">
-    </div>
-
-    <div class="mySlides fade">
-      <img src="images/cm2.jpg" alt="Comic 2">
-    </div>
-
-    <div class="mySlides fade">
-      <img src="images/cm3.jpg" alt="Comic 3">
-    </div>
-
-    <!-- Nút điều khiển trái và phải -->
-    <a class="prev" onclick="plusSlides(-1)">&#10094;</a>
-    <a class="next" onclick="plusSlides(1)">&#10095;</a>
-
-  </div>
-
-  <script>
-    let slideIndex = 0;
-    let slides = document.getElementsByClassName("mySlides");
-
-    function showSlides(index) {
-      for (let i = 0; i < slides.length; i++) {
-        slides[i].style.display = "none";
-        slides[i].classList.remove("activeSlide");
-      }
-
-      if (index >= slides.length) {
-        slideIndex = 0;
-      }
-      if (index < 0) {
-        slideIndex = slides.length - 1;
-      }
-
-      slides[slideIndex].style.display = "block"; 
-      slides[slideIndex].classList.add("activeSlide"); // Thêm hiệu ứng mờ dần cho slide hiện tại
-    }
-
-    // Chuyển slide tự động mỗi 3 giây
-    setInterval(function() {
-      plusSlides(1);
-    }, 3000);
-
-    // Điều khiển khi nhấn nút
-    function plusSlides(n) {
-      slideIndex += n;
-      showSlides(slideIndex);
-    }
-
-    // Khởi động slide đầu tiên
-    showSlides(slideIndex);
-  </script>
-
+    <h2>Thanh Toán VNPAY</h2>
+    <form id="paymentForm" action="ajaxServlet" method="POST">
+        <label for="amount">Số tiền (VNĐ):</label>
+        <input type="text" id="amount" name="amount" required>
+        <br><br>
+        <label for="bankCode">Ngân hàng (mã):</label>
+        <input type="text" id="bankCode" name="bankCode">
+        <br><br>
+        <label for="language">Ngôn ngữ:</label>
+        <select id="language" name="language">
+            <option value="vn">Tiếng Việt</option>
+            <option value="en">English</option>
+        </select>
+        <br><br>
+        <button type="submit">Thanh Toán</button>
+    </form>
+    <script>
+        document.getElementById("paymentForm").onsubmit = function(event) {
+            event.preventDefault();
+            var formData = new FormData(this);
+            fetch('ajaxServlet', {
+                method: 'POST',
+                body: formData
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.code === '00') {
+                    window.location.href = data.data; // Chuyển hướng đến URL thanh toán
+                } else {
+                    alert('Có lỗi xảy ra: ' + data.message);
+                }
+            })
+            .catch(error => console.error('Lỗi:', error));
+        };
+    </script>
 </body>
 </html>
