@@ -13,7 +13,7 @@ public class OrderRequest {
     private String district;
     private String ward;
     private String address;
-   
+   private String payment;
 
     public String getFullName() {
         return fullName;
@@ -61,6 +61,14 @@ public class OrderRequest {
 
     public void setAddress(String address) {
         this.address = address;
+    }
+
+    public String getPayment() {
+        return payment;
+    }
+
+    public void setPayment(String payment) {
+        this.payment = payment;
     }
 
     

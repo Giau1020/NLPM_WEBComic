@@ -39,7 +39,7 @@ public class Comic {
     private String Size;
     private String Publisher;
     private String Summarize;
-
+   
     
      @ManyToMany
     @JoinTable(
@@ -174,6 +174,6 @@ public class Comic {
     public void setGenres(List<Genre> genres) {
         this.genres = genres;
     }
-
+    
 }
 

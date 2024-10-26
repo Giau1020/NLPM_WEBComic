@@ -119,6 +119,22 @@ public ResponseEntity<String> addToCart(@RequestParam("comicId") Long comicId, H
 //        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(comics); // Trả về 404 nếu không có kết quả
 //    }
 //}
+    @GetMapping("/top5similar/{id}")
+public ResponseEntity<List<Comic>> getTop5ComicsSimilarTo(@PathVariable Long id) {
+    Optional<Comic> comicOptional = comicRepository.findById(id);
+    if (comicOptional.isPresent()) {
+        String comicName = comicOptional.get().getName();
+        // Tách hai từ đầu tiên từ tên truyện
+        String[] words = comicName.split(" ");
+        String firstTwoWords = (words.length >= 2) ? words[0] + " " + words[1] : comicName;
+
+        // Gọi phương thức để tìm các truyện có hai từ đầu tiên giống nhau
+        List<Comic> similarComics = comicRepository.findByFirstTwoWordsAndExcludeId(firstTwoWords, id);
+        return ResponseEntity.ok(similarComics);
+    } else {
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+    }
+}
       @GetMapping("/search")
     public ResponseEntity<List<Comic>> searchComics(@RequestParam("query") String query) {
         // Tìm kiếm theo cả tên truyện, tác giả, và thể loại

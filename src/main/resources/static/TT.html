@@ -4,6 +4,7 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="stylesheet" href="/css/styles.css" />
+    
     <title>Trang Thanh Toán</title>
     <style>
       
@@ -13,7 +14,7 @@
             flex-direction: column;
             flex-grow: 1;
         }
-        .TTin, .SP {
+        .TTin, .SP, .payment{
             width: 700px;
             margin-top: 20px;
             background-color: white;
@@ -95,6 +96,29 @@ h2 {
     padding-bottom: 10px; /* Tạo khoảng cách giữa nội dung tiêu đề và đường kẻ */
     margin-bottom: 20px; /* Tạo khoảng cách giữa tiêu đề và nội dung bên dưới */
 }
+  
+
+.radio-container {
+    display: inline-flex;
+    align-items: center;
+  
+}
+
+.radio-container input[type="radio"] {
+    margin: 0 5px 0 0; 
+    vertical-align: middle; 
+}
+
+.radio-container label {
+    white-space: nowrap;
+    font-weight: normal;
+    vertical-align: middle;
+}
+
+
+
+
+
 
     </style>
 </head>
@@ -138,6 +162,45 @@ h2 {
                     
                 </form>
             </div>
+            <!-- <div class="payment">
+                <h2>Hình thức thanh toán</h2>
+                <div style="border: blue solid 1px; width: 400px;">
+                <div class="radio-container" style=" width: 250px; height: 50px; ">
+                    <input type="radio" name="payment" id="option1" value="Thanh toán khi nhận hàng">
+                    <span style="white-space: nowrap; font-size: 18px;" >Thanh toán khi nhận hàng </span>
+                </div>
+                </div>
+                <br>
+                <div style="border: blue solid 1px; width: 400px;">
+                <div class="radio-container" style=" width: 250px; height: 50px;">
+                    <input type="radio" name="payment" id="option2" value="Thanh toán trục tuyến">
+                    <span style="white-space: nowrap; font-size: 18px;">Thanh toán khi trực tuyến</span>
+                </div></div>
+                <br>
+                
+            </div> -->
+            <div class="payment">
+                <h2>Hình thức thanh toán</h2>
+                <div style="border: rgb(222, 222, 226) solid 1px; width: 480px;">
+                <div class="radio-container" style=" width: 450px; height: 50px; ">
+                    <input type="radio" name="payment" id="option1" value="Thanh toán khi nhận hàng">
+                    <span style="white-space: nowrap; font-size: 18px;" >Thanh toán bằng tiền mặt khi nhận hàng </span> <img src="images/mn.png" alt=""  style="width: 80px; height: 40px; margin-left: 30px;">
+                </div>
+                </div>
+                <br>
+                <div style="border: rgb(222, 222, 226) solid 1px; width: 400px;">
+                <div class="radio-container" style=" width: 380px; height: 50px;">
+                    <input type="radio" name="payment" id="option2" value="Thanh toán trục tuyến">
+                    <span style="white-space: nowrap; font-size: 18px;">Thanh toán khi trực tuyến</span> 
+                    <img src="images/vnpay-logo.png" alt="" style="width: 100px; margin-left: 30px;">    
+                </div>
+            </div>
+            </div>
+
+
+            
+            
+            
             <div class="SP">
                 <div ><h2>Kiểm tra lại đơn hàng</h2></div>
                 <div class="product-list" id="productList"></div>
@@ -147,6 +210,7 @@ h2 {
         </main>
         <div id="footer"></div>
     </div>
+  
     <script src="js/Header.js"></script>
     <script>
 //           fetch('header.html')
@@ -316,89 +380,193 @@ districtSelect.addEventListener('change', updateWards);
 
 // Gọi hàm fetchLocationData khi trang được tải
 window.onload = function() {
-    
-    loadCheckoutItems();  
-};
+    // Chọn option2
+option1.checked = true;
+    if( stValue==1)
+{    
+    // Lấy lại thông tin từ localStorage
+const savedFullName = localStorage.getItem('fullName');
+const savedPhoneNumber = localStorage.getItem('phoneNumber');
+const savedProvince = localStorage.getItem('province');
+const savedDistrict = localStorage.getItem('district');
+const savedWard = localStorage.getItem('ward');
+const savedAddress = localStorage.getItem('address');
+
+// Gán giá trị vào các trường trong form nếu có dữ liệu trong localStorage
+if (savedFullName) {
+    document.getElementById('fullName').value = savedFullName;
+}
+
+if (savedPhoneNumber) {
+    document.getElementById('phoneNumber').value = savedPhoneNumber;
+}
 
 
-        // // Tải header và footer
-        // fetch("header.html")
-        //     .then((response) => response.text())
-        //     .then((data) => {
-        //         document.getElementById("header").innerHTML = data;
-        //     });
+if (savedAddress) {
+    document.getElementById('address').value = savedAddress;
+}
+ // Gọi hàm để điền tỉnh/thành phố
+ populateProvinces();
 
-        // fetch("footer.html")
-        //     .then((response) => response.text())
-        //     .then((data) => {
-        //         document.getElementById("footer").innerHTML = data;
-        //     });
-        document.getElementById('checkoutButton').addEventListener('click', function() {
-            const totalElement = document.getElementById('finalTotal').textContent;
-            const totalPrice = parseFloat(totalElement.replace(/\D/g, '')); // Lấy giá trị tổng, loại bỏ các ký tự không phải số
-    const orderData = {
-        fullName: document.getElementById('fullName').value,
-        phoneNumber: document.getElementById('phoneNumber').value,
-        province: document.getElementById('province').options[document.getElementById('province').selectedIndex].text,
-        district: document.getElementById('district').options[document.getElementById('district').selectedIndex].text,
-        ward: document.getElementById('ward').options[document.getElementById('ward').selectedIndex].text,
-        address: document.getElementById('address').value,
-        totalPrice: totalPrice // Hàm tính tổng giá trị giỏ hàng
-    };
+// Gán giá trị cho tỉnh (province) nếu có lưu trong localStorage
+if (savedProvince) {
+    provinceSelect.value = savedProvince;
+    updateDistricts(); // Cập nhật danh sách quận/huyện dựa trên tỉnh được chọn
 
-    // fetch('/api/orders/create', {
-    //     method: 'POST',
-    //     headers: {
-    //         'Content-Type': 'application/json; charset=UTF-8',
-    //     },
-    //     body: JSON.stringify(orderData),
-    // })
-    // .then(response => response.json())
-    // .then(data => {
-    //     alert('Đặt hàng thành công!');
-    //     console.log('Success:', data);
-    //     window.location.href = "Order.html";
-    // })
-    // .catch((error) => {
-    //     console.error('Error:', error);
-    // });
-    
-    fetch('/api/orders/create', {
-    method: 'POST',
-    headers: {
-        'Content-Type': 'application/json; charset=UTF-8',
-    },
-    body: JSON.stringify(orderData),
-})
-.then(response => {
-    if (!response.ok) {
-        // Kiểm tra nếu phản hồi là 409 (xung đột do số lượng không đủ)
-        if (response.status === 409) {
-            return response.text().then(errorMessage => {
-                alert('Số lượng sản phẩm trong kho đã có sự thay đổi, vui lòng thử lại.'); // Hiển thị thông báo lỗi
-                // Không chuyển trang, chỉ thông báo cho người dùng
-                window.location.href = "GioHang.html";
-                throw new Error('Inventory issue: ' + errorMessage); // Dừng chuỗi promise và không thực hiện các lệnh tiếp theo
-            });
-        } else {
-            throw new Error('Đã xảy ra lỗi khi đặt hàng');
+    // Đợi danh sách quận/huyện được tải rồi mới gán giá trị cho quận/huyện
+    if (savedDistrict) {
+        districtSelect.value = savedDistrict;
+        updateWards(); // Cập nhật danh sách phường/xã dựa trên quận/huyện được chọn
+
+        // Đợi danh sách phường/xã được tải rồi mới gán giá trị cho phường/xã
+        if (savedWard) {
+            wardSelect.value = savedWard;
         }
     }
-    return response.json();  // Nếu thành công, tiếp tục xử lý đơn hàng
-})
-.then(data => {
-    // Chỉ khi response.ok là true mới thực hiện phần này
-    alert('Đặt hàng thành công!');
-    console.log('Success:', data);
-    window.location.href = "Order.html";  // Chuyển về trang Order nếu đặt hàng thành công
-})
-.catch((error) => {
-    console.error('Error:', error);
+}
+// Chọn option2
+option2.checked = true;
+
+// Vô hiệu hóa option1
+option1.disabled = true;
+
+}
+setTimeout(function() {
+                if (stValue == 1) {
+                    alert("Thanh toán thành công, vui lòng nhấn đặt hàng để hoàn thành đơn hàng.");
+                }
+            }, 1000);
+    loadCheckoutItems();  
+};
+// Lấy các tham số từ URL
+const urlParams = new URLSearchParams(window.location.search);
+// Lấy giá trị của tham số "st"
+const stValue = urlParams.get('st');
+        document.getElementById('checkoutButton').addEventListener('click', function() {
+const option1 = document.getElementById('option1');   
+const option2 = document.getElementById('option2');
+//  // Kiểm tra xem tất cả các trường đều được nhập
+const fullName = document.getElementById("fullName").value.trim();
+  const phoneNumber = document.getElementById("phoneNumber").value.trim();
+  const province = document.getElementById("province").value.trim();
+  const district = document.getElementById("district").value.trim();
+  const ward = document.getElementById("ward").value.trim();
+  const address = document.getElementById("address").value.trim();
+   // Lấy giá trị tổng từ finalTotal
+   const totalElement = document.getElementById("finalTotal").textContent;
+    const totalPrice = parseFloat(totalElement.replace(/\D/g, "")); // Loại bỏ các ký tự không phải số để lấy tổng giá trị
+   // Thông tin đơn hàng
+    const orderData = {
+        amount: totalPrice,
+        orderInfo: "Thông tin đơn hàng ví dụ"
+    };
+    if(stValue==0 && option2.checked){
+        if (!fullName || !phoneNumber || !province || !district || !ward || !address) {
+    alert("Vui lòng điền đầy đủ thông tin.");
+    return;
+  }
+  // Lưu thông tin vào localStorage
+localStorage.setItem('fullName', fullName);
+localStorage.setItem('phoneNumber', phoneNumber);
+localStorage.setItem('province', province);
+localStorage.setItem('district', district);
+localStorage.setItem('ward', ward);
+localStorage.setItem('address', address);
+
+console.log('Thông tin đã được lưu vào localStorage');
+    // Gửi yêu cầu đến backend để lấy URL thanh toán
+    fetch('/submitOrder', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8',
+        },
+        body: new URLSearchParams(orderData)
+    })
+    .then(response => response.text())  // Nhận URL từ backend dưới dạng plain text
+    .then(paymentUrl => {
+        console.log('Received Payment URL:', paymentUrl);  // Kiểm tra URL
+        // Thực hiện chuyển hướng đến URL VNPAY
+        window.location.href = paymentUrl;
+    })
+    .catch(error => {
+        console.error('Error:', error);
+        alert('Đã xảy ra lỗi khi xử lý thanh toán.');
+    });
+    }
+else{ if (!fullName || !phoneNumber || !province || !district || !ward || !address) {
+    alert("Vui lòng điền đầy đủ thông tin.");
+    return;}        
+    const paymentMethod = document.querySelector('input[name="payment"]:checked').value;
+    console.log(paymentMethod);
+      const totalElement =
+            document.getElementById("finalTotal").textContent;
+          const totalPrice = parseFloat(totalElement.replace(/\D/g, "")); // Lấy giá trị tổng, loại bỏ các ký tự không phải số
+          const orderData1 = {
+            fullName: document.getElementById("fullName").value,
+            phoneNumber: document.getElementById("phoneNumber").value,
+            province:
+              document.getElementById("province").options[
+                document.getElementById("province").selectedIndex
+              ].text,
+            district:
+              document.getElementById("district").options[
+                document.getElementById("district").selectedIndex
+              ].text,
+            ward: document.getElementById("ward").options[
+              document.getElementById("ward").selectedIndex
+            ].text,
+            address: document.getElementById("address").value,
+            totalPrice: totalPrice, // Hàm tính tổng giá trị giỏ hàng
+            payment: paymentMethod // Thêm phương thức thanh toán
+          };
+
+          
+
+          fetch("/api/orders/create", {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json; charset=UTF-8",
+            },
+            body: JSON.stringify(orderData1),
+          })
+            .then((response) => {
+              if (!response.ok) {
+                // Kiểm tra nếu phản hồi là 409 (xung đột do số lượng không đủ)
+                if (response.status === 409) {
+                  return response.text().then((errorMessage) => {
+                    alert(
+                      "Số lượng sản phẩm trong kho đã có sự thay đổi, vui lòng thử lại."
+                    ); // Hiển thị thông báo lỗi
+                    // Không chuyển trang, chỉ thông báo cho người dùng
+                    window.location.href = "GioHang.html";
+                    throw new Error("Inventory issue: " + errorMessage); // Dừng chuỗi promise và không thực hiện các lệnh tiếp theo
+                  });
+                } else {
+                  throw new Error("Đã xảy ra lỗi khi đặt hàng");
+                }
+              }
+              return response.json(); // Nếu thành công, tiếp tục xử lý đơn hàng
+            })
+            .then((data) => {
+              // Chỉ khi response.ok là true mới thực hiện phần này
+              alert("Đặt hàng thành công!");
+              console.log("Success:", data);
+              window.location.href = "Order.html"; // Chuyển về trang Order nếu đặt hàng thành công
+            })
+            .catch((error) => {
+              console.error("Error:", error);
+            });}
+
+
+// Vô hiệu hóa option1
+option1.disabled = false;
+
+
+
+
+
 });
 
-
-
-});
 
 
 

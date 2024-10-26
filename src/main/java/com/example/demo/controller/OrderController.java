@@ -42,66 +42,7 @@ public class OrderController {
     private CartItemRepository cartItemRepository;
     @Autowired
     private ComicRepository comicRepository;
-//    @PostMapping("/create")
-//public ResponseEntity<?> createOrder(@RequestBody Order order, HttpSession session) {
-//    Long userId = (Long) session.getAttribute("userId");
-//    
-//    // Kiểm tra xem userId có tồn tại trong session không
-//    if (userId == null) {
-//        return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("User not logged in");
-//    }
-// 
-//     Optional<User> userOpt = userRepository.findById(userId);
-//    if (!userOpt.isPresent()) {
-//        return ResponseEntity.status(HttpStatus.NOT_FOUND).body("User not found");
-//    }
-//
-//    User user = userOpt.get();
-//
-//    // Tìm giỏ hàng của người dùng
-//    Optional<Cart> cartOpt = cartRepository.findByUser(user);
-//    if (!cartOpt.isPresent()) {
-//        return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Cart not found for user");
-//    }
-//
-//    Cart cart = cartOpt.get();
-//List<CartItem> cartItems = cartItemRepository.findByCartAndSelectedTrue(cart);
-//    
-//
-//// Kiểm tra tồn kho trước khi xử lý đơn hàng
-//    for (CartItem cartItem : cartItems) {
-//        Comic comic = cartItem.getComic();
-//        
-//        // Kiểm tra số lượng tồn kho
-//        if (comic.getQuantity() < cartItem.getQuantity()) {
-//            // Nếu số lượng trong kho không đủ, trả về thông báo lỗi
-//            return ResponseEntity.status(HttpStatus.BAD_REQUEST)
-//                    .body("Sản phẩm " + comic.getName() + " không đủ số lượng trong kho.");
-//        }
-//    }
-//    
-//     order.setOrderTime(LocalDateTime.now().withNano(0));
-//    order.setOrderStatus("Chờ xác nhận"); // Trạng thái mặc định "Chờ xác nhận"
-//    order.setUserId(userId); // Gán userId cho đơn hàng
-//    Order savedOrder = orderRepository.save(order);
-//    
-//    for (CartItem cartItem : cartItems) {
-//         Comic comic = cartItem.getComic();
-//           // Trừ số lượng tồn kho
-//        comic.setQuantity(comic.getQuantity() - cartItem.getQuantity());
-//        comicRepository.save(comic); // Cập nhật lại thông tin sản phẩm trong cơ sở dữ liệu
-//        // Tạo một OrderItem mới
-//        OrderItem orderItem = new OrderItem();
-//        orderItem.setOrder(savedOrder); // Gán đơn hàng đã lưu vào OrderItem
-//        orderItem.setComic(cartItem.getComic()); // Gán thông tin sản phẩm
-//        orderItem.setQuantity(cartItem.getQuantity()); // Gán số lượng sản phẩm
-//        orderItem.setPrice(cartItem.getComic().getPrice()); // Gán giá sản phẩm
-//        
-//        // Lưu OrderItem vào cơ sở dữ liệu
-//        orderItemRepository.save(orderItem);
-//    }
-//    return ResponseEntity.ok(savedOrder); // Trả về đối tượng Order đã lưu
-//}
+
     @PostMapping("/create")
 public ResponseEntity<?> createOrder(@RequestBody Order order, HttpSession session) {
     Long userId = (Long) session.getAttribute("userId");
@@ -145,6 +86,8 @@ public ResponseEntity<?> createOrder(@RequestBody Order order, HttpSession sessi
     order.setOrderTime(LocalDateTime.now().withNano(0));
     order.setOrderStatus("Chờ xác nhận");
     order.setUserId(userId);
+    System.out.println(order.getPayment());
+    order.setPayment(order.getPayment());
     Order savedOrder = orderRepository.save(order);
     
     for (CartItem cartItem : cartItems) {

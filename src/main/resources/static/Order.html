@@ -324,6 +324,7 @@
                         <div class="order-details">
                             <strong>Mã đơn hàng:</strong> ${order.id}<br>
                             <strong>Ngày đặt hàng:</strong> ${new Date(order.orderTime).toLocaleString()}<br>
+                             <strong>Hình thức thanh toán:</strong> ${order.payment}<br>
                             <strong>Trạng thái:</strong> <span class="order-status">${order.orderStatus}</span><br>
                             <strong>Tổng tiền:</strong> ${formatPrice(order.totalPrice)}VNĐ
                         </div>

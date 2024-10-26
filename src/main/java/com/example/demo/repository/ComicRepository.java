@@ -38,7 +38,9 @@ public interface ComicRepository extends JpaRepository<Comic, Long> {
     @Query("SELECT c.name FROM Comic c WHERE c.id = :id")
     String findNameById(@Param("id") Long id);
 
-    
+    // Tìm các truyện có hai chữ đầu trong tên giống với hai chữ đầu của truyện chính và loại trừ truyện có ID đã cho
+    @Query("SELECT c FROM Comic c WHERE LOWER(c.name) LIKE LOWER(CONCAT(:firstTwoWords, '%')) AND c.id <> :id ORDER BY c.id DESC")
+List<Comic> findByFirstTwoWordsAndExcludeId(@Param("firstTwoWords") String firstTwoWords, @Param("id") Long id);
 //     List<Comic> findByNameContainingIgnoreCase(String name);
 
     public List<Comic> findByGenres(Genre genre);

@@ -780,27 +780,45 @@
 
       return comicDiv;
     }
-     //-----------------------------------------------------------------------------------------------------
-    // Hàm tải và hiển thị sản phẩm
-    function loadComics(apiUrl, containerId) {
-      fetch(apiUrl)
-        .then((response) => response.json())
-        .then((data) => {
-          const comicContainer = document.getElementById(containerId);
-          comicContainer.innerHTML = ""; // Xóa nội dung cũ
+    // Hàm để lấy ngẫu nhiên N phần tử từ mảng
+function getRandomElements(array, n) {
+  const result = [];
+  const taken = new Set();
 
-          data.forEach((comic) => {
-            const comicDiv = createComicItem(comic);
-            comicContainer.appendChild(comicDiv);
-          });
-        })
-        .catch((error) => {
-          console.error("Lỗi khi lấy dữ liệu từ API:", error);
-        });
+  while (result.length < n && result.length < array.length) {
+    const randomIndex = Math.floor(Math.random() * array.length);
+    if (!taken.has(randomIndex)) {
+      result.push(array[randomIndex]);
+      taken.add(randomIndex);
     }
+  }
+
+  return result;
+}
+     //-----------------------------------------------------------------------------------------------------
+   // Hàm tải và hiển thị sản phẩm
+function loadComics(apiUrl, containerId) {
+  fetch(apiUrl)
+    .then((response) => response.json())
+    .then((data) => {
+      const comicContainer = document.getElementById(containerId);
+      comicContainer.innerHTML = ""; // Xóa nội dung cũ
+
+      // Lấy 5 phần tử ngẫu nhiên từ dữ liệu
+      const randomComics = getRandomElements(data, 5);
+
+      randomComics.forEach((comic) => {
+        const comicDiv = createComicItem(comic);
+        comicContainer.appendChild(comicDiv);
+      });
+    })
+    .catch((error) => {
+      console.error("Lỗi khi lấy dữ liệu từ API:", error);
+    });
+}
     // Gọi hàm khi trang được tải
     document.addEventListener("DOMContentLoaded", function () {
-      loadComics("http://localhost:8080/comics/top5byid", "sptt");
+      loadComics(`http://localhost:8080/comics/top5similar/${productId}`, "sptt");
     });
      //-----------------------------------------------------------------------------------------------------
     // Modal xem tóm tắt
