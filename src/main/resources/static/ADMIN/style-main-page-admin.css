@@ -148,6 +148,7 @@ th, td {
 
 }
 td{
+    display: table-cell;
     white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -166,7 +167,7 @@ a img{
     height: 20px;
 }
 td:last-child{
-    width: 80%;
+    width: auto;
 }
 td:nth-child(4){
     width: 15%;
@@ -199,6 +200,7 @@ tr{
     text-align: center; 
     width: fit-content;
     box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1); /* Hiệu ứng đổ bóng */
+    margin-bottom: 15;
 }
 .btn-admin{
     width: 13%;
@@ -249,7 +251,7 @@ tr{
     background-color: #4CAF50; /* Màu xanh nổi bật */
     border: none; /* Loại bỏ viền mặc định */
     color: black; /* Chữ màu trắng */
-    padding: 6px 12px; /* Tăng khoảng cách bên trong */
+    padding: 6px 12px;
     border-radius: 20px; /* Bo tròn góc cho các tag */
     font-size: 20px; /* Kích thước chữ vừa phải */
     margin: 4px 4px 0 0; /* Khoảng cách giữa các tag */
@@ -260,10 +262,17 @@ tr{
     border-color: #4CAF50; /* Đổi màu viền khi được focus */
     box-shadow: 0px 0px 6px rgba(76, 175, 80, 0.5); /* Hiệu ứng ánh sáng khi chọn */
 }
-.select2-container--default .select2-search--inline .select2-search__field {
-    font-size: 20px;
-    height: 30px;
+
+.select2-container--default .select2-selection--single {
+    height: auto; /* Điều chỉnh chiều cao cho phù hợp */
+    padding: 5px; /* Căn chỉnh khoảng cách */
+    font-size: 16px; /* Đảm bảo kích thước font phù hợp */
 }
+
+.select2-dropdown {
+    z-index: 9999; /* Đảm bảo dropdown xuất hiện trên các thành phần khác */
+}
+
 
 #form-add-new-comic, #form-edit-comic {
 
@@ -403,12 +412,16 @@ tr{
 
 }
 
+
+
 /* CSS của checkbox trong xóa comics */
 .select-all-comic{
     width: 100%;
 }
-.checkbox-delete-comic{
-    width: 100%;
+
+.delete-comic{
+    height: 79.5%;
+    max-height: 54.4vh;
 }
 .btn-delete-comic{
     border: 1px solid black;
@@ -459,4 +472,16 @@ tr{
     display: inline-block;
     margin-left: 10px; /* Điều chỉnh khoảng cách nhỏ giữa số lượng và nút đóng */
     vertical-align: middle; /* Căn giữa theo chiều dọc */
+}
+.btn-close-delete-mode{
+    display: none;
+    font-size: larger;
+    border: none;
+    margin-left: 10px;
+    
+}
+.btn-close-delete-mode:hover{
+    color: red;
+    cursor: pointer;
+    
 }

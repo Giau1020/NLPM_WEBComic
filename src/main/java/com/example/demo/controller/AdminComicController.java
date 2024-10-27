@@ -1,17 +1,13 @@
 package com.example.demo.controller;
 
 import com.example.demo.DTO.ComicDTO;
-import com.example.demo.Service.ComicService;
 import com.example.demo.ServiceImpl.ComicServiceImpl;
 import com.example.demo.model.Author;
 import com.example.demo.model.Comic;
-import com.example.demo.model.ComicAuthor;
 import com.example.demo.model.Genre;
 import com.example.demo.repository.AuthorRepository;
 import com.example.demo.repository.ComicAuthorRepository;
 import com.example.demo.repository.ComicRepository;
-import com.example.demo.request.ComicAuthorId;
-import com.example.demo.request.ComicAuthorRequest;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -119,4 +115,55 @@ private final ComicAuthorRepository comicAuthorRepository;
     public List<Optional<Comic>> getComicsByListId(List<Long> comic_id){
         return comicService.getComicByListId(comic_id);
     }
+
+
+    @PutMapping("/update/{comicId}")
+    public ResponseEntity<Comic> updateComic(
+            @PathVariable Long comicId,
+            @RequestBody ComicDTO comicDTO
+    ) {
+        try {
+            Comic updated = comicService.updateComic(comicId, comicDTO);
+            return ResponseEntity.ok(updated);
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().body(null);
+        }
+    }
+
+//    Hàm xóa comic, với đầu vào là list Comic
+    @DeleteMapping("/deleteComics")
+    public ResponseEntity<?> deleteComicsByIds(@RequestBody List<Long> comicIds) {
+        try {
+            comicService.deleteComicsByIds(comicIds);
+            return ResponseEntity.ok("Comics successfully deleted");
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Failed to delete comics: " + e.getMessage());
+        }
+    }
+
+//    Hàm resetQuantity về 0
+    ComicRepository comicRepository;
+@PutMapping("/reset-quantity")
+public ResponseEntity<String> resetQuantityForComics(@RequestBody List<Long> comicIds) {
+    try {
+        for (Long comicId : comicIds) {
+            Comic comic = comicService.findComicById(comicId);
+            if (comic == null) {
+                return ResponseEntity.status(HttpStatus.NOT_FOUND)
+                        .body("Comic with ID " + comicId + " not found.");
+            }
+
+            // Reset the sold attribute to 0
+            comic.resetQuantity();
+            comicService.saveComic(comic);
+        }
+
+        return ResponseEntity.ok("Sold count reset to 0 for provided comic IDs.");
+    } catch (Exception e) {
+        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                .body("Error resetting sold count: " + e.getMessage());
+    }
+}
+
+
 }

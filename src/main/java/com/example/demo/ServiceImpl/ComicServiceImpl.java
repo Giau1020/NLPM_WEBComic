@@ -6,10 +6,8 @@ import com.example.demo.Service.ComicService;
 import com.example.demo.model.Author;
 import com.example.demo.model.Comic;
 import com.example.demo.model.Genre;
-import com.example.demo.repository.AuthorRepository;
-import com.example.demo.repository.ComicRepository;
+import com.example.demo.repository.*;
 
-import com.example.demo.repository.GenreRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
@@ -130,6 +128,7 @@ public class ComicServiceImpl implements ComicService {
         return comics;
     }
 
+
     // Upload img
     private static final String UPLOAD_DIR = "C:/Users/NgocG/Documents/NLPM_WebComic_SNG/NLPM_WEBComic/src/main/resources/static/images/";
 
@@ -151,6 +150,73 @@ public class ComicServiceImpl implements ComicService {
         // Lưu tệp
         Files.write(path, file.getBytes());
         return "../images/" + file.getOriginalFilename(); // Trả về đường dẫn tệp đã tải lên
+    }
+
+
+
+
+    @Override
+    public Comic updateComic(Long comicId, ComicDTO comicDTO) {
+        Optional<Comic> optionalComic = comicRepository.findById(comicId);
+
+        if (optionalComic.isPresent()) {
+            Comic existingComic = optionalComic.get();
+
+            // Cập nhật thông tin cơ bản của Comic
+            existingComic.setName(comicDTO.getName());
+            existingComic.setPrice(comicDTO.getPrice());
+            existingComic.setUrl(comicDTO.getUrl());
+            existingComic.setSold(comicDTO.getSold());
+            existingComic.setQuantity(comicDTO.getQuantity());
+            existingComic.setWeight(comicDTO.getWeight());
+            existingComic.setDescription(comicDTO.getDescription());
+            existingComic.setPages(comicDTO.getPages());
+            existingComic.setSize(comicDTO.getSize());
+            existingComic.setPublisher(comicDTO.getPublisher());
+            existingComic.setSummarize(comicDTO.getSummarize());
+            System.out.println("Updated comic URL: " + existingComic.getUrl());
+            // Cập nhật danh sách authors (dựa trên ID)
+            List<Long> authorIds = comicDTO.getAuthorIds();
+            if (authorIds != null && !authorIds.isEmpty()) {
+                List<Author> authors = authorRepository.findAllById(authorIds);
+//                if (authors.size() != authorIds.size()) {
+//                    throw new RuntimeException("One or more authors not found");
+//                }
+                existingComic.setAuthors(authors);
+            }
+
+            // Cập nhật danh sách genres (dựa trên ID)
+            List<Long> genreIds = comicDTO.getGenreIds();
+            if (genreIds != null && !genreIds.isEmpty()) {
+                List<Genre> genres = genreRepository.findAllById(genreIds);
+//                if (genres.size() != genreIds.size()) {
+//                    throw new RuntimeException("One or more genres not found");
+//                }
+                existingComic.setGenres(genres);
+            }
+
+            // Lưu comic đã cập nhật vào cơ sở dữ liệu
+            return comicRepository.save(existingComic);
+        } else {
+            throw new RuntimeException("Comic không tồn tại với id: " + comicId);
+        }
+    }
+
+    // In ComicServiceImpl class
+    CartItemRepository cartItemRepository;
+    @Override
+    public void deleteComicsByIds(List<Long> comicIds) {
+        comicRepository.deleteAllById(comicIds);
+
+    }
+
+
+    public Comic findComicById(Long comicId) {
+        return comicRepository.findById(comicId).orElse(null);
+    }
+
+    public void saveComic(Comic comic) {
+        comicRepository.save(comic);
     }
 }
 

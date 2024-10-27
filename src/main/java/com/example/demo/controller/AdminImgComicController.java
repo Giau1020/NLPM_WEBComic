@@ -33,7 +33,7 @@ public class AdminImgComicController {
     }
 
     @GetMapping("/{comic_id}")
-    public ResponseEntity<ImgComic> getImgComicById(@PathVariable("comic_id") Long comic_id) {
+    public ResponseEntity<ImgComic> getImgComicById(@PathVariable Long comic_id) {
         Optional<ImgComic> imgComic = imgComicService.findByComicId(comic_id);
         return imgComic.map(ResponseEntity::ok)
                 .orElseGet(() -> ResponseEntity.notFound().build());
@@ -44,4 +44,26 @@ public class AdminImgComicController {
         List<String> uploadedUrls = imgComicService.uploadImages(files);
         return new ResponseEntity<>(uploadedUrls, HttpStatus.OK);
     }
+
+    @PutMapping("/update/{comicId}")
+    public ResponseEntity<ImgComic> updateImgComic(
+            @PathVariable Long comicId,
+            @RequestBody ImgComic newImgComic) {
+
+        ImgComic updatedImgComic = imgComicService.updateImgComic(comicId, newImgComic);
+        return ResponseEntity.ok(updatedImgComic);
+    }
+
+
+    @DeleteMapping("/delete")
+    public ResponseEntity<?> deleteImgComicsByComicIds(@RequestBody List<Long> comicIds) {
+        int deletedCount = imgComicService.deleteImgComicsByComicIds(comicIds);
+        if (deletedCount > 0) {
+            return ResponseEntity.ok(deletedCount + " images successfully deleted.");
+        } else {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("No images found for provided comic IDs.");
+        }
+    }
+
+
 }

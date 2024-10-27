@@ -7,6 +7,8 @@
     <link rel="stylesheet" href="./style-header-footer-admin.css">
     <link rel="stylesheet" href="./style-main-page-admin.css">
     <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+    <!-- <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/css/select2.min.css" rel="stylesheet" /> -->
+
 
 </head>
 <body>
@@ -208,13 +210,14 @@
             <div class="products-tool">
                 <button class="btn-admin add-product" onclick="popUpAddNewComic(); close_edit_mode();">Thêm</button>
                 <button class="btn-admin search-product" onclick="searchComic();">Tìm kiếm</button>
-                <button class="btn-admin edit-product" onclick="showEditTool('#form-edit-comic', 'css-for-popup'); close_edit_mode();">Chỉnh sửa</button>
-                <button class="btn-admin delete-product" onclick="show_delete_comic(); close_edit_mode();">Xóa</button>
+                <button class="btn-admin edit-product" onclick="showEditTool('#form-edit-comic', 'css-for-popup'); close_edit_mode();resetEditMode();">Chỉnh sửa</button>
+                <button type="button" class="btn-admin delete-product" onclick=" show_delete_comic(event); ">Xóa</button>
                 <p class="KQTK" style="display: none;">Kết quả tìm kiếm: <p style="display: none;" class="count_search"></p> <button class="close_search" style="display: none;">&times;</button></p>
                 
                 <p class="select-all-comic" style="display: none;">Chọn tất cả <input type="checkbox" name="checkbox-delete-comic" id="checkbox-delete-comic">
                 </p>
-                <button class="btn-delete-comic" style="display: none;">Xóa</button>
+                <button class="btn-delete-comic" style="display: none;" onclick="deleteComic()">Xóa</button>
+                <button class="btn-close-delete-mode" >&times;</button>
 
             </div>
             <div class="table">
@@ -239,7 +242,7 @@
                         <!-- <td>Hiện</td> -->
                          <td></td>
                         <td><img style="width: 100px; height: 100px;"  class="btn-detail-comic" src="./images-Admin/edit-text.png" alt=""></td>
-                        <td class="checkbox-delete-comic" style="display: none;"><input type="checkbox" name="checkbox-delete-comic" id="checkbox-delete-comic"></td>
+                        <td class="checkbox-delete-comic" ><input type="checkbox" name="checkbox-delete-comic" id="checkbox-delete-comic"></td>
                     </tr>
                   </tbody>  
                   <link rel="stylesheet" href="">
@@ -257,8 +260,8 @@
             <div class="content-edit-mode">
             <div class="table">
                 <div class="search-frame-edit">
-                    <input class="search-frame-inp" type="text">
-                    <img class="header-btn-search" style="width: 30px; height: 30px;" src="./images-Admin/icon-search.png" alt="icon-search">
+                    <input class="search-frame-inp inp_edit" type="text">
+                    <img class="header-btn-search img_edit" style="width: 30px; height: 30px;" src="./images-Admin/icon-search.png" alt="icon-search">
                 </div>
                 <div>
                     <table>
@@ -266,7 +269,7 @@
                         <tr>
                             <th>ID</th>
                             <th>Tên truyện</th>
-                            <th>Mô tả</th>
+                            <!-- <th>Mô tả</th> -->
                            
                             <th>Giá</th>
                         </tr>
@@ -294,12 +297,12 @@
                     <input type="text" name="name_comic" id="inp-name-comic2" required>
                 
                     <p>Tác giả:</p>
-                    <input type="text" name="name_author" id="name-author2" required>
-                    
+                    <!-- <input type="text" name="name_author" id="name-author2" required> -->
+                    <select name="" id="name-author2" multiple></select>
                     <p>Giá</p>
                     <input type="number" name="price-comic" id="price-comic2" min="0" required>
                     
-                    <p>Số lượng bán:</p>
+                    <p>Số lượng còn trong kho: </p>
                     <input type="number" name="slb" id="inp-slb2">
 
                     <p>Nhà xuất bản:</p>
@@ -312,17 +315,17 @@
                     <input type="number" name="Pages" id="inp-pages2">
 
                     <p>Cân nặng (kg):</p>
-                    <input type="number" name="Weight" id="inp-weight2" step="0.01" min="0">
+                    <input type="text" name="Weight" id="inp-weight2" step="0.01" min="0">
 
 
 
                 
                 <p>Thể loại:</p>
-                <select name="genre"  required>
-                    <option id="inp-genre2" value="">-- Chọn thể loại --</option>
-                    <option value="Fun">Hài hước</option>
+                <select name="genre" id="inp-genre2" required multiple>
+                    <!-- <option class="inp-genre2" value="">-- Chọn thể loại --</option> -->
+                    <!-- <option value="Fun">Hài hước</option>
                     <option value="Romantic">Lãng mạn</option>
-                    <option value="Student">Thanh xuân vườn trường</option>
+                    <option value="Student">Thanh xuân vườn trường</option> -->
                 </select>
                
                 <p>Mô tả nội dung:</p>
@@ -333,9 +336,9 @@
                 <input type="file" name="images[]" id="files-cover-img2" accept="image/*" multiple required>
                 <div id="preview1"></div>
                 <p>Thêm file hình ảnh:</p>
-                <input type="file" name="images[]" id="files-img2" accept="image/*" multiple required>
+                <input  type="file" name="images[]" id="files-img2" accept="image/*" multiple required>
 
-                <div id="preview"></div>
+                <div id="preview2"></div>
                 <div id="response"></div>
     
                 
@@ -359,11 +362,12 @@
     <script src="./script-for-main-page.js"></script>
     <script src="https://kit.fontawesome.com/86ec971ab9.js" crossorigin="anonymous"></script>
     <script src="./script-csdl-admin.js"></script>
-
+    <script src="./script/script-for-edit-from.js"></script>
      <!-- Bao gồm jQuery và Select2 JS -->
      <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-     <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
-
+    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+     <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/js/select2.min.js"></script> -->
+    <script src="./script/scrip-for-detele-comic.js"></script>
 
    
 </body>

@@ -20,4 +20,6 @@ import org.springframework.web.multipart.MultipartFile;
 public interface ImgComicRepository extends JpaRepository<ImgComic, Long> {
     Optional<ImgComic> findByComicId(Long comicId);
 
+
+    int deleteAllByComicIdIn(List<Long> comicIds);
 }

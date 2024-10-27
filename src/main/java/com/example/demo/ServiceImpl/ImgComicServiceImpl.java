@@ -4,6 +4,8 @@ import com.example.demo.Service.ImgComicService;
 import com.example.demo.model.ImgComic;
 import com.example.demo.repository.ImgComicRepository;
 
+import jakarta.persistence.EntityNotFoundException;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -57,7 +59,7 @@ public class ImgComicServiceImpl implements ImgComicService {
         List<String> uploadedUrls = new ArrayList<>();
 
         // Kiểm tra số lượng tệp tải lên
-        if (files.size() > 5) {
+        if (files.size() != 5) {
             throw new IllegalArgumentException("Bạn chỉ có thể tải lên tối đa 5 tệp.");
 
         }
@@ -86,6 +88,41 @@ public class ImgComicServiceImpl implements ImgComicService {
     }
 
 
-//    Tìm kiếm truyện theo tên hoặc tác giả
+//    Cập nhật imgComic
+
+@Override
+    public ImgComic updateImgComic(Long comicId, ImgComic newImgComic) {
+        // Tìm ImgComic theo comicId
+        Optional<ImgComic> existingImgComic = imgComicRepository.findByComicId(comicId);
+
+        if (existingImgComic.isPresent()) {
+            ImgComic imgComic = existingImgComic.get();
+
+            // Cập nhật các trường ảnh
+            imgComic.setUrl1(newImgComic.getUrl1());
+            imgComic.setUrl2(newImgComic.getUrl2());
+            imgComic.setUrl3(newImgComic.getUrl3());
+            imgComic.setUrl4(newImgComic.getUrl4());
+            imgComic.setUrl5(newImgComic.getUrl5());
+
+            // Lưu thay đổi vào database
+            return imgComicRepository.save(imgComic);
+        } else {
+            // Nếu không tìm thấy, có thể xử lý ngoại lệ hoặc tạo mới (nếu cần)
+            throw new EntityNotFoundException("ImgComic with comicId " + comicId + " not found.");
+        }
+    }
+
+
+    @Override
+    public int deleteImgComicsByComicIds(List<Long> comicIds) {
+        return imgComicRepository.deleteAllByComicIdIn(comicIds);
+    }
+
+    // In ImgComicServiceImpl class
+
+
+
+
 
 }

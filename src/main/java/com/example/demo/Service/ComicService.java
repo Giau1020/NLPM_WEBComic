@@ -1,8 +1,10 @@
 package com.example.demo.Service;
 
+import com.example.demo.DTO.ComicDTO;
 import com.example.demo.model.Author;
 import com.example.demo.model.Comic;
 import com.example.demo.model.Genre;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -37,6 +39,16 @@ public interface ComicService {
     //Hàm hiển thị danh sách truyện theo danh sách id
     List<Optional<Comic>> getComicByListId(@PathVariable List<Long> id);
 
+//    Hàm cập nhật truyện tranh
+//public Comic updateComic(Long comicId, Comic updatedComic);
+    public Comic updateComic(Long comicId, ComicDTO comicDTO);
+
+//    Phương thức xóa truyện
+@Modifying
+@Query("DELETE FROM CartItem ci WHERE ci.Comic.id IN :comicIds" +" DELETE FROM CartItem ci WHERE ci.comic.id IN :comicIds")
+public void deleteComicsByIds(List<Long> comicIds) ;
+
+    public Comic findComicById(Long comicId);
 
 
 }

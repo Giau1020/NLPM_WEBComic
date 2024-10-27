@@ -176,5 +176,8 @@ public class Comic {
         this.genres = genres;
     }
 
+    public void resetQuantity() {
+        this.quantity = 0;
+    }
 }
 

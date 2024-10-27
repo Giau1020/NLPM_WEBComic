@@ -200,22 +200,24 @@ function removeCSSFile(id){
 function showEditTool(className, id){
     let element = document.querySelector(`${className}`);
     if(element.style.display === 'none'){
-        close_edit_mode();
+            
         element.style.display = 'block';
         addCSSFile('./Form-popUp/Style-edit-comic.css', `${id}`);
-         document.querySelector('#inp-id-comic2').value = "";
-     document.querySelector('#inp-name-comic2').value = "";
-     document.querySelector('#name-author2').value = "";
-    document.querySelector('#price-comic2').value = "";
-     document.querySelector('#inp-slb2').value = "";
-    document.querySelector('#NXB2').value = "";
-     document.querySelector('#inp-size2').value = "";
-     document.querySelector('#inp-pages2').value = "";
-     document.querySelector('#inp-genre2').value = "";
-     document.querySelector('#content-comic2').value = "";
-     document.querySelector('#summary_content-comic2').value = "";
-     document.querySelector('#files-img2').value = "";
-     document.querySelector('#inp-weight2').value = "";
+        document.querySelector('#inp-id-comic2').value = "";
+        document.querySelector('#inp-name-comic2').value = "";
+        document.querySelector('#name-author2').value = "";
+        document.querySelector('#price-comic2').value = "";
+        document.querySelector('#inp-slb2').value = "";
+        document.querySelector('#NXB2').value = "";
+        document.querySelector('#inp-size2').value = "";
+        document.querySelector('#inp-pages2').value = "";
+        document.querySelector('#inp-genre2').value = "";
+        document.querySelector('#content-comic2').value = "";
+        document.querySelector('#summary_content-comic2').value = "";
+        document.querySelector('#files-img2').value = "";
+        document.querySelector('#inp-weight2').value = "";
+        showAllComicsEditTable();
+        edit_mode();
     }else if(element.style.display === 'block'){
         element.style.display = 'none';
         removeCSSFile(`${id}`);
@@ -235,12 +237,14 @@ function edit_mode(){
     // Lấy nội dung của cột mà bạn muốn, ví dụ là cột thứ 2 (Title)
     const title = clickedRow.cells[0].textContent;
     console.log(title);
-    getComicById(title);
+    // getComicById(title);
+    updateComic(title);
+    
   }});
     
 
 }
-edit_mode();
+
 // Hàm hiện div trang chủ
 function On_div_main(){
     document.querySelector('.admin-detail-section').style.display = 'grid'; 
@@ -276,17 +280,43 @@ function on_off_div(className){
 // Script cho chế độ xóa
 // Khi click vào nút 'Xóa' ô chọn tất cả truyện sẽ hiện ra, và cột xóa sẽ hiện ra
 // Hàm Hiện các chế độ của nút xóa
-function show_delete_comic(){
-    On_div('.select-all-comic');
-    On_div('.delete-comic');
-    On_div('.btn-delete-comic');
-   // On_div('.checkbox-delete-comic');
-   const checkboxes = document.querySelectorAll('.checkbox-delete-comic');
 
-    checkboxes.forEach(td => {
-        td.style.display = 'block';
-    });
+var click_delete = 0;
+let isColumnHidden = true;
+async function show_delete_comic(event){
+    event.preventDefault();
+  //  console.log("Delete button clicked");
+  click_delete =1;
+        document.querySelector('.delete-comic').style.display = 'table-cell';
+        document.querySelector('.select-all-comic').style.display = 'block';
+        document.querySelector('.btn-delete-comic').style.display = 'block';
+        document.querySelector('.btn-close-delete-mode').style.display = 'block';
+        isColumnHidden = !isColumnHidden; // Toggle the state
+        await toggleColumnVisibility(5, true);
+        updateCheckbox();
+
+        document.querySelector('.btn-close-delete-mode').addEventListener('click', function(){
+            closeDelete();
+        });
+        
+        
+
 }
+
+async function toggleColumnVisibility(index, shouldShow) {
+    const rows = document.querySelectorAll('.table_body tr');
+    rows.forEach(row => {
+        const cell = row.cells[index];
+        cell.style.setProperty('display', shouldShow ? 'table-cell' : 'none', 'important');
+          //  console.log(shouldShow ? "table-cell" : "none", cell); // Debugging output
+
+       
+    });
+    return;
+}
+
+
+
 
 
 

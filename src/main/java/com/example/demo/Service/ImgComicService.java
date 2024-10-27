@@ -1,5 +1,6 @@
 package com.example.demo.Service;
 
+import com.example.demo.model.Comic;
 import com.example.demo.model.ImgComic;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -15,6 +16,13 @@ public interface ImgComicService {
 
     //Hàm lấy Hình ảnh comic bằng id
     Optional<ImgComic> findByComicId(Long comicId);
+
+    ImgComic updateImgComic(Long comicId, ImgComic newImgComic);
+    // In ImgComicServiceImpl class
+
+    //ImgComic deleteAllByComicIdIn(Long comicId);
+
+    int deleteImgComicsByComicIds(List<Long> comicIds);
 
 
 }
