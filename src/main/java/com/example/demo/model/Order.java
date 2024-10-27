@@ -180,7 +180,8 @@ public class Order {
 
     @Column(name = "order_time")
     private LocalDateTime orderTime;
-
+    
+     private String Payment;
     // Thêm mối quan hệ một-nhiều với OrderItem
     @OneToMany(mappedBy = "order", cascade = CascadeType.ALL)
     private List<OrderItem> items;
@@ -285,5 +286,12 @@ public class Order {
 
     public void setItems(List<OrderItem> items) {
         this.items = items;
+    }
+    public String getPayment() {
+        return Payment;
+    }
+
+    public void setPayment(String Payment) {
+        this.Payment = Payment;
     }
 }

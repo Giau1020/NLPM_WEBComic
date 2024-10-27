@@ -56,7 +56,7 @@
         .details-button,
         .cancel-button,
         .review-button {
-            margin-top: 10px;
+            /* margin-top: 10px; */
             background-color: rgb(220, 41, 41);
             color: white;
             border: none;
@@ -64,7 +64,14 @@
             cursor: pointer;
             
         }
-
+        
+        .review-button {
+            margin-top: 10px;
+            background-color: rgb(220, 41, 41);
+           width: 90px;
+            cursor: pointer;
+        }
+        
         .order-detail-info {
             display: none;
             margin-top: 15px;
@@ -317,6 +324,7 @@
                         <div class="order-details">
                             <strong>Mã đơn hàng:</strong> ${order.id}<br>
                             <strong>Ngày đặt hàng:</strong> ${new Date(order.orderTime).toLocaleString()}<br>
+                             <strong>Hình thức thanh toán:</strong> ${order.payment}<br>
                             <strong>Trạng thái:</strong> <span class="order-status">${order.orderStatus}</span><br>
                             <strong>Tổng tiền:</strong> ${formatPrice(order.totalPrice)}VNĐ
                         </div>

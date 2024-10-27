@@ -293,7 +293,7 @@
     // Cập nhật lại số lượng bằng số lượng còn lại
     item.quantity = item.comic.quantity;
     quantityInput.value = item.comic.quantity;
-
+    calculateTotal();
     // Gửi yêu cầu cập nhật số lượng trong cơ sở dữ liệu
     fetch('/cart/update', {
         method: 'POST',
@@ -329,8 +329,14 @@
             deleteButton.innerHTML = "🗑️";
             deleteButton.classList.add("delete-button");
             deleteButton.onclick = function() {
-                removeFromCart(item.comic.id);
-            };
+             const confirmed = confirm("Bạn có chắc chắn muốn xóa sản phẩm này khỏi giỏ hàng không?");
+             if (confirmed) {
+             // Nếu người dùng nhấn "OK", thì tiến hành xóa
+             removeFromCart(item.comic.id);
+             }
+   
+};
+
 
             quantityContainer.appendChild(decreaseButton);
             quantityContainer.appendChild(quantityInput);
@@ -464,15 +470,6 @@
         }
 
         // Xử lý sự kiện cho checkbox "Chọn tất cả"
-        // document.getElementById("selectAllCheckbox").addEventListener("change", function() {
-        //     const checkboxes = document.querySelectorAll('.checkbox');
-        //     checkboxes.forEach(checkbox => {
-        //         checkbox.checked = this.checked;
-        //         const comicId = checkbox.closest('.cart-item').querySelector('.item-info input').dataset.comicId;
-        //         updateCheckboxStatus(comicId, checkbox.checked);
-        //     });
-        //     updateTotal();
-        // });
         document.getElementById("selectAllCheckbox").addEventListener("change", function() {
     const checkboxes = document.querySelectorAll('.checkbox');
     checkboxes.forEach(checkbox => {
@@ -492,7 +489,7 @@
     if (!anyChecked) {
         alert("Bạn chưa chọn sản phẩm nào để thanh toán!");
     } else {
-        window.location.href = "TT.html"; // Điều hướng sang trang thanh toán nếu có sản phẩm được chọn
+        window.location.href = "TT.html?st=0"; // Điều hướng sang trang thanh toán nếu có sản phẩm được chọn
     }
     
 });

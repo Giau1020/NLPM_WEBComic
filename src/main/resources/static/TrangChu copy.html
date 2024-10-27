@@ -14,93 +14,21 @@
       .p1 {
         margin-top: 10px;
         background-color: white;
-        height: 260px;
+        height: 280px;
         width: 1200px;
         display: flex;
       }
-   
       .ps1 {
-  position: relative;
-  height: 260px;
-  width: 800px;
-  background-color: white;
-  overflow: hidden;
-}
-
-.banner-slider {
-  position: relative;
-  width: 100%;
-  height: 100%;
-}
-
-.banner-image {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  opacity: 0;
-  transition: opacity 1s ease-in-out;
-}
-
-.banner-image.active {
-  opacity: 1;
-}
-/* Dấu chấm điều hướng */
-.dots-container {
-  position: absolute;
-  bottom: 10px;
-  left: 50%;
-  transform: translateX(-50%);
-  display: flex;
-  gap: 8px;
-}
-
-.dot {
-  width: 12px;
-  height: 12px;
-  background-color: rgba(255, 255, 255, 0.5);
-  border-radius: 50%;
-  cursor: pointer;
-  transition: background-color 0.3s;
-}
-
-.dot.active {
-  background-color: white;
-}
-
-/* Nút điều khiển */
-.prev-button, .next-button {
-  position: absolute;
-  top: 50%;
-  transform: translateY(-50%);
-  background-color: rgba(0, 0, 0, 0.5);
-  color: white;
-  border: none;
-  cursor: pointer;
-  font-size: 20px;
-  padding: 10px;
-  border-radius: 50%;
-  transition: background-color 0.3s;
-}
-
-.prev-button {
-  left: 10px;
-}
-
-.next-button {
-  right: 10px;
-}
-
-.prev-button:hover, .next-button:hover {
-  background-color: rgba(0, 0, 0, 0.8);
-}
-
+        margin-top: 15px;
+        height: 250px;
+        width: 700px;
+        background-color: white;
+      }
       .ps2 {
-        margin-left: 10px;
-        height: 259px;
-        width: 400px;
+        margin-top: 15px;
+        margin-left: 15px;
+        height: 250px;
+        width: 485px;
         background-color: white;
       }
       .ps2 img {
@@ -203,39 +131,19 @@
 
       <main class="main">
         <div class="p1">
-          <!-- <div class="ps1">
-            <img src="" alt="" id="myImage" height="250px" width="700px" />
-          </div> -->
           <div class="ps1">
-            <div class="banner-slider">
-              <img src="images/bnluffy.png" alt="Banner 1" class="banner-image active" />
-              <img src="images/bn7v.png" alt="Banner 2" class="banner-image" />
-              <img src="images/bnop.jpg" alt="Banner 3" class="banner-image" />
-              <img src="images/bnnaru.jpg" alt="Banner 4" class="banner-image" />
-              <img src="images/bnic.jpg" alt="Banner 5" class="banner-image" />
-            </div>
-              <!-- Thêm các dấu chấm điều hướng -->
-  <div class="dots-container">
-    <span class="dot active"></span>
-    <span class="dot"></span>
-    <span class="dot"></span>
-    <span class="dot"></span>
-    <span class="dot"></span>
-  </div>
-  <!-- Thêm các nút điều khiển -->
-  <button class="prev-button">&lt;</button>
-  <button class="next-button">&gt;</button>
-          </div>          
+            <img src="" alt="" id="myImage" height="250px" width="700px" />
+          </div>
           <div class="ps2">
-            
-              <img src="images/bnt1.png" alt="" height="259px" width="400px" />
-           
-            <!-- <div class="ps2-bottom">
+            <div class="ps2-top">
               <img src="" alt="" height="125px" width="485px" />
-            </div> -->
+            </div>
+            <div class="ps2-bottom">
+              <img src="" alt="" height="125px" width="485px" />
+            </div>
           </div>
         </div>
-        <!-- <div class="p2">Flash Sale</div> -->
+        <div class="p2">Flash Sale</div>
 
         <!-- Phần sản phẩm bán chạy -->
         <div class="p3">
@@ -297,73 +205,6 @@
             console.error("Lỗi khi lấy dữ liệu từ API:", error);
           });
       }
-      // Hàm tương tác với banner
-      document.addEventListener("DOMContentLoaded", function () {
-  let currentIndex = 0;
-  const images = document.querySelectorAll(".banner-image");
-  const dots = document.querySelectorAll(".dot");
-  const totalImages = images.length;
-  const intervalTime = 3000; // Thời gian chuyển đổi (3000ms = 3 giây)
-  let slideInterval;
-
-  function showImage(index) {
-    // Ẩn hình hiện tại và bỏ trạng thái "active" của dấu chấm
-    images[currentIndex].classList.remove("active");
-    dots[currentIndex].classList.remove("active");
-
-    // Cập nhật chỉ số của hình hiện tại
-    currentIndex = index;
-
-    // Hiển thị hình mới và thêm trạng thái "active" cho dấu chấm tương ứng
-    images[currentIndex].classList.add("active");
-    dots[currentIndex].classList.add("active");
-  }
-
-  function showNextImage() {
-    const nextIndex = (currentIndex + 1) % totalImages;
-    showImage(nextIndex);
-  }
-
-  function showPrevImage() {
-    const prevIndex = (currentIndex - 1 + totalImages) % totalImages;
-    showImage(prevIndex);
-  }
-
-  // Tự động chuyển đổi hình ảnh
-  function startSlideShow() {
-    slideInterval = setInterval(showNextImage, intervalTime);
-  }
-
-  function stopSlideShow() {
-    clearInterval(slideInterval);
-  }
-
-  // Sự kiện click cho các dấu chấm
-  dots.forEach((dot, index) => {
-    dot.addEventListener("click", () => {
-      showImage(index);
-      stopSlideShow(); // Dừng slideshow khi người dùng nhấp vào dấu chấm
-      startSlideShow(); // Khởi động lại slideshow
-    });
-  });
-
-  // Sự kiện click cho các nút điều khiển
-  document.querySelector(".prev-button").addEventListener("click", () => {
-    showPrevImage();
-    stopSlideShow(); // Dừng slideshow khi người dùng nhấp vào nút
-    startSlideShow(); // Khởi động lại slideshow
-  });
-
-  document.querySelector(".next-button").addEventListener("click", () => {
-    showNextImage();
-    stopSlideShow(); // Dừng slideshow khi người dùng nhấp vào nút
-    startSlideShow(); // Khởi động lại slideshow
-  });
-
-  // Khởi động slideshow khi trang được tải
-  startSlideShow();
-});
-
 
       // Gọi hàm khi trang được tải
       document.addEventListener("DOMContentLoaded", function () {
