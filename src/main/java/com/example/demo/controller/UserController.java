@@ -63,28 +63,54 @@ public void logout(HttpSession session, HttpServletResponse response) throws IOE
 }
 
  // Chức năng đăng ký
+//    @PostMapping("/register")
+//    public ResponseEntity<String> register(@RequestBody UserRegistrationRequest registrationRequest) {
+//        // Kiểm tra xem username đã tồn tại chưa
+//        if (userRepository.findByUsername(registrationRequest.getUsername()).isPresent()) {
+//            return ResponseEntity.status(HttpStatus.CONFLICT).body("Username already exists");
+//        }
+//
+//        // Tạo người dùng mới
+//        User newUser = new User();
+//        newUser.setUsername(registrationRequest.getUsername());
+//        newUser.setPassword(registrationRequest.getPassword()); // Mã hóa mật khẩu nếu cần
+//        newUser.setRole("user");
+//        userRepository.save(newUser);
+//
+//        // Tạo giỏ hàng rỗng cho người dùng mới
+//        Cart cart = new Cart();
+//        cart.setUser(newUser);
+//        cartRepository.save(cart);
+//
+//        return ResponseEntity.ok("User registered successfully");
+//    }
     @PostMapping("/register")
-    public ResponseEntity<String> register(@RequestBody UserRegistrationRequest registrationRequest) {
-        // Kiểm tra xem username đã tồn tại chưa
-        if (userRepository.findByUsername(registrationRequest.getUsername()).isPresent()) {
-            return ResponseEntity.status(HttpStatus.CONFLICT).body("Username already exists");
-        }
-
-        // Tạo người dùng mới
-        User newUser = new User();
-        newUser.setUsername(registrationRequest.getUsername());
-        newUser.setPassword(registrationRequest.getPassword()); // Mã hóa mật khẩu nếu cần
-        newUser.setRole("user");
-        userRepository.save(newUser);
-
-        // Tạo giỏ hàng rỗng cho người dùng mới
-        Cart cart = new Cart();
-        cart.setUser(newUser);
-        cartRepository.save(cart);
-
-        return ResponseEntity.ok("User registered successfully");
+public ResponseEntity<String> register(@RequestBody UserRegistrationRequest registrationRequest) {
+    // Kiểm tra xem tên đăng nhập đã tồn tại chưa
+    if (userRepository.findByUsername(registrationRequest.getUsername()).isPresent()) {
+        return ResponseEntity.status(HttpStatus.CONFLICT).body("Tên đăng nhập đã tồn tại");
     }
-    
+
+    // Kiểm tra mật khẩu và xác nhận mật khẩu có khớp nhau không
+    if (!registrationRequest.getPassword().equals(registrationRequest.getConfirmPassword())) {
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Mật khẩu xác nhận không khớp");
+    }
+
+    // Tạo người dùng mới
+    User newUser = new User();
+    newUser.setUsername(registrationRequest.getUsername());
+    newUser.setPassword(registrationRequest.getPassword()); // Lưu mật khẩu không mã hóa
+    newUser.setRole("user");
+    userRepository.save(newUser);
+
+    // Tạo giỏ hàng rỗng cho người dùng mới
+    Cart cart = new Cart();
+    cart.setUser(newUser);
+    cartRepository.save(cart);
+
+    return ResponseEntity.ok("Đăng ký thành công");
+}
+
      @GetMapping("/info")
     public ResponseEntity<User> getUserInfo(HttpSession session) {
         Long userId = (Long) session.getAttribute("userId");
@@ -126,7 +152,7 @@ public void logout(HttpSession session, HttpServletResponse response) throws IOE
     static class UserRegistrationRequest {
         private String username;
         private String password;
-
+        private String confirmPassword;
         public String getUsername() {
             return username;
         }
@@ -142,6 +168,15 @@ public void logout(HttpSession session, HttpServletResponse response) throws IOE
         public void setPassword(String password) {
             this.password = password;
         }
+
+        public String getConfirmPassword() {
+            return confirmPassword;
+        }
+
+        public void setConfirmPassword(String confirmPassword) {
+            this.confirmPassword = confirmPassword;
+        }
+        
     }
     static class UserLoginResponse {
     private String role;
