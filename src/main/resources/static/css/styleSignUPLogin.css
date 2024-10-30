@@ -1,0 +1,145 @@
+
+/* đăng kí và đăng nhập*/
+.main {
+    display: flex;
+    justify-content: center; /* Căn giữa theo chiều ngang */
+    align-items: center;     /* Căn giữa theo chiều dọc */
+    flex-grow: 1;            /* Chiếm không gian còn lại của trang */
+    text-align: center;      /* Căn giữa văn bản trong các phần tử */
+
+}
+
+
+.login-container , .registrationForm{
+    margin: 3%;
+    padding: 18px;
+    width:25%;
+    height:80%;
+    border-radius: 8px; 
+    border: 2px solid red; /* Màu sắc của đường viền */
+    background-color: #fff;
+
+}
+
+
+.login-container h2 , .registrationForm h2{
+    margin-top:40px;
+    margin-bottom: 20px;
+    font-size: 30px;
+    color:red;
+}
+#forgot-password{
+    text-align:right;
+    color: red;
+}
+#using {
+    text-align: center;
+    margin-top: 30px;
+    margin-bottom: 2px 0;
+    font-weight: bold;
+}
+#fb{
+   width:7%;
+   height:auto;
+   margin-top: 10px;
+   margin-left: 25px;
+}
+#google {
+width:7%;
+   height:auto;
+   margin-top: 10px;
+   margin-right: 25px;
+}
+#signupusing{
+    text-align: center;
+    margin-top: 30px;
+    margin-bottom: 2px 0;
+   
+}
+#SignUp{
+    text-align: center;
+    margin-top: 15px;
+    margin-bottom: 40px;
+    font-weight: bold;
+    color :red;
+}
+.registrationForm p{
+    display:inline;
+}
+#logininsignup{
+    margin-top: 15px;
+    margin-bottom: 40px;
+}
+.login-container input ,.registrationForm input{
+    width: 90%;
+    padding: 10px;
+    margin: 15px 0;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    transition: border-color 0.3s;
+}
+.login-container button , .registrationForm button{
+    width: 90%;
+    padding: 10px;
+ /*   background: #007BFF;*/
+ background: #ccc;
+    color: white;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+    margin:10px 0;
+    margin-top: 25px;
+}
+.login-container button:hover , .registrationForm button:hover{
+    background: red;
+}
+
+/* trang đặt hàng thành công*/
+#checkimages{
+    margin-top: 20px;
+    width:50px;
+}
+.DatHangThanhCong {
+    margin-top: 20px;
+  padding:18px;
+ 
+}
+#textDHTC{
+    text-align: center;
+    margin-top: 15px;
+    font-size: 200%;
+}
+#textnote{
+    text-align: center;
+    margin-top: 3px;
+    margin-bottom: 20px;
+    font-size: 100%;
+}
+.DatHangThanhCong table {  
+    margin: 10px auto;
+    width:400px;
+    border-collapse: collapse;
+    
+}
+.DatHangThanhCong th,.DatHangThanhCong td {
+     
+    border: 1px solid red; /* Viền cho các ô */
+   padding: 20px; /* Khoảng cách bên trong các ô */
+    text-align: center;
+}
+.DatHangThanhCong th {
+    background-color: #fff; /* Màu nền cho ô tiêu đề */
+}
+.bttMuaThemvaTrangChu button{
+    width: 25%;
+    padding: 10px;
+    cursor: pointer;
+ /*   background: #007BFF;*/
+    background: #fff;
+    color: black;
+    border: 1px solid red;
+    border-radius: 10px;
+    margin:10px 0;
+    margin-top: 25px;
+    margin-bottom: 40px;
+}

@@ -1,0 +1,87 @@
+.main {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding-left: 20px;
+  padding-right: 20px;
+  padding-top: 50px;
+
+}
+
+#div1 {
+  width: 50%; /* Chiều rộng lớn hơn nửa màn hình */
+  background-color: #ffff;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 2px 6px rgb(230, 143, 143);
+}
+
+.info h2 {
+  margin-top: 0;
+  font-size: 25px;
+}
+
+.info p {
+  margin-bottom: 20px;
+  font-size: 25px;
+}
+
+hr {
+  margin-top: 30px; /* Tăng khoảng cách đến nhãn đầu tiên */
+  margin-bottom: 30px; /* Tăng khoảng cách từ hr đến các nhãn */
+}
+
+.form {
+  list-style: none;
+  padding: 0;
+}
+
+.form li {
+  display: flex;
+  align-items: center;
+  margin-bottom: 10px; /* Giảm khoảng cách giữa các dòng */
+  padding: 10px;
+  font-size: 20px;
+}
+
+.form label {
+  flex: 1;
+  text-align: left;
+  margin-right: 2px; /* Giảm khoảng cách giữa label và input */
+}
+
+.form input[type="text"],
+.form input[type="email"],
+.form input[type="tel"],
+.form input[type="date"],
+.form input[type="password"],
+.form select {
+  flex: 2;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  width: 100%;
+  margin: 0; /* Loại bỏ khoảng trống thừa */
+}
+
+
+#passwordForm {
+  margin-top: 15px;
+}
+
+#button {
+  display: block;
+  width: 50%; /* Nút rộng 50% */
+  margin: 30px auto; /* Tăng khoảng cách từ button lên và căn giữa */
+  padding: 10px;
+  background-color: red;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  font-size: 16px;
+  cursor: pointer;
+}
+
+#button:hover {
+  background-color: red;
+}

@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Trang Giải quyết khiếu nại</title>
+    <link rel="stylesheet" href="./style-header-footer-admin.css">
+    <link rel="stylesheet" href="./style-complaint.css">
+    <!-- <link rel="stylesheet" href="./response.css"> -->
+</head>  
+<body>  
+    <div class="container">
+    <div id="header-admin-page" ></div>
+    <div class="admin-main-page">
+        <div class="admin-manage">
+           <div class="menu-admin"> <img  class="admin-manage-menu" src="./images-Admin/menu.png" alt="menu"></div>
+            <a href="#" style="margin-top: 10%;"><img src="./images-Admin/home.png" alt="admin-home-page">Trang chủ</a>
+            <a href="#"><img src="./images-Admin/grid.png" alt="admin-product-manage">Sản phẩm</a>
+            <a href="#"><img src="./images-Admin/checkout.png" alt="admin-order-manage">Quản lý đơn hàng</a>
+            <a href="#"><img src="./images-Admin/accountant.png" alt="admin-account-manage">Quản lý tài khoản</a>
+            <a href="#"><img src="./images-Admin/complain.png" alt="admin-complain-manage" >Xử lý khiếu nại</a>
+            <a href="#"><img src="./images-Admin/price-tag.png" alt="admin-promotion-manage">Khuyến mãi & giảm giá</a>
+            <a href="#"  style="margin-bottom: 10%;"><img src="./images-Admin/dashboard.png" alt="admin-report-manage" >Báo cáo và thống kê</a>
+        </div>
+
+        
+        <!-- DIV Của phần xử lý khiếu nại -->
+        <div class="admin-complaint-section" id="complaint" >
+            <div class="products-tool">
+                <button class="btn-admin all-complaint" onclick="showAllComplaints()">Tất Cả khiếu nại</button>
+                <button class="btn-admin processed-complaint"onclick="filterPending()" >Khiếu nại chưa được xử lý</button>
+            </div>
+            <div class="table">
+              <div >
+                    <table >
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>Tên Người gửi</th>
+                                <th>Ngày gửi</th>
+                                <th>Trạng thái</th>                  
+                                <th>Xem chi tiết</th>
+                            </tr>
+                        </thead>
+                        <tbody id="complaint-table" >
+                        <!--chi tiết khiếu nại-->
+                        </tbody>
+                    </table>
+                </div>
+                </div>
+        </div>
+        
+        <!--trang chi tiết khiếu nại-->
+
+        <!-- Modal để hiển thị chi tiết khiếu nại -->
+<!-- Modal -->
+<div id="complaint-modal" class="modal">
+    <div class="modal-response-content">
+        <span class="close" onclick="closeModal()">&times;</span>
+        <div id="modal-body">
+            <!-- Chi tiết khiếu nại sẽ được hiển thị ở đây -->
+        </div>
+    </div>
+</div>
+<!--kết thúc modal-->
+
+
+<!--Gửi phản hồi-->
+<!-- Overlay -->
+<div id="overlay" class="overlay" onclick="closeModals()"></div>
+
+<!-- Modal phản hồi -->
+<from  id="responseModal" class="modal" method="PUT">
+    <div class="modal-response-content">
+        <span class="close" onclick="closeModals()">&times;</span>
+        <h2>Giải Quyết Khiếu Nại</h2>
+        <input type="hidden" id="complaintId">
+        <label for="status">Trạng Thái:</label>
+        <select id="status" name="status" required>
+            <option value="Đã xử lý">Đã xử lý</option>
+            <option value="Chưa xử lý">Chưa xử lý</option>
+            <option value="Không hợp lệ">Không hợp lệ</option>
+        </select>
+        <br>
+        <label for="responseInput">Phản Hồi từ Admin:</label>
+        <textarea id="response" rows="4" required></textarea>
+        <br>
+        <button type="submit" onclick="updateComplaint()">Gửi Phản Hồi</button>
+    </div>
+</from>
+
+
+
+<!--kết thúc gửi phản hồi-->
+</div>
+</div>
+
+    <div id="footer-admin-page"  ></div>
+</div>
+    <script src="./import-header-footer-AD.js"></script>
+    <script src="./script-for-main-page.js"></script>
+    <script src="https://kit.fontawesome.com/86ec971ab9.js" crossorigin="anonymous"></script>
+   <script src="./complaint-section.js"></script>
+   <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.17.0/xlsx.full.min.js"></script>
+
+</body>
+</html>

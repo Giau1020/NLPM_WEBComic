@@ -4,6 +4,8 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="stylesheet" href="/css/styles.css" />
+    <link rel="stylesheet" href="./css/style-Send-Complaint.css" />
+
     <title>Danh sách Đơn Hàng</title>
     <style>
         .main {
@@ -55,7 +57,7 @@
 
         .details-button,
         .cancel-button,
-        .review-button {
+        .review-button{
             /* margin-top: 10px; */
             background-color: rgb(220, 41, 41);
             color: white;
@@ -65,11 +67,12 @@
             
         }
         
-        .review-button {
+        .review-button{
             margin-top: 10px;
             background-color: rgb(220, 41, 41);
            width: 90px;
             cursor: pointer;
+          
         }
         
         .order-detail-info {
@@ -247,7 +250,34 @@
             </div>
         </main>
         <div id="footer"></div>
+  
+      <!-- Modal Form Gửi Khiếu Nại -->
+<div id="complaintModal" class="modal-complaint">
+    <div class="modal-content-complaint">
+        <span class="close" onclick="closeComplaintModal()">&times;</span>
+        <h2>Gửi Khiếu Nại</h2>
+        <form id="complaintForm" method="post">
 
+            <input style="display:none;" type="text" id="Id_order" name="Id_order" readonly>
+
+            <input style="display:none;" type="text" id="user_id" name="user_id" readonly>
+
+            <input style="display:none;" type="text" id="full_name" name="full_name" readonly>
+
+            <input style="display:none;" type="text" id="complaintTime" name="complaintTime" readonly>
+
+            <label for="complaintContent">Nội Dung Khiếu Nại:</label>
+            <textarea id="complaintContent" name="complaintContent" required></textarea>
+
+            <!-- Đính kèm tệp -->
+            <label for="attachment">Đính Kèm Tệp (tùy chọn):</label>
+            <input type="file" id="attachment" name="attachment" accept="image/*">
+
+            <button type="submit">Gửi Khiếu Nại</button>
+        </form>
+    </div>
+</div>
+        <!--kết thúc modal gửi khiếu nại-->
         <!-- Modal -->
         <div id="reviewModal" class="modal">
             <div class="modal-content">
@@ -340,6 +370,13 @@
                         cancelButton.textContent = "Hủy đơn hàng";
                         cancelButton.onclick = () => cancelOrder(order.id);
                         orderDiv.appendChild(cancelButton);
+                         // Tạo nút "Xem hóa đơn"
+                        const invoiceButton = document.createElement('button');
+                        invoiceButton.classList.add('invoice-button');
+                        invoiceButton.textContent = "Xem hóa đơn";
+                        invoiceButton.onclick = () => viewInvoice(order.id); // Hàm viewInvoice để xử lý xem hóa đơn
+                        orderDiv.appendChild(invoiceButton);
+                                       
                     }
 
                     orderList.appendChild(orderDiv);
@@ -380,7 +417,13 @@
                                         <span class="product-item-total">Tổng thành tiền: ${formatPrice(totalItemPrice)} VNĐ</span>
                                         ${
                                             order.orderStatus === 'Đã hoàn thành'
-                                            ? `<button class="review-button" onclick="openModal(${item.comic.id})">Đánh giá</button>`
+                                            ? `
+                                            <div class="button-container" style="display: flex; gap: 10px;">
+                                            <button class="review-button" onclick="openModal(${item.comic.id})">Đánh giá</button>
+                                           <button class="review-button" onclick="openComplaintModal(${orderId}, ${order.userId}, '${order.fullName}')">Khiếu nại</button>
+                                             </div>
+                                                
+                                           `
                                             : ''
                                         }
                                     </div>
@@ -516,6 +559,15 @@
         window.onload = function() {
             loadUserOrders(); 
         };
+
+        function viewInvoice(orderId) {
+    // Chuyển hướng đến trang hóa đơn với orderId
+    window.location.href = `/invoice.html?orderId=${orderId}`;
+}
+
+
     </script>
+    <script src="./js/script-send-complaint.js"></script>
+    <script src="./js/invoice.js"></script>
 </body>
 </html>

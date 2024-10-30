@@ -13,7 +13,7 @@ import jakarta.persistence.Table;
 @Entity
 @Table(name = "users1")  // Sử dụng dấu ngoặc vuông để tránh xung đột với từ khóa của SQL Server
 
-public class User {
+public class UserProfile {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -27,8 +27,12 @@ public class User {
     private String role;
     private String email;
     private String phonenumber;
-    private LocalDate birthdate;
     private String gender;
+    private LocalDate birthdate;
+
+//ddooir maat khau
+    private transient String currentPassword; // mật khẩu hiện tại để xác thực
+    private transient String newPassword;
 
     public Long getId() {
         return id;
@@ -91,6 +95,20 @@ public class User {
     }
 
     /**
+     * @return String return the gender
+     */
+    public String getGender() {
+        return gender;
+    }
+
+    /**
+     * @param gender the gender to set
+     */
+    public void setGender(String gender) {
+        this.gender = gender;
+    }
+
+    /**
      * @return LocalDate return the birthdate
      */
     public LocalDate getBirthdate() {
@@ -104,18 +122,21 @@ public class User {
         this.birthdate = birthdate;
     }
 
-    /**
-     * @return String return the gender
-     */
-    public String getGender() {
-        return gender;
+    // Getters and setters
+    public String getCurrentPassword() {
+        return currentPassword;
     }
 
-    /**
-     * @param gender the gender to set
-     */
-    public void setGender(String gender) {
-        this.gender = gender;
+    public void setCurrentPassword(String currentPassword) {
+        this.currentPassword = currentPassword;
+    }
+
+    public String getNewPassword() {
+        return newPassword;
+    }
+
+    public void setNewPassword(String newPassword) {
+        this.newPassword = newPassword;
     }
 
 }

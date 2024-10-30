@@ -1,0 +1,377 @@
+body{
+    padding: 0;
+    margin: 0;
+ 
+}
+/* CSS FOR ADMIN SIDE BAR (ADMIN MANAGE) */
+
+
+.admin-main-page{
+    width: 80%;
+    margin: 2% 10% ;
+    gap: 20px;
+    display: flex;
+    flex-direction: row;
+}
+.admin-manage{
+    flex-direction: column;
+    width: 26%;
+    height: 60%;
+    border: 3px solid #ff5757;
+    background-color: white;
+    align-items: center;
+    text-align: justify;
+}
+.admin-manage img{
+    width: 12%;
+    height: 12%;
+    margin-right: 10%;
+}
+.admin-manage a{
+    display: flex;
+    margin: 10% 10%;
+    text-decoration: none;
+    color: inherit;
+    cursor: pointer;
+    font-size: 20px;
+    align-items: center;
+    align-self: center;
+}
+.admin-manage-menu,.admin-manage-menu2{
+    all: unset;
+    align-self: flex-start;
+    margin-left: 2%;
+    width: 40px;
+    height: 40px;
+    cursor: pointer;
+}
+.menu-admin {
+    background-color: rgba(255, 87, 87, 0.4);
+    cursor: pointer;
+}
+
+/* CSS FOR OVERVIEW MANAGE (DETAIL-SECTION) WITH SIDE BAR */
+.admin-detail-section{
+    position: relative;
+    width: 74%;
+    height: inherit;
+    border: 3px solid #ff5757;
+    background-color: white;
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    grid-template-rows: 8.5% 45.5% 45.5% ;
+   
+}
+.detail-title{
+    grid-column: span 3;
+    background-color: rgba(255, 87, 87, 0.4);
+    
+}
+.overview{
+    position: relative;
+    border: 2px solid ;
+    background-color: white;
+    box-sizing: border-box;
+    margin:  2%;
+    cursor: pointer;
+    align-content: center;
+}
+.overview span{
+    font-size: 25px;
+    font-weight: bold;
+}
+.overview p:not(.detail), .overview span{
+    margin-left: 7%;
+}
+.detail{
+    position: absolute;
+    height: 50px;
+    width: 100%;
+    align-content: center;
+    text-align: center;
+    bottom: 0;
+    margin-bottom: 0;
+    background-color: rgba(255, 87, 87, 0.4);
+}
+
+/* CSS FOR OVERVIEW MANAGE (DETAIL-SECTION) WITHOUT SIDE BAR */
+/* .admin-detail-section2{
+    position: relative;
+    width: 100%;
+    height: 500px;
+    border: 3px solid #ff5757;
+    background-color: white;
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    grid-template-rows: 8.5% 45.5% 45.5% ;
+   
+}
+.detail-title2{
+    grid-column: span 3;
+    background-color: rgba(255, 87, 87, 0.4);
+
+}
+.underline {
+    text-decoration: underline;
+  } */
+
+  .admin-detail-section{
+    display: none;
+   
+  }
+
+
+/*CSS FOR Quản lý sản phẩm  */
+  .admin-complaint-section{
+    width: 74%;
+  }
+  /* CSS của bảng sản phẩm */
+  .table, table{
+    position: relative;
+   width: 100%;
+   flex-grow: 1;
+   max-height: 54.4vh;
+   height: fit-content;
+    border: 1.75px solid #ff5757;
+    border-collapse: collapse; /* Gộp các đường viền */
+    overflow-x: auto;
+    overflow-y: auto;
+
+}
+
+th, td {
+    border: 1px solid #dddddd;
+    text-align: center;
+    padding: 8px;
+
+}
+
+th {
+    background-color: rgba(255, 87, 87, 0.4);
+}
+
+tr:nth-child(even) {
+    background-color: #f9f9f9;
+}
+a img{
+    width: 20px;
+    height: 20px;
+}
+td:last-child{
+    width: 30%;
+}
+td:nth-child(4){
+    width: 20%;
+}
+td:nth-child(3){
+    width: 20%;
+}
+td:nth-child(2){
+    width: 20%;
+}
+td:nth-child(1){
+    width: 10%;
+}
+tr{
+    height: 40px;
+}
+    /* CSS của phần tool */
+.products-tool{
+    margin: 1% 0.5%;
+    width: 100%;
+    height: 7%;
+}
+.btn-admin{
+    width: 30%;
+    height: 90%;
+    border: 2px solid #ff5757;
+    background-color: white;
+    text-align: center;
+    border-radius: 50px;
+    margin-right: 10px;
+    cursor: pointer;
+    font-size: 15px;
+    font-weight: bold;
+}
+.btn-admin:hover{
+    background-color: #333333;
+    color: white;
+    border: 2px solid white
+}
+/*style của xử lý khiếu nại*/
+/*chi tiết khiếu nại*/
+
+/* Modal */
+.modal {
+    display: none; /* Ẩn modal mặc định */
+    position: fixed; /* Đặt modal cố định */
+    z-index: 1000; /* Đảm bảo modal luôn nằm trên các thành phần khác */
+    left: 0;
+    top: 0;
+    width: 100%; /* Modal sẽ phủ toàn màn hình */
+    height: 100%; /* Phủ cả chiều cao của màn hình */
+    background-color: rgba(0, 0, 0, 0.5); /* Tạo lớp nền mờ */
+  }
+  
+  /* Nội dung của modal sẽ được canh giữa */
+  .modal-response-content{
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%); /* Dịch modal vào giữa */
+    background-color: white; /* Nền trắng cho modal */
+    padding: 20px;
+    width: 50%; /* Đặt kích thước modal tùy ý */
+    max-width: 600px; /* Kích thước tối đa */
+    border-radius: 10px; /* Bo góc nhẹ cho modal */
+    box-shadow: 0px 4px 16px rgba(0, 0, 0, 0.2); /* Đổ bóng */
+  }
+
+.close {
+    color: #aaa;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.close:hover,
+.close:focus {
+    color: black;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+
+
+/**/
+#process-complaint-section {
+ text-align: center;
+}
+/*btn xử lý khiếu nại*/
+#process-complaint-btn {
+    margin-top: 20px;
+    margin-left:35%;
+    padding: 10px 20px;
+    border: 2px solid red;
+    border-radius: 5px;
+    color: white;
+    border: none;
+    cursor: pointer;
+    justify-content: center
+}
+
+#process-complaint-btn:hover {
+    background-color: red;
+}
+
+/*thẻ diiv gửi phản hồi*/
+
+
+/*kết thúc thher div gửi phản hồi*/
+
+/*kết thúc style của xử lý khiếu nại*/
+
+
+
+/* Phong cách cho nút đóng modal */
+.modal-response-content .close {
+    position: absolute;
+    top: 10px;
+    right: 15px;
+    font-size: 28px;
+    font-weight: bold;
+    color: black; /* Màu nút đóng */
+    cursor: pointer;
+}
+
+/* Đổi màu khi hover vào nút đóng */
+.modal-response-content .close:hover,
+.modal-response-content .close:focus {
+    color: #fff; /* Màu khi hover vào nút đóng */
+    background-color: red;
+}
+
+/* Phong cách cho tiêu đề của modal */
+.modal-response-content h2 {
+    margin-bottom: 15px;
+    font-size: 22px;
+    font-weight: 600;
+    color: black;
+}
+
+/* Phong cách cho các nhãn (label) */
+.modal-response-content label {
+    font-size: 20px;
+    font-weight: 500;
+    color: black;
+    display: block;
+    margin-bottom: 8px;
+}
+
+/*button xem và phản hồi*/
+/* CSS chung cho cả hai nút */
+button {
+    width:25%;
+    background-color: #fff; /* Màu nền nhạt */
+    color: black; /* Màu chữ đen */
+    border: 1px solid red; /* Đường viền xám nhạt */
+    border-radius: 5px; /* Góc bo tròn */
+    padding: 5px 10px; /* Khoảng cách trong nút */
+    font-size: 14px; /* Kích thước chữ */
+    cursor: pointer; /* Con trỏ chuột thành hình tay khi hover */
+    margin: 5px; /* Khoảng cách giữa các nút */
+    transition: background-color 0.3s ease, color 0.3s ease; /* Hiệu ứng chuyển đổi màu */
+}
+
+
+
+/* Hiệu ứng hover cho nút Xem */
+button:first-child:hover {
+    background-color: red; /* Màu nền khi hover cho nút Xem */
+    color: white; /* Đảm bảo màu chữ vẫn là trắng */
+}
+
+/* Hiệu ứng hover cho nút Phản hồi */
+button:last-child:hover {
+    background-color: red; /* Màu nền khi hover cho nút Phản hồi */
+    color: white; /* Đảm bảo màu chữ vẫn là trắng */
+}
+/**/
+/* Phong cách cho select và textarea */
+.modal-response-content select, 
+.modal-response-content textarea {
+    width: 95%; /* Chiều rộng 100% so với modal */
+    padding: 10px; /* Khoảng cách bên trong */
+    margin-bottom: 20px; /* Khoảng cách dưới */
+    /* margin-left: 5%; */
+    /* margin-right: 5%; */
+    border: 1px solid #ccc; /* Đường viền nhạt */
+    border-radius: 4px; /* Bo tròn đường viền */
+    font-size: 14px; /* Kích thước chữ */
+    color: black; /* Màu chữ */
+    resize: vertical; /* Cho phép thay đổi kích thước chiều cao của textarea */
+}
+
+/* Phong cách cho nút gửi phản hồi */
+.modal-response-content button {
+    background-color: #fff;
+    color: black; /* Màu chữ trắng */
+    border: none; /* Không có đường viền */
+    padding: 10px 20px; /* Khoảng cách bên trong nút */
+    font-size: 16px; /* Kích thước chữ */
+    border:3px solid red;
+    border-radius: 4px; /* Bo tròn góc nút */
+    cursor: pointer; /* Con trỏ tay khi hover */
+    width: 100%; /* Chiều rộng 100% so với modal */
+}
+
+/* Thay đổi màu nút khi hover */
+.modal-response-content button:hover {
+    background-color: red; /* Màu nền đậm hơn khi hover */
+}
+
+/* Đảm bảo textarea không thể thay đổi kích thước ngang */
+textarea {
+    resize: vertical; /* Chỉ cho phép thay đổi chiều cao */
+}

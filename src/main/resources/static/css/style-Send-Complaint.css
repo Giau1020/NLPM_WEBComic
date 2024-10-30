@@ -1,0 +1,77 @@
+   /*css khiếu nại*/
+                            /* CSS cho Modal */
+                            .modal-complaint {
+                                display: none; /* Ẩn modal mặc định */
+                                position: fixed; /* Đặt modal cố định */
+                                z-index: 1; /* Đảm bảo modal luôn ở phía trên */
+                                left:0%;
+                                top: 0%;
+                                width: 100%; /* Chiếm toàn bộ chiều rộng */
+                                height: 100%; /* Chiếm toàn bộ chiều cao */
+                                background-color: rgba(0, 0, 0, 0.5); /* Làm tối nền sau modal */
+                            }
+        
+                            /* CSS cho nội dung của modal */
+                            .modal-content-complaint {
+                                background-color: #fefefe;
+                                margin: 5% auto; /* Canh giữa modal theo chiều dọc */
+                                padding: 20px;
+                                border: 1px solid #888;
+                                width: 50%; /* Độ rộng modal */
+                                border-radius: 10px; /* Bo tròn góc */
+                                box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+                                width: 50%; /* Độ rộng modal */
+                                max-height: 80vh; /* Giới hạn chiều cao modal là 80% của chiều cao cửa sổ */
+                                overflow-y: auto; /*Cho phép thanh cuộn nếu cần */
+        
+                            }
+        
+                            /* CSS cho form */
+                            #complaintForm form {
+                                display: flex;
+                                flex-direction: column;
+                            }
+        
+                            /* CSS cho các label và input */
+                            #complaintForm label {
+                                padding: 20px;
+                                font-size: 20px;
+                                margin-bottom: 5px;
+                            }
+        
+                            #complaintForm input[type="text"],
+                            #complaintForm textarea,
+                            #complaintForm input[type="file"] {
+                                padding: 20px;
+                                margin-bottom: 15px;
+                                border: 1px solid #ccc;
+                                border-radius: 4px;
+                                width: 100%;
+                                font-size: 18px;
+                            }
+        
+                            /* CSS cho nút submit */
+                            #complaintForm button[type="submit"] {
+        
+                                color: white;
+                                padding: 12px 15px;
+                                border: none;
+                                border-radius: 4px;
+                                cursor: pointer;
+                                font-size: 20px;
+                                transition: background-color 0.3s;
+                                width:50%;
+                                margin-left: 25%;
+                                margin-right: 25%;
+                               
+                            }
+        
+                            #complaintForm button[type="submit"]:hover {
+                                background-color: red;
+                            }
+                             h2 {
+                                text-align: center;
+                                font-size: 40px;
+                            }
+        
+                /*kết thúc css khiếu nại*/

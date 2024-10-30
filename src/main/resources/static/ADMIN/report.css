@@ -1,0 +1,56 @@
+.report-comic ,.report-quantity ,.report-cart ,.report-excel{
+    width: 300px;
+    height: 90%;
+    border: 2px solid #ff5757;
+    background-color: white;
+    text-align: center;
+    border-radius: 50px;
+    margin-right: 10px;
+    cursor: pointer;
+    font-size: 15px;
+    font-weight: bold;
+}
+.report-comic:hover ,.report-cart:hover ,.report-quantity:hover ,.report-excel:hover{
+    background-color: red;
+    color: white;
+    border: 2px solid white
+}
+  /* CSS của bảng sản phẩm */
+  .table, table , .table_sold , table {
+    width: 100%; /* Bảng chiếm 100% chiều rộng của bố cục */
+    border-collapse: collapse;
+}
+
+th, td {
+    padding: 10px;
+    text-align: left;
+    border: 1px solid #ddd;
+}
+
+th {
+    background-color:  rgba(255, 87, 87, 0.4);
+}
+
+/* Điều chỉnh độ rộng của từng cột */
+th:nth-child(1), td:nth-child(1) {
+    width: 10%; /* ID Truyện */
+}
+
+th:nth-child(2), td:nth-child(2) {
+    width: 30%; /* Tên Truyện */
+}
+
+th:nth-child(3), td:nth-child(3) {
+    width: 15%; /* Tên Tác Giả */
+}
+
+th:nth-child(4), td:nth-child(4) {
+    width: 20%; /* Nhà Xuất Bản */
+}
+
+th:nth-child(5), td:nth-child(5) {
+    width: 10%; /* Số Lượt Bán */
+}
+.table-comic, .table-sold ,.table-cart {
+    display: none; /* Ẩn bảng mặc định */
+}
