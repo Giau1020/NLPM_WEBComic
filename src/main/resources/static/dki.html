@@ -1,49 +1,165 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Register</title>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="/css/styles.css" />
+    <title>Trang Thanh Toán</title>
+    <style>
+        .main {
+            display: flex;
+            align-items: center;
+            flex-direction: column;
+            flex-grow: 1;
+            justify-content: center;
+        }
+        .login-container {
+            background-color: white;
+            padding: 50px 100px;
+            border-radius: 10px;
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+            width: 600px;
+            height: 400px;
+        }
+        h2 {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        .input-container {
+            position: relative;
+            width: 100%;
+        }
+        input[type="text"],
+        input[type="password"] {
+            width: 100%;
+            padding: 10px;
+            margin: 10px 0;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+        .toggle-password {
+            position: absolute;
+            top: 50%;
+            right: 10px;
+            transform: translateY(-50%);
+            cursor: pointer;
+        }
+        #btlg {
+            width: 100%;
+            padding: 10px;
+            background-color: rgb(220, 41, 41);
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+        button:hover {
+            background-color: #218838;
+        }
+        .error-message {
+            color: red;
+            font-size: 14px;
+            margin-top: 10px;
+            text-align: center;
+        }
+        a {
+            color: black;
+            cursor: pointer;
+            text-decoration: none;
+        }
+        a:hover {
+            color: red;
+        }
+    </style>
 </head>
 <body>
-    <h2>Register</h2>
-    <form id="registerForm">
-        <label for="username">Username:</label>
-        <input type="text" id="username" name="username" required><br><br>
-
-        <label for="password">Password:</label>
-        <input type="password" id="password" name="password" required><br><br>
-
-        <button type="submit">Register</button>
-    </form>
-
-    <p id="registerMessage"></p>
-
+    <div class="container">
+        <div id="header"></div>
+        <main class="main">
+            <div class="login-container">
+                <h2>Đăng Kí</h2>
+                <form id="login-form">
+                    <input type="text" id="username" placeholder="Tên đăng nhập" required />
+                    
+                    <!-- Container cho mật khẩu với nút con mắt -->
+                    <div class="input-container">
+                        <input type="password" id="password" placeholder="Mật khẩu" required />
+                        <span class="toggle-password" onclick="togglePassword('password')">👁️</span>
+                    </div>
+                    
+                    <!-- Container cho mật khẩu xác nhận với nút con mắt -->
+                    <div class="input-container">
+                        <input type="password" id="confirm-password" placeholder="Nhập lại mật khẩu" required />
+                        <span class="toggle-password" onclick="togglePassword('confirm-password')">👁️</span>
+                    </div>
+                    
+                    <button type="button" id="btlg" onclick="register()">Đăng nhập</button>
+                </form>
+                <div id="error-message" class="error-message"></div>
+            </div> 
+        </main>
+        <div id="footer"></div>
+    </div>
+    <script src="js/Header.js"></script>
     <script>
-        document.getElementById('registerForm').addEventListener('submit', function(event) {
-            event.preventDefault();
-            
-            var username = document.getElementById('username').value;
-            var password = document.getElementById('password').value;
+        async function register() {
+            const username = document.getElementById('username').value;
+            const password = document.getElementById('password').value;
+            const confirmPassword = document.getElementById('confirm-password').value;
+            const errorMessage = document.getElementById('error-message');
 
-            fetch('/user/register', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify({
-                    username: username,
-                    password: password,
-                }),
-            })
-            .then(response => response.text())
-            .then(data => {
-                document.getElementById('registerMessage').innerText = data;
-            })
-            .catch(error => {
-                console.error('Error:', error);
-            });
-        });
+            errorMessage.textContent = '';
+
+            if (username.length < 6) {
+                errorMessage.textContent = "Tên đăng nhập phải có ít nhất 6 ký tự";
+                return;
+            }
+
+            const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[A-Za-z\d]{6,}$/;
+            if (!passwordRegex.test(password)) {
+                errorMessage.textContent = "Mật khẩu phải có ít nhất 6 ký tự, bao gồm chữ hoa, chữ thường và số";
+                return;
+            }
+
+            if (password !== confirmPassword) {
+                errorMessage.textContent = "Mật khẩu xác nhận không khớp";
+                return;
+            }
+
+            try {
+                const response = await fetch('user/register', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        username: username,
+                        password: password,
+                        confirmPassword: confirmPassword
+                    })
+                });
+
+                const result = await response.text();
+                if (response.ok) {
+                    alert("Đăng ký thành công");
+                    window.location.href = "login.html";
+                } else {
+                    errorMessage.textContent = result;
+                }
+            } catch (error) {
+                errorMessage.textContent = "Đã xảy ra lỗi khi đăng ký, vui lòng thử lại.";
+            }
+        }
+
+        function togglePassword(inputId) {
+            const inputField = document.getElementById(inputId);
+            if (inputField.type === "password") {
+                inputField.type = "text";
+            } else {
+                inputField.type = "password";
+            }
+        }
     </script>
 </body>
 </html>

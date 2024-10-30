@@ -80,12 +80,14 @@ flex-grow: 1;            /* Chiếm không gian còn lại của trang */
     display: flex;
     align-items: center;
     height: 70%;
-    margin-right: 5px;
-    margin-left: 150px;
+   margin-left: 30px;
+   margin-right: 25px;
+   width: 750px;
+   
 }
 #khungsearch {
     height: 100%;
-    width: 400px;
+    width: 700px;
     border-radius: 25px 0 0 25px;
     padding: 0 15px;
     font-size: 1rem;
@@ -107,7 +109,7 @@ flex-grow: 1;            /* Chiếm không gian còn lại của trang */
 #lgo  {
     height: 55px;
     margin-left: 20px;
-    margin-right: 50px;
+    
     transition: transform 0.3s ease, filter 0.3s ease; /* Thêm hiệu ứng chuyển tiếp */
 }
 
@@ -120,7 +122,7 @@ flex-grow: 1;            /* Chiếm không gian còn lại của trang */
 .auth-links {
     display: flex;
     align-items: center;
-    margin-left: 20px;
+   
 }
 .auth-links a {
     font-size: 130%;
