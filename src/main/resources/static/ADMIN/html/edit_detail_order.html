@@ -1,0 +1,523 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chi Tiết Đơn Hàng - Admin</title>
+    <!-- Link tới Google Fonts -->
+    <link href="https://fonts.googleapis.com/css?family=Roboto:400,500,700&display=swap" rel="stylesheet">
+    <!-- Link tới Font Awesome để sử dụng icon -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" />
+    <style>
+        /* Thiết lập cơ bản */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Roboto', sans-serif;
+            background-color: #fef6f6;
+            color: #333;
+        }
+
+        /* Thanh điều hướng */
+        .navbar {
+            background-color: #fff;
+            border-bottom: 2px solid #f2c6c6;
+            padding: 15px 0;
+            margin-bottom: 30px;
+        }
+
+        .navbar .container {
+            width: 90%;
+            margin: 0 auto;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .navbar h1 {
+            font-size: 24px;
+            color: #e86868;
+        }
+
+        .navbar ul {
+            list-style: none;
+            display: flex;
+            gap: 20px;
+        }
+
+        .navbar ul li a {
+            text-decoration: none;
+            color: #333;
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+
+        .navbar ul li a:hover {
+            color: #e86868;
+        }
+
+        /* Container chính */
+        .container {
+            width: 90%;
+            margin: 0 auto;
+            padding-top: 2%;
+        }
+
+        /* Tiêu đề đơn hàng */
+        .order-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 20px;
+        }
+
+        .order-header h2 {
+            font-size: 28px;
+            font-weight: 700;
+            color: #e86868;
+        }
+
+        .order-header h2 span {
+            font-weight: 500;
+            color: #555;
+        }
+
+        .btn-status {
+            padding: 8px 15px;
+            border: none;
+            background-color: #ffaaaa;
+            color: #fff;
+            border-radius: 5px;
+            cursor: pointer;
+            font-weight: 500;
+        }
+
+        .btn-status:hover {
+            background-color: #e88b8b;
+        }
+
+        /* Grid thông tin đơn hàng và khách hàng */
+        .order-info-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+
+        /* Thẻ thông tin */
+        .card {
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            border: 1px solid #f2c6c6;
+        }
+
+        .card h3 {
+            font-size: 20px;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            color: #e86868;
+        }
+
+        .card p {
+            font-size: 16px;
+            margin-bottom: 10px;
+        }
+
+        /* Danh sách sản phẩm */
+        .product-list {
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            margin-bottom: 30px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            border: 1px solid #f2c6c6;
+        }
+
+        .product-list h3 {
+            font-size: 20px;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            color: #e86868;
+            width: 100%;
+        }
+
+        .product-list table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        .product-list th, .product-list td {
+            padding: 12px 15px;
+            border-bottom: 1px solid #f2c6c6;
+            text-align: left;
+        }
+
+        .product-list th {
+            background-color: #fdf2f2;
+            font-weight: 500;
+            color: #e86868;
+        }
+
+        .product-list tfoot td {
+            font-weight: 700;
+        }
+
+        /* Hành động */
+        .actions {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
+            margin-bottom: 30px;
+        }
+
+        .btn {
+            padding: 12px 20px;
+            border: none;
+            background-color: #e86868;
+            color: #fff;
+            border-radius: 5px;
+            cursor: pointer;
+            font-weight: 500;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            transition: background-color 0.3s;
+        }
+
+        .btn:hover {
+            background-color: #d75959;
+        }
+
+        .btn-danger {
+            background-color: #dc3545;
+        }
+
+        .btn-danger:hover {
+            background-color: #c82333;
+        }
+
+        /* Tổng cộng */
+        .total-amount {
+            font-size: 18px;
+            color: #28a745;
+            font-weight: 700;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .navbar .container {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+
+            .order-header {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 10px;
+            }
+
+            .actions {
+                flex-direction: column;
+            }
+        }
+.head_container{
+    display: flex;
+    gap: 10px;
+    margin: 10px auto;
+}
+
+/* Status Update Div Styling */
+.status-div {
+    display: none; /* Initially hidden */
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 300px;
+    padding: 20px;
+    background-color: #fff;
+    border: 2px solid #ff6666;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    text-align: center;
+    z-index: 1000;
+}
+
+/* Close Button Styling */
+.close-btn {
+    position: absolute;
+    top: 10px;
+    right: 15px;
+    font-size: 20px;
+    color: #ff6666;
+    cursor: pointer;
+}
+
+/* Save Button Styling */
+.save-btn {
+    margin-top: 15px;
+    padding: 8px 15px;
+    background-color: #ff6666;
+    color: #fff;
+    border: none;
+    cursor: pointer;
+    border-radius: 5px;
+}
+
+/* Select Styling */
+select, input {
+    width: 100%;
+    padding: 8px;
+    margin-top: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+.overlay {
+    display: none; /* Initially hidden */
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5); /* Semi-transparent black */
+    z-index: 999; /* Below the modal div */
+}
+/* Overlay Styling */
+.overlayEdit {
+    display: none; /* Initially hidden */
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5); /* Semi-transparent black */
+    z-index: 999; /* Below the modal div */
+}
+
+/* Edit Information Div Styling */
+.edit-info-div {
+    display: none; /* Initially hidden */
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 50%;
+    height: fit-content;
+    padding: 20px;
+    background-color: #fff;
+    border: 2px solid #ff6666;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    text-align: start;
+    z-index: 1000; /* Above the overlay */
+    font-size: large;
+}
+input[type="text"], textarea {
+    width: 100%;
+    padding: 8px;
+    margin-top: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+.form-group{
+    margin-top: 30px;
+}
+.modal {
+    display: none; /* Ẩn mặc định */
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    justify-content: center;
+    align-items: center;
+}
+
+.modal-content {
+    background-color: white;
+    padding: 20px;
+    border-radius: 8px;
+    text-align: center;
+    width: 300px;
+}
+
+.btn-confirm {
+    background-color: #ff4d4d;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    margin: 10px;
+    cursor: pointer;
+    border-radius: 5px;
+}
+
+.btn-cancel {
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    margin: 10px;
+    cursor: pointer;
+    border-radius: 5px;
+}
+
+
+    </style>
+</head>
+<body>
+
+  <!-- Nút Quay về và Trang chủ -->
+   
+    <!-- Nội dung chính -->
+    <div class="container">
+        <div class="head_container">
+            <button  class="btn" onclick="window.location.href='/html/list_edit_order.html';"><i class="fas fa-arrow-left"></i> Quay về</button>
+            <button class="btn" onclick="window.location.href='/main-page-admin.html';"><i class="fas fa-home"></i> Trang chủ</button>
+        </div>
+        <div class="order-header">
+            <!-- <h2>Chi Tiết Đơn Hàng <span>#123456</span></h2>
+            <button class="btn-status">Đang xử lý</button> -->
+        </div>
+
+        <!-- Thông tin đơn hàng và khách hàng -->
+        <div class="order-info-grid">
+            <!-- Thông tin Khách hàng -->
+            <div class="card">
+                <h3><i class="fas fa-user"></i> Thông tin Khách hàng</h3>
+                <p><strong>Tên:</strong> Nguyễn Văn A</p>
+                <p><strong>Số điện thoại:</strong> 0123 456 789</p>
+                <p><strong>Email:</strong> nguyenvana@example.com</p>
+                <p><strong>Địa chỉ:</strong> 123 Đường ABC, Quận XYZ, TP.HCM</p>
+            </div>
+
+            <!-- Thông tin Vận chuyển -->
+            <div class="card">
+                <h3><i class="fas fa-truck"></i> Thông tin Vận chuyển</h3>
+                <p><strong>Đơn vị vận chuyển:</strong> Viettel Post</p>
+                <p><strong>Mã vận đơn:</strong> <a href="#">123456789</a></p>
+                <p><strong>Trạng thái giao hàng:</strong> Đang giao</p>
+                <p><strong>Địa chỉ giao hàng:</strong> 123 Đường ABC, Quận XYZ, TP.HCM</p>
+            </div>
+
+            <!-- Thông tin Thanh toán -->
+            <div class="card">
+                <h3><i class="fas fa-credit-card"></i> Thông tin Thanh toán</h3>
+                <p><strong>Phương thức thanh toán:</strong> COD</p>
+                <p><strong>Trạng thái thanh toán:</strong> Chưa thanh toán</p>
+                <p><strong>Tổng tiền sản phẩm:</strong> 500,000₫</p>
+                <p><strong>Phí vận chuyển:</strong> 50,000₫</p>
+                <p><strong>Tổng cộng:</strong> <span class="total-amount">550,000₫</span></p>
+            </div>
+
+           
+        </div>
+
+        <!-- Danh sách sản phẩm -->
+        <div class="product-list" style="display: block;">
+
+        </div>
+
+        <!-- Hành động -->
+        <div class="actions">
+            <button class="btn" onclick=" openStatusDiv()"><i class="fas fa-sync-alt"></i> Cập nhật Trạng thái</button>
+            <button class="btn" onclick="openEditInfoDiv(); setInforEditDiv(document.querySelector('h2 span').innerHTML)"><i class="fas fa-edit"></i> Chỉnh sửa Thông tin</button>
+            <button class="btn"><i class="fas fa-receipt"></i> In Hóa đơn</button>
+            <!-- <button class="btn"><i class="fas fa-envelope"></i> Gửi Email</button> -->
+            <button class="btn btn-danger" onclick="showConfirmCancelOrder()"><i class="fas fa-trash-alt"></i> Hủy Đơn hàng</button>
+        </div>
+    </div>
+
+
+
+    <div id="overlay" class="overlay" onclick="closeStatusDiv()"></div>
+    <div id="statusDiv" class="status-div">
+        <span class="close-btn" onclick="closeStatusDiv()">&times;</span>
+        <h3>Cập nhật Trạng thái Đơn hàng</h3>
+        <label for="statusSelect">Trạng thái:</label>
+        <select id="statusSelect">
+            <option value="Chờ xác nhận">Chờ xác nhận</option>
+            <option value="Xác nhận">Xác nhận</option>
+            <option value="Đã giao">Đã giao</option>
+            <option value="Đã hủy">Đã hủy</option>
+        </select>
+        <button class="save-btn" onclick="saveStatus()">Lưu</button>
+    </div>
+
+
+
+
+    <!-- Khi nhấn vào nút CHỈNH SỬA -->
+    <div id="overlayEdit" class="overlayEdit" onclick="closeEditInfoDiv()"></div>
+
+    <!-- Edit Information Div -->
+    <div id="editInfoDiv" class="edit-info-div">
+        <span class="close-btn" onclick="closeEditInfoDiv()">&times;</span>
+        <h3>Chỉnh sửa Thông tin Khách hàng</h3>
+        
+        <!-- Form to Edit Information -->
+        <div class="form-group">
+            <label for="fullName">Họ và Tên:</label>
+            <input type="text" id="fullName" name="fullName" required />
+        </div>
+        <div class="form-group">
+            <label for="phoneNumber">Số điện thoại:</label>
+            <input type="tel" id="phoneNumber" name="phoneNumber" required style="width: 100%; height: 30px; "/>
+        </div>
+        <div class="form-group">
+            <label for="province">Tỉnh/Thành phố:</label>
+            <select id="province" name="province" required>
+                <option value="">Chọn tỉnh/thành phố</option>
+            </select>
+        </div>
+        <div class="form-group">
+            <label for="district">Quận/Huyện:</label>
+            <select id="district" name="district" required>
+                <option value="">Chọn quận/huyện</option>
+            </select>
+        </div>
+        <div class="form-group">
+            <label for="ward">Phường/Xã:</label>
+            <select id="ward" name="ward" required>
+                <option value="">Chọn phường/xã</option>
+            </select>
+        </div>
+        <div class="form-group">
+            <label for="address">Địa chỉ giao hàng:</label>
+            <input type="text" id="address" name="address" required />
+        </div>
+    
+
+     
+        <button class="save-btn edit-order" onclick="saveCustomerInfo()">Lưu</button>
+    </div>
+
+
+
+    <!-- DIV hủy đơn hàng -->
+    <div id="confirmCancelOrder" class="modal">
+        <div class="modal-content">
+            <p>Bạn có chắc chắn muốn hủy đơn hàng không?</p>
+            <button onclick="confirmCancel(true)" class="btn-confirm">Có</button>
+            <button onclick="confirmCancel(false)" class="btn-cancel">Không</button>
+        </div>
+    </div>
+
+<script src="../script/script-edit-detail-order.js"></script>
+<script>
+    const orderId = sessionStorage.getItem('orderId');
+    ShowDetailOrder(orderId);
+</script>
+</body>
+</html>

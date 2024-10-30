@@ -123,10 +123,11 @@ body{
 
 
 /*CSS FOR Quản lý sản phẩm  */
-  .admin-product-section{
+  .admin-product-section, #order-manage-container{
     width: 74%;
 
   } 
+
  
   /* CSS của bảng sản phẩm */
   .table,table {
@@ -214,6 +215,9 @@ tr{
     font-size: 15px;
     font-weight: bold;
 }
+.list_order, .manage_status_order{
+    width: fit-content;
+  }
 .btn-admin:hover{
     background-color: #333333;
     color: white;
