@@ -8,6 +8,8 @@ import com.example.demo.repository.UserRepository;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 import java.io.IOException;
+import java.util.HashMap;
+import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -26,24 +28,38 @@ public class UserController {
     private CartRepository cartRepository;
 
 @PostMapping("/login")
-public ResponseEntity<UserLoginResponse> login(@RequestBody UserLoginRequest loginRequest, HttpSession session) {
+public ResponseEntity<Map<String, String>> login(@RequestBody UserLoginRequest loginRequest, HttpSession session) {
+    Map<String, String> response = new HashMap<>();
+
     Optional<User> userOpt = userRepository.findByUsername(loginRequest.getUsername());
-    
+
     if (userOpt.isPresent()) {
         User user = userOpt.get();
+
+        // Kiểm tra nếu tài khoản bị khóa (status = 0)
+        if (Boolean.FALSE.equals(user.getStatus())) {
+            response.put("message", "Tài khoản bị khóa");
+            return ResponseEntity.status(HttpStatus.FORBIDDEN).body(response);
+        }
+
+        // Kiểm tra mật khẩu
         if (user.getPassword().equals(loginRequest.getPassword())) {
             session.setAttribute("userId", user.getId());
             System.out.println("Set userId in session: " + session.getAttribute("userId"));
 
-            // Trả về thông tin người dùng bao gồm role
-            return ResponseEntity.ok(new UserLoginResponse(user.getRole()));
+            response.put("role", user.getRole());
+            return ResponseEntity.ok(response);
         } else {
-            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(null);
+            response.put("message", "Sai tên đăng nhập hoặc mật khẩu!");
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(response);
         }
     } else {
-        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
+        response.put("message", "Người dùng không tồn tại");
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(response);
     }
 }
+
+
 
    
 @GetMapping("/is-logged-in")
@@ -62,28 +78,7 @@ public void logout(HttpSession session, HttpServletResponse response) throws IOE
     response.sendRedirect("/TrangChu.html");  // Chuyển hướng về trang chủ
 }
 
- // Chức năng đăng ký
-//    @PostMapping("/register")
-//    public ResponseEntity<String> register(@RequestBody UserRegistrationRequest registrationRequest) {
-//        // Kiểm tra xem username đã tồn tại chưa
-//        if (userRepository.findByUsername(registrationRequest.getUsername()).isPresent()) {
-//            return ResponseEntity.status(HttpStatus.CONFLICT).body("Username already exists");
-//        }
-//
-//        // Tạo người dùng mới
-//        User newUser = new User();
-//        newUser.setUsername(registrationRequest.getUsername());
-//        newUser.setPassword(registrationRequest.getPassword()); // Mã hóa mật khẩu nếu cần
-//        newUser.setRole("user");
-//        userRepository.save(newUser);
-//
-//        // Tạo giỏ hàng rỗng cho người dùng mới
-//        Cart cart = new Cart();
-//        cart.setUser(newUser);
-//        cartRepository.save(cart);
-//
-//        return ResponseEntity.ok("User registered successfully");
-//    }
+
     @PostMapping("/register")
 public ResponseEntity<String> register(@RequestBody UserRegistrationRequest registrationRequest) {
     // Kiểm tra xem tên đăng nhập đã tồn tại chưa
@@ -101,6 +96,7 @@ public ResponseEntity<String> register(@RequestBody UserRegistrationRequest regi
     newUser.setUsername(registrationRequest.getUsername());
     newUser.setPassword(registrationRequest.getPassword()); // Lưu mật khẩu không mã hóa
     newUser.setRole("user");
+    newUser.setStatus(true);
     userRepository.save(newUser);
 
     // Tạo giỏ hàng rỗng cho người dùng mới
