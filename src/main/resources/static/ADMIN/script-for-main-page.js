@@ -266,14 +266,27 @@ function on_off_div(className){
         case '.admin-detail-section':
             On_div_main();
             Off_div('.admin-product-section');
+            Off_div('#order-manage-container');
         break;
         case '.admin-product-section':
-            Off_div('.admin-detail-section');
+            Off_div('.admin-detail-section');// DIV main
             On_div('.admin-product-section');
+            Off_div('#order-manage-container');
         break;
+        case '#order-manage-container':
+            console.log("click ");
+            Off_div('.admin-detail-section'); // DIV main
+            Off_div('.admin-product-section');
+            On_div('#order-manage-container');
+            ShowAllOrders();
+            break;
+            
+
+
         default:
             On_div_main();
             Off_div('.admin-product-section');
+            Off_div('#order-manage-container');
     }
 }
 

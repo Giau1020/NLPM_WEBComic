@@ -1,0 +1,315 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cập nhật trạng thái đơn hàng</title>
+
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <title>Cập nhật Trạng thái Đơn hàng</title>
+    <!-- Liên kết đến CSS -->
+    
+   <style>
+    /* Thiết lập cơ bản */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f9f2ec;
+    color: #333;
+    margin: 0;
+    padding: 0;
+}
+#orderForm{
+    overflow-y: auto;
+    max-height: 500px;
+}
+.container {
+    width: 90%;
+    max-width: 1200px;
+    height: 85vh;
+    
+    max-height: 85vh;
+    margin: 20px auto;
+    background-color: #fff;
+    padding: 20px;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+    border-radius: 8px;
+    border: 2px solid #e07b69;
+}
+
+/* Header */
+h1 {
+    text-align: center;
+    color: #e07b69;
+    margin-bottom: 20px;
+    font-weight: bold;
+}
+
+/* Bảng danh sách đơn hàng */
+table {
+    width: 100%;
+    max-height: 80vh;
+    border-collapse: collapse;
+    margin-bottom: 20px;
+    font-size: 16px;
+}
+
+thead th {
+    background-color: #f8d7d3;
+    color: #b54c4c;
+    padding: 10px;
+    border-bottom: 2px solid #e07b69;
+    text-align: center;
+}
+
+tbody td {
+    padding: 12px;
+    text-align: center;
+    color: #333;
+    border-bottom: 1px solid #e0e0e0;
+}
+
+tbody tr:nth-child(even) {
+    background-color: #fdf5f3;
+}
+
+tbody tr:hover {
+    background-color: #f8d7d3;
+}
+
+/* Checkbox */
+input[type="checkbox"] {
+    transform: scale(1.2);
+}
+
+/* Khu vực cập nhật trạng thái */
+.status-update {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-top: 40px;
+}
+
+.status-update label {
+    font-weight: bold;
+    color: #b54c4c;
+}
+
+.status-update select {
+    
+    padding: 8px;
+    border-radius: 4px;
+    border: 1px solid #e07b69;
+    background-color: #fdf5f3;
+    color: #333;
+}
+
+#updateButton {
+    padding: 10px 20px;
+    background-color: #e07b69;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-weight: bold;
+    transition: background-color 0.3s;
+}
+
+#updateButton:hover {
+    background-color: #b54c4c;
+}
+
+/* Checkbox chọn tất cả */
+#selectAll {
+    cursor: pointer;
+}
+
+/* Khu vực điều hướng bên trái */
+.navbar {
+    width: 200px;
+    background-color: #f8d7d3;
+    padding: 20px;
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 100%;
+}
+
+.navbar ul {
+    list-style: none;
+}
+
+.navbar li {
+    margin-bottom: 20px;
+}
+
+.navbar a {
+    text-decoration: none;
+    color: #333;
+    font-weight: bold;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    transition: color 0.3s;
+}
+
+.navbar a:hover {
+    color: #e07b69;
+}
+
+.navbar .logo {
+    font-size: 24px;
+    color: #e07b69;
+    font-weight: bold;
+    text-align: center;
+    margin-bottom: 30px;
+}
+
+/* Footer */
+.footer {
+    background-color: #f8d7d3;
+    padding: 20px;
+    text-align: center;
+    color: #b54c4c;
+    font-weight: bold;
+    border-top: 2px solid #e07b69;
+}
+
+.footer a {
+    color: #e07b69;
+    text-decoration: none;
+    font-weight: bold;
+    transition: color 0.3s;
+}
+
+.footer a:hover {
+    color: #b54c4c;
+}
+/* Nút Quay về Trang chủ */
+#homeButton {
+    padding: 10px 20px;
+    background-color: #e07b69;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-weight: bold;
+    margin-bottom: 20px;
+    transition: background-color 0.3s;
+}
+
+#homeButton:hover {
+    background-color: #b54c4c;
+}
+/* Thanh lọc */
+.filter-bar {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 20px;
+    align-items: center;
+}
+
+.filter-bar input[type="text"], .filter-bar select {
+    padding: 8px;
+    border: 1px solid #e07b69;
+    border-radius: 5px;
+    background-color: #fdf5f3;
+}
+
+.filter-bar button {
+    padding: 8px 15px;
+    background-color: #e07b69;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-weight: bold;
+    transition: background-color 0.3s;
+}
+
+.filter-bar button:hover {
+    background-color: #b54c4c;
+}
+
+table thead th {
+    position: sticky; /* Cố định vị trí */
+    top: 0; /* Đặt ở đầu */
+    background-color: #f8d7da; /* Màu nền cho hàng tiêu đề */
+    z-index: 1; /* Đảm bảo hàng tiêu đề nằm trên các hàng khác */
+    padding: 10px;
+}
+   </style>
+</head>
+<body>
+
+    <div class="container">
+        <h1>Cập nhật Trạng thái Đơn hàng</h1>
+     <!-- Nút Quay về Trang chủ -->
+     <button id="homeButton" onclick="window.location.href='http://localhost:8080/main-page-admin.html';">Quay về Trang chủ</button>
+     <!-- Thanh lọc -->
+     <div class="filter-bar">
+        <input type="text" id="customerFilter" placeholder="Tìm theo tên khách hàng">
+        <select title="Chọn trạng thái đơn hàng" id="statusFilter">
+            <option value="">-- Tất cả trạng thái --</option>
+            <option value="Chờ xác nhận">Chờ xác nhận</option>
+            <option value="Xác nhận">Xác nhận</option>
+            <option value="Đã giao">Đã giao</option>
+            <option value="Đã hủy">Đã hủy</option>
+        </select>
+        <button type="button" onclick="filterOrders()">Lọc</button>
+    </div>
+        <!-- Bảng danh sách đơn hàng -->
+        <form id="orderForm">
+            <table>
+                <thead>
+                    <tr>
+                        <th><input type="checkbox" id="selectAll"></th>
+                        <th>Mã Đơn hàng</th>
+                        <th>Khách hàng</th>
+                        <th>Ngày đặt hàng</th>
+                        <th>Trạng thái hiện tại</th>
+                    </tr>
+                </thead>
+                <tbody class="table_order_update">
+                    <!-- Ví dụ về các đơn hàng -->
+                    <tr>
+                        <!-- <td><input type="checkbox" name="order" value="123456"></td>
+                        <td>#123456</td>
+                        <td>Nguyễn Văn A</td>
+                        <td>25/10/2024</td>
+                        <td>Đang xử lý</td> -->
+                    </tr>
+                    
+                    <!-- Thêm các đơn hàng khác -->
+                </tbody>
+            </table>
+
+            <!-- Chọn trạng thái mới -->
+            
+        </form><div class="status-update">
+                <label for="newStatus">Chọn Trạng thái mới:</label>
+                <select id="newStatus" name="newStatus">
+                    <option value="">-- Chọn trạng thái --</option>
+                    <option value="Xác nhận">Xác nhận</option>
+                    <option value="Đã giao">Đã giao</option>
+                    <option value="Đã hủy">Đã hủy</option>
+                </select>
+                <button type="button" id="updateButton">Cập nhật Trạng thái</button>
+            </div>
+    </div>
+
+    <!-- Liên kết đến JavaScript -->
+    <script src="../script/script-update-status-order.js"></script>
+    <script src="../script/script-for-order-manage.js"></script>
+    <script src="../script/script.js"></script>
+   
+</body>
+</html>

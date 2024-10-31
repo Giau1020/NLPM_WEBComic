@@ -18,15 +18,15 @@
         <div class="admin-manage">
            <div class="menu-admin"> </div>
             <a href="#" style="margin-top: 10%;" onclick="on_off_div('.admin-detail-section')"><img src="./images-Admin/home.png" alt="admin-home-page" >Trang chủ</a>
-            <a href="#" onclick="on_off_div('.admin-product-section')"><img src="./images-Admin/grid.png" alt="admin-product-manage" >Sản phẩm</a>
-            <a href="#"><img src="./images-Admin/checkout.png" alt="admin-order-manage">Quản lý đơn hàng</a>
+            <a href="#" onclick="on_off_div('.admin-product-section'); "><img src="./images-Admin/grid.png" alt="admin-product-manage" >Sản phẩm</a>
+            <a href="#" onclick="on_off_div('#order-manage-container'); "><img src="./images-Admin/checkout.png" alt="admin-order-manage">Quản lý đơn hàng</a>
             <a href="#"><img src="./images-Admin/accountant.png" alt="admin-account-manage">Quản lý tài khoản</a>
             <a href="#"><img src="./images-Admin/complain.png" alt="admin-complain-manage">Xử lý khiếu nại</a>
             <a href="#"><img src="./images-Admin/price-tag.png" alt="admin-promotion-manage">Khuyến mãi & giảm giá</a>
             <a href="#"  style="margin-bottom: 10%;"><img src="./images-Admin/dashboard.png" alt="admin-report-manage">Báo cáo và thống kê</a>
         </div>
         <!-- FORM POP UP KHI CLICK VÀO CHI TIẾT TRUYỆN -->
-         
+      
     <div class="container-detail-backround" style="display: none;">
         <div class="detail-comic" >
             <div class="head-close-bar">
@@ -113,37 +113,37 @@
                         <input type="text" name="id_comic" id="inp-id-comic" disabled required placeholder="Mã truyện sẽ được tạo tự động">
                     
                         <p>Tên truyện:</p>
-                        <input type="text" name="name_comic" id="inp-name-comic" required>
+                        <input placeholder="Thêm tên truyện" type="text" name="name_comic" id="inp-name-comic" required>
                     
                         <p>Tác giả:</p>
                         <!-- <input type="text" name="name_author" id="name-author" required> -->
-                        <select name="name_author" id="name-author" required multiple="multiple">
+                        <select  title="Chọn tác giả" name="name_author" id="name-author" required multiple="multiple">
                            
                         </select>
                         <p>Giá</p>
-                        <input type="number" name="price-comic" id="price-comic" min="0" required>
+                        <input placeholder="Thêm giá truyện" type="number" name="price-comic" id="price-comic" min="0" required>
                         
                         <p>Số lượng trong kho:</p>
-                        <input type="number" name="slb" id="inp-slb"  required  min='0'>
+                        <input placeholder="Thêm số lượng" type="number" name="slb" id="inp-slb"  required  min='0'>
 
                         <p>Nhà xuất bản:</p>
-                        <input type="text" name="NXB" id="NXB" required>
+                        <input placeholder="Thêm nhà xuất bản" type="text" name="NXB" id="NXB" required>
                         
                         <p>Kích thước (cm):</p>
-                        <input type="text" name="Size" id="inp-size" required  min='0'>
+                        <input placeholder="Thêm kích thước" type="text" name="Size" id="inp-size" required  min='0'>
                         
                         <p>Số trang:</p>
-                        <input type="number" name="Pages" id="inp-pages"  required  min='0'>
+                        <input placeholder="Thêm số trang" type="number" name="Pages" id="inp-pages"  required  min='0'>
 
                         <p>Cân nặng (g):</p>
-                        <input type="number" name="Weight" id="inp-weight" step="0.01"  required  min='0'>
+                        <input placeholder="Thêm cân nặng" type="number" name="Weight" id="inp-weight" step="0.01"  required  min='0'>
 
 
 
                     
 
                     <p>Thể loại:</p>
-                    <select name="genre" id="inp-genre" required multiple="multiple">
+                    <select title="Chọn thể loại" name="genre" id="inp-genre" required multiple="multiple">
                         <!-- <option value="">-- Chọn thể loại --</option>
                         <option value="Fun">Hài hước</option>
                         <option value="Romantic">Lãng mạn</option>
@@ -151,14 +151,14 @@
                     </select>
                    
                     <p>Mô tả nội dung:</p>
-                    <textarea name="content_comic" id="content-comic" rows="5" required></textarea>
+                    <textarea title="Thêm nội dung mô tả truyện" name="content_comic" id="content-comic" rows="5" required></textarea>
                     <p>Tóm tắt truyện:</p>
-                    <textarea name="summary_content_comic" id="summary_content-comic" rows="5" required></textarea>
+                    <textarea title="Thêm tóm tắt truyện" name="summary_content_comic" id="summary_content-comic" rows="5" required></textarea>
                     <p>Thêm ảnh bìa:</p>
-                    <input type="file" name="images[]" id="files-cover-img" accept="image/*"  required>
+                    <input placeholder="Thêm ảnh bìa của truyện" type="file" name="images[]" id="files-cover-img" accept="image/*"  required>
                     <div id="preview1"></div>
                     <p>Thêm file hình ảnh:</p>
-                    <input type="file" name="images[]" id="files-img" accept="image/*" multiple required>
+                    <input placeholder="Thêm 5 hình ảnh xem thử cho truyện" type="file" name="images[]" id="files-img" accept="image/*" multiple required>
                     
     
                     <div id="preview"></div>
@@ -204,7 +204,7 @@
                 <p class="detail">Chi tiết</p>
             </div>
         </div>
-
+       
         <!-- DIV Của phần quản lý sản phẩm -->
         <div class="admin-product-section" style="display: none;">
             <div class="products-tool">
@@ -250,6 +250,45 @@
                 </table>
             </div>
         </div>
+
+
+         <!-- DIV quản lý đơn  hàng -->
+    <div id="order-manage-container"  style="display: none;">
+        <div class="products-tool">
+            <button title="List Order" type="button" class="btn-admin manage_status_order" onclick="window.location.href='html/update-status-order.html';">Cập nhật Trạng thái</button>
+            <!-- <button title="List Order" type="button" class="btn-admin search_order">Tìm kiếm</button> -->
+            <button title="List Order" type="button" class="btn-admin edit_order" onclick="window.location.href='html/list_edit_order.html';">Chỉnh sửa</button>
+            
+    
+        </div>
+        <div class="table">
+            <table >
+                <thead>
+                <tr>
+                    <th>ID ĐH</th>
+                    <th>Tên khách hàng</th>
+                    <th>Thời gian</th>
+                    <!-- <th>Trạng thái</th> -->
+                     <th>Tổng giá trị</th>
+                   
+    
+                </tr>
+            </thead>
+            <tbody class="table_body_order">
+                <tr>
+                    <td class="id_order_detail">1</td>
+                    <td></td>
+                    <td></td>
+                    <!-- <td>Hiện</td> -->
+                     <td></td>
+                    <td><img style="width: 100px; height: 100px;"  class="btn-detail-order" src="./images-Admin/edit-text.png" alt=""></td>
+                </tr>
+              </tbody>  
+              <link rel="stylesheet" href="">
+                
+            </table>
+        </div>
+    </div>
         <!-- DIV của phần chỉnh sửa -->
          <div id="form-edit-comic" style="display: none;">
         <div class="edit-container" > 
@@ -355,6 +394,9 @@
     </div>
     </div>
 
+
+
+    
     
     <div id="footer-admin-page"  ></div>
 </div>
@@ -368,6 +410,8 @@
     <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
      <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/js/select2.min.js"></script> -->
     <script src="./script/scrip-for-detele-comic.js"></script>
+    <script src="./script/script.js"></script>
+    <script src="./script/script-for-order-manage.js"></script>
 
    
 </body>
