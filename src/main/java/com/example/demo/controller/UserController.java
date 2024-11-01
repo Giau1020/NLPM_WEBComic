@@ -18,7 +18,7 @@ import java.util.Optional;
 @RequestMapping("/user")
 public class UserController {
 
-    @Autowired
+        @Autowired
     private UserRepository userRepository;
 
     // Xử lý đăng nhập
@@ -189,4 +189,6 @@ public ResponseEntity<String> register(@RequestBody UserRegistrationRequest regi
         return role;
     }
 }
+
+
 }

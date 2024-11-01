@@ -21,6 +21,16 @@ public class User {
     private String password;
     
     private String role;
+    private Boolean status;
+
+    public Boolean isStatus() {
+        return status;
+    }
+
+    public void setStatus(Boolean status) {
+        this.status = status;
+    }
+
     public Long getId() {
         return id;
     }

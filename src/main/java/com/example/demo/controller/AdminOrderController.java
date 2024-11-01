@@ -126,4 +126,16 @@ private  final  OrderItemRepository orderItemRepository;
         return ResponseEntity.ok("Order cancelled and stock updated");
     }
 
+//    Hàm lấy tất cả order theo userID
+    @GetMapping("getOrders/{userId}")
+    public ResponseEntity<?> getOrdersByUserId(@PathVariable Long userId){
+        List<Order> orders = orderRepository.findByUserId(userId);
+        if (orders.isEmpty()) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND)
+                    .body("No orders found for user ID: " + userId);
+        }
+
+        return ResponseEntity.ok(orders);
+    }
+
 }

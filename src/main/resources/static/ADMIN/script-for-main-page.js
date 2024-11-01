@@ -267,19 +267,32 @@ function on_off_div(className){
             On_div_main();
             Off_div('.admin-product-section');
             Off_div('#order-manage-container');
+            Off_div('#form-manage-account');
         break;
         case '.admin-product-section':
             Off_div('.admin-detail-section');// DIV main
             On_div('.admin-product-section');
             Off_div('#order-manage-container');
+            Off_div('#form-manage-account');
         break;
         case '#order-manage-container':
-            console.log("click ");
+           
             Off_div('.admin-detail-section'); // DIV main
             Off_div('.admin-product-section');
+            Off_div('#form-manage-account');
             On_div('#order-manage-container');
             ShowAllOrders();
             break;
+
+        case '#form-manage-account':
+            console.log("new click ");
+            Off_div('.admin-detail-section'); // DIV main
+            Off_div('.admin-product-section');
+            Off_div('#order-manage-container');
+            On_div('#form-manage-account');
+            getAllInforUser();
+            break;
+            
             
 
 
@@ -287,6 +300,7 @@ function on_off_div(className){
             On_div_main();
             Off_div('.admin-product-section');
             Off_div('#order-manage-container');
+            Off_div('#form-manage-account');
     }
 }
 
@@ -326,6 +340,143 @@ async function toggleColumnVisibility(index, shouldShow) {
        
     });
     return;
+}
+
+
+async function getDataFromAPI(url) {
+    try {
+        const response = await fetch(url);
+        
+        if (!response.ok) {
+            throw new Error(`Lỗi HTTP! Trạng thái: ${response.status}`);
+        }
+        
+        const data = await response.json();
+        return data;
+    } catch (error) {
+        console.error('Có lỗi xảy ra:', error);
+    }
+}
+// Hàm lấy dữ liệu của user account
+async function getAllInforUser() {
+    let api = `http://localhost:8080/api/v1/sng/admin/users`;
+    getDataFromAPI(api)
+    .then(users => {
+        let element = document.querySelector('.tbody_manage_account');
+        element.innerHTML = ``; // Clear only once before the loop
+
+        users.forEach(user => {
+            let status  = user.status;
+            let TT;
+            if(status == true){
+                TT = 'Đang hoạt động';
+            }else if(status == false){
+                TT = 'Tài khoản đã bị khóa';
+            }
+            let row = document.createElement('tr');
+            row.innerHTML = `
+                <td>${user.username}</td>
+                <td>@gmail.com</td>
+                <td>${TT}</td>
+            `;
+            element.appendChild(row);
+        });
+    })
+    .catch(error => {
+        console.log(error);
+    });
+}
+// Hàm check mật khẩu
+function togglePasswordFrame() {
+    document.querySelector('#username').value = ``;
+    document.querySelector('#currentPassword').value = ``;
+    document.getElementById("newPassword").value = ``;
+    document.getElementById("confirmPassword").value = ``;
+    document.getElementById("errorMessage");
+
+    const passwordFrame = document.getElementById("passwordFrame");
+    const overlay = document.getElementById("overlay");
+
+    if (passwordFrame.style.display === "none" || passwordFrame.style.display === "") {
+        passwordFrame.style.display = "block"; // Hiển thị khung
+        overlay.style.display = "block"; // Hiển thị overlay
+    } else {
+        passwordFrame.style.display = "none"; // Ẩn khung
+        overlay.style.display = "none"; // Ẩn overlay
+    }
+}
+
+function validatePassword() {
+    const username = document.querySelector('#username').value;
+    const oldPassword = document.querySelector('#currentPassword').value;
+    const newPassword = document.getElementById("newPassword").value;
+    const confirmPassword = document.getElementById("confirmPassword").value;
+    const errorMessage = document.getElementById("errorMessage");
+
+    if (newPassword !== confirmPassword) {
+        errorMessage.textContent = "Mật khẩu mới và xác nhận mật khẩu không khớp.";
+        return false; // Ngăn chặn gửi form
+    }
+
+    errorMessage.textContent = ""; // Xóa thông báo lỗi nếu khớp
+
+    updatePassword(username,oldPassword, newPassword );
+   
+    return true; // Cho phép gửi form
+}
+async function updatePassword(username, oldPassword, newPassword, token) {
+    // Kiểm tra các tham số đầu vào
+    if (!username || !oldPassword || !newPassword) {
+        alert("Vui lòng nhập đầy đủ thông tin.");
+        return;
+    }
+
+    try {
+        const response = await fetch(`http://localhost:8080/api/v1/sng/admin/users/update_pass`, {
+            method: 'PUT',
+            headers: {
+                'Content-Type': 'application/json',
+                // Thêm header Authorization nếu cần thiết
+                ...(token && { 'Authorization': `Bearer ${token}` })
+            },
+            body: JSON.stringify({
+                username: username,
+                oldPass: oldPassword,
+                newPass: newPassword
+            })
+        });
+
+        // Kiểm tra trạng thái phản hồi
+        if (response.ok) {
+            const data = await response.json();
+            // Giả sử server trả về thông báo trong trường 'message'
+            if (data) {
+                alert("Mật khẩu đã được cập nhật thành công!");
+                togglePasswordFrame();
+                return;
+            } else {
+                alert(`Thành công nhưng có thông báo phụ: ${data.message}`);
+            }
+        } else {
+            // Xử lý lỗi từ server
+            let errorMsg = "Đã xảy ra lỗi khi cập nhật mật khẩu.";
+            try {
+                const errorData = await response.json();
+                if (errorData) {
+                    // Nếu server trả về thông báo lỗi trong trường 'message'
+                    errorMsg = errorData;
+                }
+            } catch (e) {
+                // Nếu phản hồi không phải JSON
+                errorMsg = `Lỗi: ${response.status} ${response.statusText}`;
+            }
+            alert(errorMsg);
+        }
+    } catch (error) {
+        // Xử lý lỗi mạng hoặc các lỗi khác
+        console.error("Đã xảy ra lỗi:", error);
+        alert("Đã xảy ra lỗi khi cập nhật mật khẩu. Vui lòng thử lại sau.");
+    }
 }
 
 

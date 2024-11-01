@@ -1,0 +1,399 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quản lý Tài Khoản Người Dùng</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        /* Thiết lập chung */
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #fcebe8; /* Màu nền hồng nhạt */
+            color: #333;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+        }
+        .container {
+            width: 100%;
+            max-width: 800px;
+            padding: 20px;
+        }
+
+        /* Nút quay về và trang chủ */
+        .nav-buttons {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+        .btn-nav {
+            padding: 8px 15px;
+            border: 1px solid #d9534f;
+            border-radius: 5px;
+            background-color: #fff;
+            color: #d9534f;
+            cursor: pointer;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 0.9rem;
+            transition: background-color 0.2s, color 0.2s;
+        }
+        .btn-nav:hover {
+            background-color: #d9534f;
+            color: white;
+        }
+
+        /* Kiểu thẻ card */
+        .card {
+            background-color: #fff5f5; /* Màu nền trắng hồng nhạt */
+            padding: 20px;
+            border-radius: 8px;
+            border: 1px solid #f5c2c0; /* Viền đỏ nhạt */
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            margin-bottom: 20px;
+            transition: transform 0.2s;
+        }
+        .card:hover {
+            transform: translateY(-5px);
+        }
+        h2, h3 {
+            color: #d9534f; /* Màu chữ đỏ */
+            margin-top: 0;
+        }
+
+        /* Kiểu nút */
+        .btn {
+            padding: 10px 15px;
+            margin-right: 10px;
+            border: 1px solid #d9534f; /* Viền đỏ */
+            border-radius: 5px;
+            background-color: #fff; /* Màu nền trắng */
+            color: #d9534f; /* Màu chữ đỏ */
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 0.9rem;
+            transition: background-color 0.2s, color 0.2s;
+        }
+        .btn:hover {
+            background-color: #d9534f;
+            color: #fff;
+        }
+
+        /* Kiểu bảng */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 10px;
+        }
+        th, td {
+            padding: 12px;
+            border-bottom: 1px solid #f5c2c0; /* Viền dưới đỏ nhạt */
+            text-align: left;
+        }
+        th {
+            background-color: #f7d9d8; /* Màu nền đầu bảng */
+            color: #333;
+        }
+        tr:nth-child(even) {
+            background-color: #fff5f5; /* Màu nền dòng chẵn */
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Nút quay về trang trước và trang chủ -->
+        <div class="nav-buttons">
+            <a href="javascript:history.back()" onclick="getAllInforUser();" class="btn-nav"><i class="fas fa-arrow-left"></i> Quay về trang trước</a>
+            <a href="/main-page-admin.html" class="btn-nav"><i class="fas fa-home"></i> Quay về trang chủ</a>
+        </div>
+
+        <h2>Chi Tiết Tài Khoản Người Dùng</h2>
+        
+    </div>
+
+    <script>
+        function khoaTaiKhoan() {
+            document.getElementById("account-status").innerText = "Đã bị khóa";
+            alert("Tài khoản đã bị khóa.");
+        }
+
+        function kichHoatTaiKhoan() {
+            document.getElementById("account-status").innerText = "Đang hoạt động";
+            alert("Tài khoản đã được kích hoạt lại.");
+        }
+
+        function xoaTaiKhoan() {
+            if (confirm("Bạn có chắc chắn muốn xóa tài khoản này không?")) {
+                alert("Tài khoản đã bị xóa.");
+                // Thực hiện thao tác xóa tài khoản tại đây
+            }
+        }
+        let ordersItem = [];
+        function filterOrders() {
+    const filterOption = document.getElementById("filter-time").value;
+    const orderHistory = document.getElementById("order-history").querySelector("tbody");
+
+    const currentDate = new Date();
+    let filteredOrders;
+
+    if (filterOption === "this_month") {
+        filteredOrders = ordersItem.filter(order => {
+            const orderDate = new Date(order.orderTime); // Chuyển trực tiếp sang Date
+            return orderDate.getMonth() === currentDate.getMonth() && orderDate.getFullYear() === currentDate.getFullYear();
+        });
+    } else if (filterOption === "last_60_days") {
+        filteredOrders = ordersItem.filter(order => {
+            const orderDate = new Date(order.orderTime);
+            const diffTime = currentDate - orderDate;
+            return diffTime / (1000 * 60 * 60 * 24) <= 60;
+        });
+    } else {
+        filteredOrders = ordersItem;
+    }
+
+    // Xóa tất cả các hàng cũ trước khi hiển thị kết quả mới
+    orderHistory.innerHTML = "";
+
+    // Hiển thị danh sách đơn hàng sau khi lọc
+    filteredOrders.forEach(order => {
+        const orderDate = formatDateTime(order.orderTime); // Sử dụng formatDateTime để hiển thị định dạng mong muốn
+        const row = document.createElement("tr");
+        row.innerHTML = `<td>${order.id}</td><td>${orderDate}</td><td>${order.totalPrice}</td><td><a href="#">Xem chi tiết</a></td>`;
+        orderHistory.appendChild(row);
+    });
+}
+
+        
+        function xemThemDanhGia() {
+            alert("Hiển thị thêm các đánh giá...");
+         
+            // Thực hiện tải thêm danh sách đánh giá tại đây
+        }
+
+        
+        async function getDataFromAPI(url) {
+        try {
+            const response = await fetch(url);
+            
+            if (!response.ok) {
+                throw new Error(`Lỗi HTTP! Trạng thái: ${response.status}`);
+            }
+            
+            const data = await response.json();
+            return data;
+        } catch (error) {
+            console.error('Có lỗi xảy ra:', error);
+        }
+    }
+
+        // Khai báo các biến dùng chung
+        let container = document.querySelector('.container');
+        // Hàm hiển thị thông tin cá nhân khách hàng
+        let id = sessionStorage.getItem('userId');
+        async function showInforCustomer(id){
+            let api = `http://localhost:8080/api/v1/sng/admin/users/${id}`;
+
+            let card = document.createElement('div');
+            card.className = 'card';
+
+           // let user = getDataFromAPI(api);
+            console.log(api);
+            
+
+            getDataFromAPI(api)
+            .then(user => {
+                let TT = user.status;
+                if(TT == false){
+                    TT = 'Tài khoản bị khóa';
+                }else {
+                    TT = 'Tài khoản đang hoạt động';
+                }
+                card.innerHTML = `
+                <h3>Thông tin Tài khoản</h3>
+                <p><strong>ID:</strong> ${user.id}</p>
+                <p><strong>Tên tài khoản:</strong> ${user.username}</p>
+                <p><strong>Trạng thái tài khoản:</strong> <span id="account-status" style="font-weight: bold;">${TT}</span></p>
+                <button class="btn" onclick="khoaTaiKhoan(); updateUserStatus(${user.id}, ${false})"><i class="fas fa-lock"></i> Khóa tài khoản</button>
+                <button class="btn" onclick="kichHoatTaiKhoan(); updateUserStatus(${user.id}, ${true})"><i class="fas fa-unlock"></i> Kích hoạt lại tài khoản</button>
+            `;
+
+            container.appendChild(card);
+           
+            showHistoryOrder(id); showHistoryReview(id, 10);
+
+            })
+            .catch(error => {
+                console.log(error);
+            })
+        }
+        showInforCustomer(id);
+        
+        // Hàm format Datetime
+        function formatDateTime(dateTimeStr) {
+            const date = new Date(dateTimeStr);
+            return date.toLocaleString('vi-VN', {
+                year: 'numeric',
+                month: '2-digit',
+                day: '2-digit',
+                // hour: '2-digit',
+                // minute: '2-digit',
+                // second: '2-digit',
+                // hour12: false
+            });
+        }
+        function formatDateTimeS(dateTimeStr) {
+    const date = new Date(dateTimeStr);
+    return date.toLocaleString('vi-VN', {
+        year: 'numeric',
+        month: '2-digit',
+        day: '2-digit',
+        hour: '2-digit',
+        minute: '2-digit',
+        second: '2-digit',
+        hour12: false
+    });
+}
+let sumOrders = 0;
+async function showHistoryOrder(id){
+            let api = `http://localhost:8080/api/v1/sng/admin/orders/getOrders/${id}`;
+            let card = document.createElement('div');
+            card.className = 'card';
+
+            card.innerHTML = `
+                    <h3>Lịch sử Mua hàng</h3>
+                   
+                    <table id="order-history">
+                        <thead>
+                            <tr>
+                                <th>Mã đơn hàng</th>
+                                <th>Ngày mua</th>
+                                <th>Tổng tiền (VND)</th>
+                            </tr>
+                        </thead>
+                        <tbody class = "tbody_history_order">  
+                        </tbody>
+                    </table>
+                </div>
+            `;
+            container.appendChild(card);
+
+            let historyOrder = document.querySelector(".tbody_history_order");
+            getDataFromAPI(api)
+            .then(orders => {
+                console.log(orders);
+                orders.slice(0, 10).reverse().forEach(order => {
+                    sumOrders = sumOrders  + 1;
+                    ordersItem.push(order);
+                    let time  = formatDateTime(order.orderTime);
+                    let row = document.createElement('tr');
+                row.innerHTML = `
+                    <td>${order.id}</td>
+                    <td>${time}</td>
+                    <td>${order.totalPrice}</td>
+                `;
+                historyOrder.appendChild(row);
+                });
+                orders.forEach(order => {
+                    console.log("sum",sumOrders);
+                });
+                
+                
+            })
+        }
+
+        async function showHistoryReview(id){
+            let api =`http://localhost:8080/api/v1/sng/admin/users/getReview/${id}`;
+            let card = document.createElement('div');
+            card.className = 'card';
+            card.innerHTML =``;
+            card.innerHTML = `
+                <h3>Lịch sử Đánh giá</h3>
+                <table id="review-history">
+                    <thead>
+                        <tr>
+                            <th>Mã đánh giá</th>
+                            <th>Nội dung</th>
+                            <th>Đánh giá (sao)</th>
+                            <th>Thời gian</th>
+                        </tr>
+                    </thead>
+                    <tbody class = "tbody_history_review">
+                       
+                        <!-- Thêm các đánh giá khác -->
+                    </tbody>
+                </table>
+
+            `;
+            container.appendChild(card);
+            let historyReview = document.querySelector(".tbody_history_review");
+            historyReview.innerHTML = ``;
+            getDataFromAPI(api)
+            .then(reviews => {
+                reviews.slice(0, 10).reverse().forEach(review => {
+                    let time  = formatDateTimeS(review.createdAt);
+                    let row = document.createElement('tr');
+                    row.innerHTML = `
+                        <td>${review.id}</td>
+                        <td>${review.reviewText}</td>
+                        <td>${review.rating}</td>
+                        <td>${time}</td>
+
+                    `;
+                    historyReview.appendChild(row);
+                });return 3;
+            })
+            .catch(error =>{
+                console.log(error);
+            });
+       
+        }
+
+        function updateUserStatus(ids, newStatus) {
+    // Kiểm tra nếu không có ID nào được chọn hoặc trạng thái mới chưa được cung cấp
+            if (ids.length === 0 ) {
+                alert("Vui lòng chọn ít nhất một đơn hàng và trạng thái mới để cập nhật.");
+                return;
+            }
+
+            // Gửi yêu cầu PUT đến server
+            fetch(`http://localhost:8080/api/v1/sng/admin/users/update_status?ids=${ids}&newStatus=${newStatus}`, {
+                method: "PUT",
+            })
+            .then(response => {
+                if (response.ok) {
+                    return response.text(); // Lấy phản hồi dưới dạng text nếu thành công
+                } else {
+                    throw new Error("Cập nhật trạng thái thất bại. Vui lòng thử lại.");
+                }
+            })
+            .then(data => {
+                alert(data); // Hiển thị phản hồi từ server
+                // Tải lại trang hoặc cập nhật giao diện người dùng tại đây nếu cần
+            
+            })
+            .catch(error => {
+                alert(error.message); // Hiển thị lỗi nếu có
+            });
+        }
+        
+        
+
+       
+         
+     
+       
+
+        
+
+
+    </script>
+</body>
+</html>

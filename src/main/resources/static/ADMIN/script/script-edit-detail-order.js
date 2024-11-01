@@ -207,7 +207,7 @@ function updateOrderStatus(ids, newStatus) {
 
 function openEditInfoDiv() {
     let status = document.querySelector('.btn-status').innerHTML;
-    if(status == 'Đã hủy' || status == 'Đã xác nhận' || status == 'Đã giao'){
+    if(status == 'Đã hủy' || status == 'Đang vận chuyển' || status == 'Đã hoàn thành'){
         alert("Chỉ có thể chỉnh sửa khi đơn hàng ở trạng thái \"Chờ xác nhận\"");
         return;
     }
@@ -404,7 +404,7 @@ async function update_infor_customer(id){
 function showConfirmCancelOrder() {
     // Hiển thị hộp thoại xác nhận hủy đơn hàng
     let status = document.querySelector('.btn-status').innerHTML;
-    if(status === 'Đã hủy' || status === 'Đã xác nhận' || status === 'Đã giao'){
+    if(status === 'Đã hủy' || status === 'Đang vận chuyển' || status === 'Đã hoàn thành'){
         alert("Chỉ có thể xóa khi đơn hàng ở trạng thái \"Chờ xác nhận\"");
         //console.log("....");
         return;
@@ -414,7 +414,7 @@ function showConfirmCancelOrder() {
 
 function confirmCancel(isConfirmed) {
     let status = document.querySelector('.btn-status').innerHTML;
-    if(status === 'Đã hủy' || status === 'Đã xác nhận' || status === 'Đã giao'){
+    if(status === 'Đã hủy' || status === 'Đang vận chuyển' || status === 'Đã hoàn thành'){
         alert("Chỉ có thể xóa khi đơn hàng ở trạng thái \"Chờ xác nhận\"");
         return;
     }

@@ -1,5 +1,6 @@
 package com.example.demo.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 import java.time.LocalDateTime;
 
@@ -13,6 +14,7 @@ public class Review {
 
      @ManyToOne(fetch = FetchType.LAZY) // Thêm mối quan hệ với User
     @JoinColumn(name = "user_id")
+     @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
     private User user;
 
     @Column(name = "comic_id", nullable = false) // Thay order_id bằng comic_id

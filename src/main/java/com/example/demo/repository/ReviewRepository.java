@@ -16,5 +16,8 @@ public interface ReviewRepository extends JpaRepository<Review, Long> {
 
     // Tìm các đánh giá dựa trên comicId
     List<Review> findByComicId(Long comicId);
+
+//    Tìm đánh giá dựa trên UserId
+    List<Review> findByUserId(Long userId);
     
 }
