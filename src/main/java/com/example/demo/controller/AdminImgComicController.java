@@ -14,7 +14,7 @@ import java.util.Optional;
 @Controller
 @RequestMapping("api/v1/sng/admin/imgcomic")
 
-@CrossOrigin(origins = "http://127.0.0.1:5501")
+//@CrossOrigin(origins = "http://127.0.0.1:5501")
 public class AdminImgComicController {
     private final ImgComicServiceImpl imgComicService;
 

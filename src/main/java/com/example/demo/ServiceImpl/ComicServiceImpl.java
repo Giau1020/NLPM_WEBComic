@@ -130,7 +130,7 @@ public class ComicServiceImpl implements ComicService {
 
 
     // Upload img
-    private static final String UPLOAD_DIR = "C:/Users/NgocG/Documents/NLPM_WebComic_SNG/NLPM_WEBComic/src/main/resources/static/images/";
+    private static final String UPLOAD_DIR = "/src/main/resources/static/images/";
 
     public String uploadImage(MultipartFile file) throws IOException {
         if (file.isEmpty()) {
