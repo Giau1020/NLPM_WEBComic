@@ -19,9 +19,9 @@ public class User {
     private String username;
     @JsonIgnore
     private String password;
-    
+     private Boolean status;
     private String role;
-    private Boolean status;
+   // private Boolean status;
 
     public Boolean isStatus() {
         return status;
@@ -63,4 +63,13 @@ public class User {
     public void setRole(String role) {
         this.role = role;
     }
+
+    public Boolean getStatus() {
+        return status;
+    }
+
+//    //public void setStatus(Boolean status) {
+//        this.status = status;
+//    }
+//
 }

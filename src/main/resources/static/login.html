@@ -25,18 +25,24 @@
             text-align: center;
             margin-bottom: 20px;
         }
-        label {
-            font-weight: bold;
-            display: block;
-            margin-bottom: 5px;
+        .input-container {
+            position: relative;
+            width: 100%;
         }
         input[type="text"],
         input[type="password"] {
             width: 100%;
             padding: 10px;
-            margin: 10px 0 20px 0;
+            margin: 10px 0;
             border: 1px solid #ccc;
             border-radius: 5px;
+        }
+        .toggle-password {
+            position: absolute;
+            top: 50%;
+            right: 10px;
+            transform: translateY(-50%);
+            cursor: pointer;
         }
         #btlg {
             width: 100%;
@@ -89,51 +95,50 @@
     </div>
     <script src="js/Header.js"></script>
     <script>
-     function login() {
-        const username = document.getElementById("username").value;
-        const password = document.getElementById("password").value;
+    function login() {
+    const username = document.getElementById("username").value;
+    const password = document.getElementById("password").value;
 
-        console.log("Hàm login được gọi với:", { username, password });
+    console.log("Hàm login được gọi với:", { username, password });
 
-        fetch("/user/login", {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json",
-            },
-            body: JSON.stringify({ username, password }),
-        })
-        .then((response) => {
-            console.log("Phản hồi từ API:", response);
-
-            if (response.ok) {
-                return response.json();  // Chuyển đổi phản hồi thành JSON
-            } else {
-                document.getElementById("error-message").innerText =
-                    "Sai tên đăng nhập hoặc mật khẩu!";
-                throw new Error("Login failed");
+    fetch("/user/login", {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ username, password }),
+    })
+    .then((response) => {
+        return response.json().then((data) => {
+            if (!response.ok) {
+                throw new Error(data.message || "Đã xảy ra lỗi");
             }
-        })
-        .then((data) => {
-            console.log("Dữ liệu trả về từ API:", data);
-
-            const role = data.role; 
-            console.log("Quyền của người dùng:", role);
-
-            let redirectUrl;
-
-            if (role.trim() === "user") {
-                redirectUrl = new URLSearchParams(window.location.search).get("redirectUrl") || "TrangChu.html";
-            } else {
-                redirectUrl = "ADMIN/main-page-admin.html"; 
-            }
-
-            console.log("Chuyển hướng đến:", redirectUrl);
-            window.location.href = redirectUrl;
-        })
-        .catch((error) => {
-            console.error("Lỗi khi đăng nhập:", error);
+            return data;
         });
-    }
+    })
+    .then((data) => {
+        console.log("Dữ liệu trả về từ API:", data);
+
+        const role = data.role;
+        console.log("Quyền của người dùng:", role);
+
+        let redirectUrl;
+
+        if (role.trim() === "user") {
+            redirectUrl = new URLSearchParams(window.location.search).get("redirectUrl") || "TrangChu.html";
+        } else {
+            redirectUrl = "ADMIN/main-page-admin.html";
+        }
+
+        console.log("Chuyển hướng đến:", redirectUrl);
+        window.location.href = redirectUrl;
+    })
+    .catch((error) => {
+        console.error("Lỗi khi đăng nhập:", error);
+        document.getElementById("error-message").innerText = error.message;
+    });
+}
+
     </script>
 </body>
 </html>
