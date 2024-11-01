@@ -6,6 +6,8 @@
     <title>Document</title>
     <link rel="stylesheet" href="./style-header-footer-admin.css">
     <link rel="stylesheet" href="./style-main-page-admin.css">
+    <link rel="stylesheet" href="./style-complaint.css">
+    <link rel="stylesheet" href="./report.css">
     <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
     <!-- <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/css/select2.min.css" rel="stylesheet" /> -->
 
@@ -18,15 +20,15 @@
         <div class="admin-manage">
            <div class="menu-admin"> </div>
             <a href="#" style="margin-top: 10%;" onclick="on_off_div('.admin-detail-section')"><img src="./images-Admin/home.png" alt="admin-home-page" >Trang chủ</a>
-            <a href="#" onclick="on_off_div('.admin-product-section')"><img src="./images-Admin/grid.png" alt="admin-product-manage" >Sản phẩm</a>
-            <a href="#"><img src="./images-Admin/checkout.png" alt="admin-order-manage">Quản lý đơn hàng</a>
+            <a href="#" onclick="on_off_div('.admin-product-section'); "><img src="./images-Admin/grid.png" alt="admin-product-manage" >Sản phẩm</a>
+            <a href="#" onclick="on_off_div('#order-manage-container'); "><img src="./images-Admin/checkout.png" alt="admin-order-manage">Quản lý đơn hàng</a>
             <a href="#"><img src="./images-Admin/accountant.png" alt="admin-account-manage">Quản lý tài khoản</a>
-            <a href="./complaint.html"><img src="./images-Admin/complain.png" alt="admin-complain-manage">Xử lý khiếu nại</a>
+            <a href="#" onclick="on_off_div('.admin-complaint-section');"><img src="./images-Admin/complain.png" alt="admin-complain-manage">Xử lý khiếu nại</a>
             <a href="#"><img src="./images-Admin/price-tag.png" alt="admin-promotion-manage">Khuyến mãi & giảm giá</a>
-            <a href="./report.html"  style="margin-bottom: 10%;"><img src="./images-Admin/dashboard.png" alt="admin-report-manage">Báo cáo và thống kê</a>
+            <a href="#"  style="margin-bottom: 10%;" onclick="on_off_div('.report-content')"><img src="./images-Admin/dashboard.png" alt="admin-report-manage">Báo cáo và thống kê</a>
         </div>
         <!-- FORM POP UP KHI CLICK VÀO CHI TIẾT TRUYỆN -->
-         
+      
     <div class="container-detail-backround" style="display: none;">
         <div class="detail-comic" >
             <div class="head-close-bar">
@@ -113,37 +115,37 @@
                         <input type="text" name="id_comic" id="inp-id-comic" disabled required placeholder="Mã truyện sẽ được tạo tự động">
                     
                         <p>Tên truyện:</p>
-                        <input type="text" name="name_comic" id="inp-name-comic" required>
+                        <input placeholder="Thêm tên truyện" type="text" name="name_comic" id="inp-name-comic" required>
                     
                         <p>Tác giả:</p>
                         <!-- <input type="text" name="name_author" id="name-author" required> -->
-                        <select name="name_author" id="name-author" required multiple="multiple">
+                        <select  title="Chọn tác giả" name="name_author" id="name-author" required multiple="multiple">
                            
                         </select>
                         <p>Giá</p>
-                        <input type="number" name="price-comic" id="price-comic" min="0" required>
+                        <input placeholder="Thêm giá truyện" type="number" name="price-comic" id="price-comic" min="0" required>
                         
                         <p>Số lượng trong kho:</p>
-                        <input type="number" name="slb" id="inp-slb"  required  min='0'>
+                        <input placeholder="Thêm số lượng" type="number" name="slb" id="inp-slb"  required  min='0'>
 
                         <p>Nhà xuất bản:</p>
-                        <input type="text" name="NXB" id="NXB" required>
+                        <input placeholder="Thêm nhà xuất bản" type="text" name="NXB" id="NXB" required>
                         
                         <p>Kích thước (cm):</p>
-                        <input type="text" name="Size" id="inp-size" required  min='0'>
+                        <input placeholder="Thêm kích thước" type="text" name="Size" id="inp-size" required  min='0'>
                         
                         <p>Số trang:</p>
-                        <input type="number" name="Pages" id="inp-pages"  required  min='0'>
+                        <input placeholder="Thêm số trang" type="number" name="Pages" id="inp-pages"  required  min='0'>
 
                         <p>Cân nặng (g):</p>
-                        <input type="number" name="Weight" id="inp-weight" step="0.01"  required  min='0'>
+                        <input placeholder="Thêm cân nặng" type="number" name="Weight" id="inp-weight" step="0.01"  required  min='0'>
 
 
 
                     
 
                     <p>Thể loại:</p>
-                    <select name="genre" id="inp-genre" required multiple="multiple">
+                    <select title="Chọn thể loại" name="genre" id="inp-genre" required multiple="multiple">
                         <!-- <option value="">-- Chọn thể loại --</option>
                         <option value="Fun">Hài hước</option>
                         <option value="Romantic">Lãng mạn</option>
@@ -151,14 +153,14 @@
                     </select>
                    
                     <p>Mô tả nội dung:</p>
-                    <textarea name="content_comic" id="content-comic" rows="5" required></textarea>
+                    <textarea title="Thêm nội dung mô tả truyện" name="content_comic" id="content-comic" rows="5" required></textarea>
                     <p>Tóm tắt truyện:</p>
-                    <textarea name="summary_content_comic" id="summary_content-comic" rows="5" required></textarea>
+                    <textarea title="Thêm tóm tắt truyện" name="summary_content_comic" id="summary_content-comic" rows="5" required></textarea>
                     <p>Thêm ảnh bìa:</p>
-                    <input type="file" name="images[]" id="files-cover-img" accept="image/*"  required>
+                    <input placeholder="Thêm ảnh bìa của truyện" type="file" name="images[]" id="files-cover-img" accept="image/*"  required>
                     <div id="preview1"></div>
                     <p>Thêm file hình ảnh:</p>
-                    <input type="file" name="images[]" id="files-img" accept="image/*" multiple required>
+                    <input placeholder="Thêm 5 hình ảnh xem thử cho truyện" type="file" name="images[]" id="files-img" accept="image/*" multiple required>
                     
     
                     <div id="preview"></div>
@@ -204,7 +206,7 @@
                 <p class="detail">Chi tiết</p>
             </div>
         </div>
-
+       
         <!-- DIV Của phần quản lý sản phẩm -->
         <div class="admin-product-section" style="display: none;">
             <div class="products-tool">
@@ -250,6 +252,45 @@
                 </table>
             </div>
         </div>
+
+
+         <!-- DIV quản lý đơn  hàng -->
+    <div id="order-manage-container"  style="display: none;">
+        <div class="products-tool">
+            <button title="List Order" type="button" class="btn-admin manage_status_order" onclick="window.location.href='html/update-status-order.html';">Cập nhật Trạng thái</button>
+            <!-- <button title="List Order" type="button" class="btn-admin search_order">Tìm kiếm</button> -->
+            <button title="List Order" type="button" class="btn-admin edit_order" onclick="window.location.href='html/list_edit_order.html';">Chỉnh sửa</button>
+            
+    
+        </div>
+        <div class="table">
+            <table >
+                <thead>
+                <tr>
+                    <th>ID ĐH</th>
+                    <th>Tên khách hàng</th>
+                    <th>Thời gian</th>
+                    <!-- <th>Trạng thái</th> -->
+                     <th>Tổng giá trị</th>
+                   
+    
+                </tr>
+            </thead>
+            <tbody class="table_body_order">
+                <tr>
+                    <td class="id_order_detail">1</td>
+                    <td></td>
+                    <td></td>
+                    <!-- <td>Hiện</td> -->
+                     <td></td>
+                    <td><img style="width: 100px; height: 100px;"  class="btn-detail-order" src="./images-Admin/edit-text.png" alt=""></td>
+                </tr>
+              </tbody>  
+              <link rel="stylesheet" href="">
+                
+            </table>
+        </div>
+    </div>
         <!-- DIV của phần chỉnh sửa -->
          <div id="form-edit-comic" style="display: none;">
         <div class="edit-container" > 
@@ -353,8 +394,149 @@
             </div>
         </div>
     </div>
+
+     <!-- DIV Của phần xử lý khiếu nại -->
+        <div class="admin-complaint-section" id="complaint" style="display: none;" >
+            <div class="products-tool">
+                <button class="btn-admin all-complaint" onclick="showAllComplaints()">Tất Cả khiếu nại</button>
+                <button class="btn-admin processed-complaint"onclick="filterPending()" >Khiếu nại chưa được xử lý</button>
+            </div>
+            <div class="table">
+              <div >
+                    <table >
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>Tên Người gửi</th>
+                                <th>Ngày gửi</th>
+                                <th>Trạng thái</th>                  
+                                <th>Xem chi tiết</th>
+                            </tr>
+                        </thead>
+                        <tbody id="complaint-table" >
+                        <!--chi tiết khiếu nại-->
+                        </tbody>
+                    </table>
+                </div>
+                </div>
+        </div>
+        
+        <!--trang chi tiết khiếu nại-->
+
+        <!-- Modal để hiển thị chi tiết khiếu nại -->
+<!-- Modal -->
+<div id="complaint-modal" class="modal">
+    <div class="modal-response-content">
+        <span class="close" onclick="closeModal()">&times;</span>
+        <div id="modal-body">
+            <!-- Chi tiết khiếu nại sẽ được hiển thị ở đây -->
+        </div>
+    </div>
+</div>
+<!--kết thúc modal-->
+
+
+<!--Gửi phản hồi-->
+<!-- Overlay -->
+<div id="overlay" class="overlay" onclick="closeModals()"></div>
+
+<!-- Modal phản hồi -->
+<from  id="responseModal" class="modal" method="PUT">
+    <div class="modal-response-content">
+        <span class="close" onclick="closeModals()">&times;</span>
+        <h2>Giải Quyết Khiếu Nại</h2>
+        <input type="hidden" id="complaintId">
+        <label for="status">Trạng Thái:</label>
+        <select id="status" name="status" required>
+            <option value="Đã xử lý">Đã xử lý</option>
+            <option value="Chưa xử lý">Chưa xử lý</option>
+            <option value="Không hợp lệ">Không hợp lệ</option>
+        </select>
+        <br>
+        <label for="responseInput">Phản Hồi từ Admin:</label>
+        <textarea id="response" rows="4" required></textarea>
+        <br>
+        <button type="submit" onclick="updateComplaint()">Gửi Phản Hồi</button>
+    </div>
+</from>
+
+
+
+<!--kết thúc gửi phản hồi-->
+
+
+<!-- báo cáo thống kê-->
+<div class="report-content" style="display: none;">
+    <div class="products-tool">
+        <button class="report-comic" id="report-comic">Truyện bán chạy nhất</button>
+        <button class="report-quantity" id="report-quantity">Quản lý tồn kho</button>
+        <button class="report-cart" id="report-cart">Truyện có nhiều trong giỏ hàng</button>
+        <button class="report-excel" id="report-excel">Xuất file Excel</button>
     </div>
 
+    <!-- Bảng truyện bán chạy nhất -->
+    <div class="table table-comic" id="table-comic">
+        <table>
+            <thead>
+                <tr>
+                    <th>ID Truyện</th>
+                    <th>Tên Truyện</th>
+                    <th>Tên Tác Giả</th>
+                    <th>Nhà Xuất Bản</th>                  
+                    <th>Số Lượt Bán</th>
+                </tr>
+            </thead>
+            <tbody id="report-table">
+                <!-- Nội dung sẽ được thêm vào đây -->
+            </tbody>
+        </table>
+    </div>
+
+    <!-- Bảng quản lý tồn kho -->
+    <div class="table table-sold" id="table-sold">
+        <table>
+            <thead>
+                <tr>
+                    <th>ID Truyện</th>
+                    <th>Tên Truyện</th>
+                    <th>Tên Tác Giả</th>
+                    <th>Nhà Xuất Bản</th>                  
+                    <th>SL tồn kho</th>
+                </tr>
+            </thead>
+            <tbody id="report-sold-table">
+                <!-- Nội dung sẽ được thêm vào đây -->
+            </tbody>
+        </table>
+    </div>
+    <!--div tồn kho-->
+
+    <!--div truyện nhiều trong giỏ hàng-->
+    <div class="table table-cart" id="table-cart">
+        <table>
+            <thead>
+                <tr>
+                    <th>ID Truyện</th>
+                    <th>Tên Truyện</th>
+                    <th>Tên Tác Giả</th>
+                    <th>Nhà Xuất Bản</th>                  
+                    <th>Số Lượng</th>
+                </tr>
+            </thead>
+            <tbody id="report-cart-table">
+                <!-- Nội dung sẽ được thêm vào đây -->
+            </tbody>
+        </table>
+    </div>
+    <!--div truyện trong giỏ hàng-->
+</div>
+ <!--báo cáoo thống kê-->
+
+    </div>
+
+
+
+    
     
     <div id="footer-admin-page"  ></div>
 </div>
@@ -368,7 +550,12 @@
     <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
      <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/js/select2.min.js"></script> -->
     <script src="./script/scrip-for-detele-comic.js"></script>
-
+    <script src="./script/script.js"></script>
+    <script src="./script/script-for-order-manage.js"></script>
+    <script src="./complaint-section.js"></script>
+    <script src="./report.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.17.0/xlsx.full.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/exceljs@4.2.0/dist/exceljs.min.js"></script>
    
 </body>
 </html>

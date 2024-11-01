@@ -154,15 +154,15 @@
                         </li>
                         <li>
                             <label for="email">Email:</label>
-                            <input type="email" id="email" name="email" required>
+                            <input type="email" id="email" name="email" >
                         </li>
                         <li>
                             <label for="phonenumber">Số điện thoại:</label>
-                            <input type="tel" id="phonenumber" name="phonenumber" placeholder="Nhập số điện thoại của bạn" required>
+                            <input type="tel" id="phonenumber" name="phonenumber" placeholder="Nhập số điện thoại của bạn" >
                         </li>
                         <li>
                             <label for="gender">Giới tính:</label>
-                            <select id="gender" name="gender" required>
+                            <select id="gender" name="gender" >
                                 <option value="">Chọn giới tính</option>
                                 <option value="Male">Nam</option>
                                 <option value="Female">Nữ</option>
@@ -171,7 +171,7 @@
                         </li>
                         <li>
                             <label for="birthdate">Ngày sinh:</label>
-                            <input type="date" id="birthdate" name="birthdate" required>
+                            <input type="date" id="birthdate" name="birthdate" >
                         </li>
                         <li>
                             <label>
@@ -191,6 +191,7 @@
                             <li>
                                 <label for="confirmPassword">Nhập lại mật khẩu mới*</label>
                                 <input type="password" id="confirmPassword" name="confirmPassword" >
+
                             </li>
                         </div>
                     </ul>
@@ -215,6 +216,11 @@ function togglePasswordForm() {
         passwordForm.style.display = 'none';
     }
 }
+function togglePassword(inputId) {
+    const input = document.getElementById(inputId);
+    const type = input.type === 'password' ? 'text' : 'password';
+    input.type = type;
+}
 
 function updateProfile() {
     const userInfo = {
@@ -225,22 +231,27 @@ function updateProfile() {
         birthdate: document.getElementById('birthdate').value
     };
 
-    // Kiểm tra nếu cần đổi mật khẩu
-    if (document.getElementById('changePassword').checked) {
-        userInfo.currentPassword = document.getElementById('currentPassword').value;
-        userInfo.newPassword = document.getElementById('newPassword').value;
-        userInfo.confirmPassword = document.getElementById('confirmPassword').value;
+if (document.getElementById('changePassword').checked) {
+    userInfo.currentPassword = document.getElementById('currentPassword').value;
+    userInfo.newPassword = document.getElementById('newPassword').value;
+    userInfo.confirmPassword = document.getElementById('confirmPassword').value;
 
-        if (userInfo.newPassword !== userInfo.confirmPassword) {
-            alert('Mật khẩu mới và xác nhận mật khẩu không khớp!');
-            return;
-        }
-
-        if (!userInfo.currentPassword || !userInfo.newPassword) {
-            alert('Vui lòng nhập đầy đủ mật khẩu hiện tại và mật khẩu mới.');
-            return;
-        }
+    if (userInfo.newPassword !== userInfo.confirmPassword) {
+        alert('Mật khẩu mới và xác nhận mật khẩu không khớp!');
+        return;
     }
+
+    if (!userInfo.currentPassword || !userInfo.newPassword) {
+        alert('Vui lòng nhập đầy đủ mật khẩu hiện tại và mật khẩu mới.');
+        return;
+    }
+
+    const passwordPattern = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[A-Za-z\d]{6,}$/; // Phải có ít nhất một chữ thường, một chữ hoa và một số
+    if (!passwordPattern.test(userInfo.newPassword)) {
+        alert('Mật khẩu mới phải có ít nhất một chữ in hoa, một chữ thường và một số.');
+        return;
+    }
+}
 
   
 

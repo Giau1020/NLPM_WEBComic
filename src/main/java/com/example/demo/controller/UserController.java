@@ -1,18 +1,5 @@
 package com.example.demo.controller;
 
-import java.io.IOException;
-import java.time.LocalDate;
-import java.util.Optional;
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
-
 import com.example.demo.model.Cart;
 import com.example.demo.model.User;
 import com.example.demo.repository.CartRepository;
@@ -20,6 +7,14 @@ import com.example.demo.repository.UserRepository;
 
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
+import java.io.IOException;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
+
+import java.time.LocalDate;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/user")
@@ -31,11 +26,6 @@ public class UserController {
     // Xử lý đăng nhập
     @Autowired
     private CartRepository cartRepository;
-
-    @GetMapping("/login1")
-    public String login() {
-        return "login"; // Tên của file login.html trong thư mục templates (nếu bạn dùng Thymeleaf)
-    }
 
     @PostMapping("/login")
     public ResponseEntity<UserLoginResponse> login(@RequestBody UserLoginRequest loginRequest, HttpSession session) {
@@ -57,6 +47,7 @@ public class UserController {
         }
     }
 
+
     @GetMapping("/is-logged-in")
     public ResponseEntity<Boolean> isLoggedIn(HttpSession session) {
         Long userId = (Long) session.getAttribute("userId");
@@ -65,40 +56,62 @@ public class UserController {
         return ResponseEntity.ok(userId != null);
     }
 
+
+
     @PostMapping("/logout")
     public void logout(HttpSession session, HttpServletResponse response) throws IOException {
         session.invalidate();  // Xóa session khi đăng xuất
         response.sendRedirect("/TrangChu.html");  // Chuyển hướng về trang chủ
     }
 
-    // Chức năng đăng ký
-    @PostMapping("/register")
-    public ResponseEntity<String> register(@RequestBody UserRegistrationRequest registrationRequest) {
-        // Kiểm tra xem username đã tồn tại chưa
-        if (userRepository.findByUsername(registrationRequest.getUsername()).isPresent()) {
-            return ResponseEntity.status(HttpStatus.CONFLICT).body("Username already exists");
-        }
-
-        // Tạo người dùng mới
-        User newUser = new User();
-        newUser.setUsername(registrationRequest.getUsername());
-        newUser.setEmail(registrationRequest.getEmail());
-        newUser.setPassword(registrationRequest.getPassword());
-        newUser.setRole("user");
-
-        // Mã hóa mật khẩu nếu cần
-        userRepository.save(newUser);
-
-        // Tạo giỏ hàng rỗng cho người dùng mới
-        Cart cart = new Cart();
-        cart.setUser(newUser);
-        cartRepository.save(cart);
-
-        return ResponseEntity.ok("User registered successfully");
-        // return ResponseEntity.status(HttpStatus.SEE_OTHER)
-        //                  .header("Location", "/login")
-        //                  .build();
+// Chức năng đăng ký
+//    @PostMapping("/register")
+//    public ResponseEntity<String> register(@RequestBody UserRegistrationRequest registrationRequest) {
+//        // Kiểm tra xem username đã tồn tại chưa
+//        if (userRepository.findByUsername(registrationRequest.getUsername()).isPresent()) {
+//            return ResponseEntity.status(HttpStatus.CONFLICT).body("Username already exists");
+//        }
+//
+//        // Tạo người dùng mới
+//        User newUser = new User();
+//        newUser.setUsername(registrationRequest.getUsername());
+//        newUser.setPassword(registrationRequest.getPassword()); // Mã hóa mật khẩu nếu cần
+//        newUser.setRole("user");
+//        userRepository.save(newUser);
+//
+//        // Tạo giỏ hàng rỗng cho người dùng mới
+//        Cart cart = new Cart();
+//        cart.setUser(newUser);
+//        cartRepository.save(cart);
+//
+//        return ResponseEntity.ok("User registered successfully");
+//    }
+@PostMapping("/register")
+public ResponseEntity<String> register(@RequestBody UserRegistrationRequest registrationRequest) {
+    // Kiểm tra xem tên đăng nhập đã tồn tại chưa
+    if (userRepository.findByUsername(registrationRequest.getUsername()).isPresent()) {
+        return ResponseEntity.status(HttpStatus.CONFLICT).body("Tên đăng nhập đã tồn tại");
     }
+
+    // Kiểm tra mật khẩu và xác nhận mật khẩu có khớp nhau không
+    if (!registrationRequest.getPassword().equals(registrationRequest.getConfirmPassword())) {
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Mật khẩu xác nhận không khớp");
+    }
+
+    // Tạo người dùng mới
+    User newUser = new User();
+    newUser.setUsername(registrationRequest.getUsername());
+    newUser.setPassword(registrationRequest.getPassword()); // Lưu mật khẩu không mã hóa
+    newUser.setRole("user");
+    userRepository.save(newUser);
+
+    // Tạo giỏ hàng rỗng cho người dùng mới
+    Cart cart = new Cart();
+    cart.setUser(newUser);
+    cartRepository.save(cart);
+
+    return ResponseEntity.ok("Đăng ký thành công");
+}
 
     @GetMapping("/info")
     public ResponseEntity<User> getUserInfo(HttpSession session) {
@@ -193,21 +206,25 @@ public class UserController {
         Long userId = (Long) session.getAttribute("userId");
 
         if (userId == null) {
-            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(null);
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("User not authenticated");
         }
 
         Optional<User> userOpt = userRepository.findById(userId);
         if (userOpt.isPresent()) {
-            LocalDate birthdate = userOpt.get().getBirthdate();  // Lấy ngày sinh từ đối tượng User
-            return ResponseEntity.ok(birthdate.toString()); // Trả về dưới dạng chuỗi
+            LocalDate birthdate = userOpt.get().getBirthdate();
+            if (birthdate == null) {
+                return ResponseEntity.status(HttpStatus.NO_CONTENT).body("Birthdate not available");
+            }
+            return ResponseEntity.ok(birthdate.toString());
         } else {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("User not found");
         }
     }
 
+
+
     // Lớp để nhận dữ liệu đăng nhập từ client
     static class UserLoginRequest {
-
         private String username;
         private String password;
 
@@ -230,11 +247,9 @@ public class UserController {
 
     // Lớp để nhận dữ liệu đăng ký từ client
     static class UserRegistrationRequest {
-
         private String username;
         private String password;
-        private String email;
-
+        private String confirmPassword;
         public String getUsername() {
             return username;
         }
@@ -242,7 +257,6 @@ public class UserController {
         public void setUsername(String username) {
             this.username = username;
         }
-
         public String getPassword() {
             return password;
         }
@@ -251,17 +265,16 @@ public class UserController {
             this.password = password;
         }
 
-        public String getEmail() {
-            return email;
+        public String getConfirmPassword() {
+            return confirmPassword;
         }
 
-        public void setEmail(String email) {
-            this.email = email;
+        public void setConfirmPassword(String confirmPassword) {
+            this.confirmPassword = confirmPassword;
         }
+
     }
-
     static class UserLoginResponse {
-
         private String role;
 
         public UserLoginResponse(String role) {
@@ -272,33 +285,4 @@ public class UserController {
             return role;
         }
     }
-
-    /**
-     * @return UserRepository return the userRepository
-     */
-    public UserRepository getUserRepository() {
-        return userRepository;
-    }
-
-    /**
-     * @param userRepository the userRepository to set
-     */
-    public void setUserRepository(UserRepository userRepository) {
-        this.userRepository = userRepository;
-    }
-
-    /**
-     * @return CartRepository return the cartRepository
-     */
-    public CartRepository getCartRepository() {
-        return cartRepository;
-    }
-
-    /**
-     * @param cartRepository the cartRepository to set
-     */
-    public void setCartRepository(CartRepository cartRepository) {
-        this.cartRepository = cartRepository;
-    }
-
 }

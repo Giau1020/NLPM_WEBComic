@@ -370,15 +370,8 @@
                         cancelButton.textContent = "Hủy đơn hàng";
                         cancelButton.onclick = () => cancelOrder(order.id);
                         orderDiv.appendChild(cancelButton);
-                         // Tạo nút "Xem hóa đơn"
-                        const invoiceButton = document.createElement('button');
-                        invoiceButton.classList.add('invoice-button');
-                        invoiceButton.textContent = "Xem hóa đơn";
-                        invoiceButton.onclick = () => viewInvoice(order.id); // Hàm viewInvoice để xử lý xem hóa đơn
-                        orderDiv.appendChild(invoiceButton);
-                                       
-                    }
 
+                    }
                     orderList.appendChild(orderDiv);
                 });
             }
@@ -560,14 +553,8 @@
             loadUserOrders(); 
         };
 
-        function viewInvoice(orderId) {
-    // Chuyển hướng đến trang hóa đơn với orderId
-    window.location.href = `/invoice.html?orderId=${orderId}`;
-}
-
 
     </script>
     <script src="./js/script-send-complaint.js"></script>
-    <script src="./js/invoice.js"></script>
 </body>
 </html>

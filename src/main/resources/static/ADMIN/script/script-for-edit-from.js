@@ -641,3 +641,4 @@ document.querySelector('.img_edit').addEventListener('click', function(event) {
         search_comic_edit(document.querySelector('.inp_edit').value);
     
 });
+

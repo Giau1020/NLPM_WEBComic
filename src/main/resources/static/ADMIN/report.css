@@ -1,5 +1,13 @@
-.report-comic ,.report-quantity ,.report-cart ,.report-excel{
-    width: 300px;
+
+.report-content {
+    width: 74%;
+}
+/* Styling buttons within the report-content section */
+.report-content .report-comic,
+.report-content .report-quantity,
+.report-content .report-cart,
+.report-content .report-excel {
+    width: 258px;
     height: 90%;
     border: 2px solid #ff5757;
     background-color: white;
@@ -10,47 +18,57 @@
     font-size: 15px;
     font-weight: bold;
 }
-.report-comic:hover ,.report-cart:hover ,.report-quantity:hover ,.report-excel:hover{
+
+.report-content .report-comic:hover,
+.report-content .report-quantity:hover,
+.report-content .report-cart:hover,
+.report-content .report-excel:hover {
     background-color: red;
     color: white;
-    border: 2px solid white
-}
-  /* CSS của bảng sản phẩm */
-  .table, table , .table_sold , table {
-    width: 100%; /* Bảng chiếm 100% chiều rộng của bố cục */
-    border-collapse: collapse;
+    border: 2px solid white;
 }
 
-th, td {
+/* Styling tables within the report-content section */
+.report-content .table-comic,
+.report-content .table-sold,
+.report-content .table-cart {
+    width: 100%;
+    border-collapse: collapse;
+    display: none; /* Hide tables by default */
+}
+
+.report-content th, 
+.report-content td {
     padding: 10px;
     text-align: left;
     border: 1px solid #ddd;
 }
 
-th {
-    background-color:  rgba(255, 87, 87, 0.4);
+.report-content th {
+    background-color: rgba(255, 87, 87, 0.4);
 }
 
-/* Điều chỉnh độ rộng của từng cột */
-th:nth-child(1), td:nth-child(1) {
+/* Adjusting column widths for tables in report-content only */
+.report-content th:nth-child(1), .report-content td:nth-child(1) {
     width: 10%; /* ID Truyện */
 }
 
-th:nth-child(2), td:nth-child(2) {
+.report-content th:nth-child(2), .report-content td:nth-child(2) {
     width: 30%; /* Tên Truyện */
 }
 
-th:nth-child(3), td:nth-child(3) {
+.report-content th:nth-child(3), .report-content td:nth-child(3) {
     width: 15%; /* Tên Tác Giả */
 }
 
-th:nth-child(4), td:nth-child(4) {
+.report-content th:nth-child(4), .report-content td:nth-child(4) {
     width: 20%; /* Nhà Xuất Bản */
 }
 
-th:nth-child(5), td:nth-child(5) {
+.report-content th:nth-child(5), .report-content td:nth-child(5) {
     width: 10%; /* Số Lượt Bán */
 }
+
 .table-comic, .table-sold ,.table-cart {
     display: none; /* Ẩn bảng mặc định */
 }

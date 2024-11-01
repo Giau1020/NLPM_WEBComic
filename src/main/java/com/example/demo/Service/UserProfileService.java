@@ -28,6 +28,9 @@ import org.springframework.stereotype.Service;
 import com.example.demo.model.UserProfile;
 import com.example.demo.repository.UserProfileRepository;
 
+import java.time.LocalDate;
+import java.util.Optional;
+
 @Service
 public class UserProfileService {
 
@@ -63,4 +66,8 @@ public class UserProfileService {
     public String getPhoneNumberByUsername(String username) {
         return userProfileRepository.findPhonenumberByUsername(username);
     }
+
+    // ngày sinh null
+
+
 }
