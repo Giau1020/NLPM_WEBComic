@@ -260,60 +260,24 @@ function Off_div(className){
 }
 
 
-// function on_off_div(className){
-//     let element = document.querySelector(`${className}`);
-//     switch(className){
-//         case '.admin-detail-section':
-//             On_div_main();
-//             Off_div('.admin-product-section');
-//             Off_div('#order-manage-container');
-//         break;
-//         case '.admin-product-section':
-//             Off_div('.admin-detail-section');// DIV main
-//             On_div('.admin-product-section');
-//             Off_div('#order-manage-container');
-//         break;
-//         case '#order-manage-container':
-//             console.log("click ");
-//             Off_div('.admin-detail-section'); // DIV main
-//             Off_div('.admin-product-section');
-//             On_div('#order-manage-container');
-//             ShowAllOrders();
-//             break;
-            
-
-
-//         default:
-//             On_div_main();
-//             Off_div('.admin-product-section');
-//             Off_div('#order-manage-container');
-//     }
-// }
-
-// Script cho chế độ xóa
-// Khi click vào nút 'Xóa' ô chọn tất cả truyện sẽ hiện ra, và cột xóa sẽ hiện ra
-// Hàm Hiện các chế độ của nút xóa
-
-
-function on_off_div(className) {
+function on_off_div(className){
     let element = document.querySelector(`${className}`);
-    switch(className) {
+    switch(className){
         case '.admin-detail-section':
             On_div_main();
             Off_div('.admin-product-section');
             Off_div('#order-manage-container');
-            Off_div('.admin-complaint-section');
+             Off_div('.admin-complaint-section');
             Off_div('.report-content');
-            break;
 
+        break;
         case '.admin-product-section':
-            Off_div('.admin-detail-section'); // DIV main
+            Off_div('.admin-detail-section');// DIV main
             On_div('.admin-product-section');
             Off_div('#order-manage-container');
             Off_div('.admin-complaint-section');
-            Off_div('.report-content');
-            break;
-
+           Off_div('.report-content');
+        break;
         case '#order-manage-container':
             console.log("click ");
             Off_div('.admin-detail-section'); // DIV main
@@ -323,25 +287,20 @@ function on_off_div(className) {
             Off_div('.report-content');
             ShowAllOrders();
             break;
-
         case '.admin-complaint-section':
-            Off_div('.admin-detail-section'); // DIV main
-            Off_div('.admin-product-section');
-            Off_div('#order-manage-container');
-            On_div('.admin-complaint-section');
-            Off_div('.report-content');
-            ShowAllComplaints(); // Assuming you have a function to show complaints
+                Off_div('.admin-detail-section'); // DIV main
+                Off_div('.admin-product-section');
+                Off_div('#order-manage-container');
+                On_div('.admin-complaint-section');
+                Off_div('.report-content');
+                break;
+        case '.report-content' :
+               Off_div('.admin-detail-section'); // DIV main
+               Off_div('.admin-product-section');
+               Off_div('#order-manage-container');
+               Off_div('.admin-complaint-section');
+               On_div('.report-content');
             break;
-
-        case '.report-content':
-            Off_div('.admin-detail-section'); // DIV main
-            Off_div('.admin-product-section');
-            Off_div('#order-manage-container');
-            Off_div('.admin-complaint-section');
-            On_div('.report-content');
-            ShowReports(); // Assuming you have a function to show reports
-            break;
-
         default:
             On_div_main();
             Off_div('.admin-product-section');
@@ -351,7 +310,9 @@ function on_off_div(className) {
     }
 }
 
-
+// Script cho chế độ xóa
+// Khi click vào nút 'Xóa' ô chọn tất cả truyện sẽ hiện ra, và cột xóa sẽ hiện ra
+// Hàm Hiện các chế độ của nút xóa
 
 var click_delete = 0;
 let isColumnHidden = true;

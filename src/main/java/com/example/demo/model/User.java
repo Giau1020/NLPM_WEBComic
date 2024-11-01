@@ -29,6 +29,17 @@ public class User {
     private String phonenumber;
     private LocalDate birthdate;
     private String gender;
+     private Boolean status;
+
+   // private Boolean status;
+
+    public Boolean isStatus() {
+        return status;
+    }
+
+    public void setStatus(Boolean status) {
+        this.status = status;
+    }
 
     public Long getId() {
         return id;
@@ -61,7 +72,6 @@ public class User {
     public void setRole(String role) {
         this.role = role;
     }
-
     /**
      * @return String return the email
      */
@@ -118,4 +128,12 @@ public class User {
         this.gender = gender;
     }
 
+    public Boolean getStatus() {
+        return status;
+    }
+
+//    //public void setStatus(Boolean status) {
+//        this.status = status;
+//    }
+//
 }

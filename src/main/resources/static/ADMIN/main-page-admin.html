@@ -22,10 +22,12 @@
             <a href="#" style="margin-top: 10%;" onclick="on_off_div('.admin-detail-section')"><img src="./images-Admin/home.png" alt="admin-home-page" >Trang chủ</a>
             <a href="#" onclick="on_off_div('.admin-product-section'); "><img src="./images-Admin/grid.png" alt="admin-product-manage" >Sản phẩm</a>
             <a href="#" onclick="on_off_div('#order-manage-container'); "><img src="./images-Admin/checkout.png" alt="admin-order-manage">Quản lý đơn hàng</a>
-            <a href="#"><img src="./images-Admin/accountant.png" alt="admin-account-manage">Quản lý tài khoản</a>
+<!--            <a href="#"><img src="./images-Admin/accountant.png" alt="admin-account-manage">Quản lý tài khoản</a>-->
+            <a href="#" onclick="on_off_div('#form-manage-account')"><img src="./images-Admin/accountant.png" alt="admin-account-manage">Quản lý tài khoản</a>
             <a href="#" onclick="on_off_div('.admin-complaint-section');"><img src="./images-Admin/complain.png" alt="admin-complain-manage">Xử lý khiếu nại</a>
-            <a href="#"><img src="./images-Admin/price-tag.png" alt="admin-promotion-manage">Khuyến mãi & giảm giá</a>
+<!--            <a href="#"><img src="./images-Admin/price-tag.png" alt="admin-promotion-manage">Khuyến mãi & giảm giá</a>-->
             <a href="#"  style="margin-bottom: 10%;" onclick="on_off_div('.report-content')"><img src="./images-Admin/dashboard.png" alt="admin-report-manage">Báo cáo và thống kê</a>
+
         </div>
         <!-- FORM POP UP KHI CLICK VÀO CHI TIẾT TRUYỆN -->
       
@@ -173,6 +175,30 @@
             </div>
         </div>
         <!-- Hết FORM thêm truyện tranh -->
+         <!-- Frame đổi mật khẩu của admin -->
+         <div id="overlay" class="overlay" style="display: none;"></div>
+
+    <!-- Form Đổi Mật Khẩu -->
+    <div id="passwordFrame" class="password-frame" style="display: none;">
+        <button onclick="togglePasswordFrame()" class="close-button">X</button>
+        <h2 class="frame-title">Đổi Mật Khẩu</h2>
+        <form id="changePasswordForm" class="password-form" onsubmit="return validatePassword();">
+            <label for="username" class="form-label">Tên đăng nhập:</label>
+            <input type="text" id="username" class="form-input" required>
+            
+            <label for="currentPassword" class="form-label">Mật khẩu hiện tại:</label>
+            <input type="password" id="currentPassword" class="form-input" required>
+            
+            <label for="newPassword" class="form-label">Mật khẩu mới:</label>
+            <input type="password" id="newPassword" class="form-input" required>
+            
+            <label for="confirmPassword" class="form-label">Xác nhận mật khẩu mới:</label>
+            <input type="password" id="confirmPassword" class="form-input" required>
+            
+            <p id="errorMessage" class="error-message"></p>
+            <button type="submit" class="submit-button">Xác nhận</button>
+        </form>
+    </div>
         <!-- DIV của trang chủ -->
         <div class="admin-detail-section">
             <div class="detail-title"></div>
@@ -291,6 +317,43 @@
             </table>
         </div>
     </div>
+
+    <!-- Div của phần quản lý tài khoản -->
+     <div id="form-manage-account" style="display: none;">
+        <div class="account-info">
+            <div class="tool_account">
+                <button onclick="window.location.href='/html/update-status-user.html';" class="btn-admin update_status_account">Cập nhật trạng thái</button>
+                <button onclick="window.location.href='/html/list-edit-user.html';" class="btn-admin edit_infor_account">Xem chi tiết</button>
+            </div>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Username</th>
+                        <th>Email</th>
+                        <th>Trạng thái tài khoản</th>
+                    </tr>
+                </thead>
+                <tbody class="tbody_manage_account">
+                    <!-- <tr>
+                        <td>user01</td>
+                        <td>user01@example.com</td>
+                        <td>Đang hoạt động</td>
+                    </tr>
+                    <tr>
+                        <td>user02</td>
+                        <td>user02@example.com</td>
+                        <td>Đã khóa</td>
+                    </tr>
+                    <tr>
+                        <td>user03</td>
+                        <td>user03@example.com</td>
+                        <td>Đang hoạt động</td> -->
+                    </tr>
+                    <!-- Thêm các dòng người dùng khác tại đây -->
+                </tbody>
+            </table>
+        </div>
+     </div>
         <!-- DIV của phần chỉnh sửa -->
          <div id="form-edit-comic" style="display: none;">
         <div class="edit-container" > 
@@ -438,7 +501,7 @@
 
 <!--Gửi phản hồi-->
 <!-- Overlay -->
-<div id="overlay" class="overlay" onclick="closeModals()"></div>
+<!--<div id="overlay" class="overlay" onclick="closeModals()"></div>-->
 
 <!-- Modal phản hồi -->
 <from  id="responseModal" class="modal" method="PUT">

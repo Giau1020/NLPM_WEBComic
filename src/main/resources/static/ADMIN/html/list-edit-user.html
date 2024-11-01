@@ -1,0 +1,426 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chỉnh sửa thông tin tài khoản</title>
+
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <title>Cập nhật Trạng thái Đơn hàng</title>
+    <!-- Liên kết đến CSS -->
+    
+   <style>
+    /* Thiết lập cơ bản */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f9f2ec;
+    color: #333;
+    margin: 0;
+    padding: 0;
+}
+#orderForm{
+    overflow-y: auto;
+    max-height: 500px;
+}
+.container {
+    width: 90%;
+    max-width: 1200px;
+    height: 85vh;
+    
+    max-height: 85vh;
+    margin: 20px auto;
+    background-color: #fff;
+    padding: 20px;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+    border-radius: 8px;
+    border: 2px solid #e07b69;
+}
+
+/* Header */
+h1 {
+    text-align: center;
+    color: #e07b69;
+    margin-bottom: 20px;
+    font-weight: bold;
+}
+
+/* Bảng danh sách đơn hàng */
+table {
+    width: 100%;
+    max-height: 80vh;
+    border-collapse: collapse;
+    margin-bottom: 20px;
+    font-size: 16px;
+}
+
+thead th {
+    background-color: #f8d7d3;
+    color: #b54c4c;
+    padding: 10px;
+    border-bottom: 2px solid #e07b69;
+    text-align: center;
+}
+
+tbody td {
+    padding: 12px;
+    text-align: center;
+    color: #333;
+    border-bottom: 1px solid #e0e0e0;
+}
+
+tbody tr:nth-child(even) {
+    background-color: #fdf5f3;
+}
+
+tbody tr:hover {
+    background-color: #f8d7d3;
+}
+
+/* Checkbox */
+input[type="checkbox"] {
+    transform: scale(1.2);
+}
+
+/* Khu vực cập nhật trạng thái */
+.status-update {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-top: 40px;
+}
+
+.status-update label {
+    font-weight: bold;
+    color: #b54c4c;
+}
+
+.status-update select {
+    
+    padding: 8px;
+    border-radius: 4px;
+    border: 1px solid #e07b69;
+    background-color: #fdf5f3;
+    color: #333;
+}
+
+#updateButton {
+    padding: 10px 20px;
+    background-color: #e07b69;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-weight: bold;
+    transition: background-color 0.3s;
+}
+
+#updateButton:hover {
+    background-color: #b54c4c;
+}
+
+/* Checkbox chọn tất cả */
+#selectAll {
+    cursor: pointer;
+}
+
+/* Khu vực điều hướng bên trái */
+.navbar {
+    width: 200px;
+    background-color: #f8d7d3;
+    padding: 20px;
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 100%;
+}
+
+.navbar ul {
+    list-style: none;
+}
+
+.navbar li {
+    margin-bottom: 20px;
+}
+
+.navbar a {
+    text-decoration: none;
+    color: #333;
+    font-weight: bold;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    transition: color 0.3s;
+}
+
+.navbar a:hover {
+    color: #e07b69;
+}
+
+.navbar .logo {
+    font-size: 24px;
+    color: #e07b69;
+    font-weight: bold;
+    text-align: center;
+    margin-bottom: 30px;
+}
+
+/* Footer */
+.footer {
+    background-color: #f8d7d3;
+    padding: 20px;
+    text-align: center;
+    color: #b54c4c;
+    font-weight: bold;
+    border-top: 2px solid #e07b69;
+}
+
+.footer a {
+    color: #e07b69;
+    text-decoration: none;
+    font-weight: bold;
+    transition: color 0.3s;
+}
+
+.footer a:hover {
+    color: #b54c4c;
+}
+/* Nút Quay về Trang chủ */
+#homeButton {
+    padding: 10px 20px;
+    background-color: #e07b69;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-weight: bold;
+    margin-bottom: 20px;
+    transition: background-color 0.3s;
+}
+
+#homeButton:hover {
+    background-color: #b54c4c;
+}
+/* Thanh lọc */
+.filter-bar {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 20px;
+    align-items: center;
+}
+
+.filter-bar input[type="text"], .filter-bar select {
+    padding: 8px;
+    border: 1px solid #e07b69;
+    border-radius: 5px;
+    background-color: #fdf5f3;
+}
+
+.filter-bar button {
+    padding: 8px 15px;
+    background-color: #e07b69;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-weight: bold;
+    transition: background-color 0.3s;
+}
+
+.filter-bar button:hover {
+    background-color: #b54c4c;
+}
+
+table thead th {
+    position: sticky; /* Cố định vị trí */
+    top: 0; /* Đặt ở đầu */
+    background-color: #f8d7da; /* Màu nền cho hàng tiêu đề */
+    z-index: 1; /* Đảm bảo hàng tiêu đề nằm trên các hàng khác */
+    padding: 10px;
+}
+.edit-icon{
+    width: 20px;
+    height: 20px;
+    cursor: pointer;
+}
+   </style>
+</head>
+<body>
+
+    <div class="container">
+        <h1>Chỉnh sửa thông tin tài khoản</h1>
+     <!-- Nút Quay về Trang chủ -->
+     <button id="homeButton" onclick="window.location.href='/main-page-admin.html';">Quay về Trang chủ</button>
+     <!-- Thanh lọc -->
+     <div class="filter-bar">
+        <input type="text" id="customerFilter" placeholder="Tìm theo username">
+        <select title="Chọn trạng thái đơn hàng" id="statusFilter">
+            <option value="">-- Tất cả trạng thái --</option>
+            <option value="Đang hoạt động">Đang hoạt động</option>
+            <option value="Tài khoản đã bị khóa">Tài khoản đã bị khóa</option>
+        </select>
+        <button type="button" onclick="filterOrders()">Lọc</button>
+    </div>
+        <!-- Bảng danh sách đơn hàng --><th>
+        <form id="orderForm">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Username</th>
+                        <th>Email</th>
+                        <th>Trạng thái tài khoản</th>
+                        <th>Chỉnh sửa thông tin</th>
+                    </tr>
+                </thead>
+                <tbody class="tbody_manage_account">
+                    <!-- <tr>
+                        <td>user01</td>
+                        <td>user01@example.com</td>
+                        <td>Đang hoạt động</td>
+                    </tr>
+                    <tr>
+                        <td>user02</td>
+                        <td>user02@example.com</td>
+                        <td>Đã khóa</td>
+                    </tr>
+                    <tr>
+                        <td>user03</td>
+                        <td>user03@example.com</td>
+                        <td>Đang hoạt động</td> -->
+                    </tr>
+                    <!-- Thêm các dòng người dùng khác tại đây -->
+                </tbody>
+            </table>
+
+            <!-- Chọn trạng thái mới -->
+            
+        </form>
+    </div>
+
+  
+   
+    <script>
+        // Lấy thông tin hiện lên
+        // Hàm lấy dữ liệu của user account
+        async function getDataFromAPI(url) {
+            try {
+                const response = await fetch(url);
+                
+                if (!response.ok) {
+                    throw new Error(`Lỗi HTTP! Trạng thái: ${response.status}`);
+                }
+                
+                const data = await response.json();
+                return data;
+            } catch (error) {
+                console.error('Có lỗi xảy ra:', error);
+            }
+        }
+        async function getAllInforUser() {
+            let api = `http://localhost:8080/api/v1/sng/admin/users`;
+            getDataFromAPI(api)
+            .then(users => {
+                let element = document.querySelector('.tbody_manage_account');
+                element.innerHTML = ``; // Clear only once before the loop
+
+                users.forEach(user => {
+                    let status  = user.status;
+                    let TT;
+                    if(status == true){
+                        TT = 'Đang hoạt động';
+                    }else if(status == false){
+                        TT = 'Tài khoản đã bị khóa';
+                    }
+                    let row = document.createElement('tr');
+                    row.innerHTML = `
+                        <td>${user.username}</td>
+                        <td>@gmail.com</td>
+                        <td>${TT}</td>
+                        <td><img onclick = "btn_edit(${user.id}); showInforCustomer(${user.id});" class="edit-icon" src="../images-Admin/editing.png"  alt=""></td>
+
+                    `;
+                    element.appendChild(row);
+                });
+            })
+            .catch(error => {
+                console.log(error);
+            });
+        }
+        getAllInforUser();
+
+
+       
+
+        function btn_edit(orderid){
+    
+    //   const orderId = this.getAttribute('data-id');
+       sessionStorage.setItem('userId', orderid);
+       window.location.href = "/html/test.html";
+
+}
+       
+
+        // Hàm lọc đơn hàng
+        function filterOrders() {
+            const customerFilter = document.getElementById('customerFilter').value.toLowerCase();
+            const statusFilter = document.getElementById('statusFilter').value;
+
+            const rows = document.querySelectorAll('tbody tr');
+
+            rows.forEach(row => {
+                const customerName = row.cells[0].textContent.toLowerCase();
+                const status = row.cells[2].textContent;
+
+                const matchesCustomer = customerFilter === "" || customerName.includes(customerFilter);
+                const matchesStatus = statusFilter === "" || status === statusFilter;
+
+                if (matchesCustomer && matchesStatus) {
+                    row.style.display = "";
+                } else {
+                    row.style.display = "none";
+                }
+            });
+
+        }
+
+        function updateUserStatus(ids, newStatus) {
+    // Kiểm tra nếu không có ID nào được chọn hoặc trạng thái mới chưa được cung cấp
+            if (ids.length === 0 ) {
+                alert("Vui lòng chọn ít nhất một đơn hàng và trạng thái mới để cập nhật.");
+                return;
+            }
+
+            // Gửi yêu cầu PUT đến server
+            fetch(`http://localhost:8080/api/v1/sng/admin/users/update_status?ids=${ids}&newStatus=${newStatus}`, {
+                method: "PUT",
+            })
+            .then(response => {
+                if (response.ok) {
+                    return response.text(); // Lấy phản hồi dưới dạng text nếu thành công
+                } else {
+                    throw new Error("Cập nhật trạng thái thất bại. Vui lòng thử lại.");
+                }
+            })
+            .then(data => {
+                alert(data); // Hiển thị phản hồi từ server
+                // Tải lại trang hoặc cập nhật giao diện người dùng tại đây nếu cần
+            
+            })
+            .catch(error => {
+                alert(error.message); // Hiển thị lỗi nếu có
+            });
+        }
+
+
+    </script>
+   
+</body>
+</html>

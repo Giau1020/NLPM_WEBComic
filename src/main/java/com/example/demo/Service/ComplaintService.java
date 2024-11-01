@@ -45,7 +45,7 @@ public class ComplaintService {
             return null;
         }
 
-        String folder = "C:/Users/ASUS/Documents/NH/uploads"; // Đường dẫn lưu tệp
+        String folder = "C:/Users/ASUS/Documents/NH/src/main/resources/static/images/"; // Đường dẫn lưu tệp
         String fileName = file.getOriginalFilename();
 
         if (fileName == null || fileName.isEmpty()) {

@@ -433,7 +433,7 @@ input[type="text"], textarea {
         <div class="actions">
             <button class="btn" onclick=" openStatusDiv()"><i class="fas fa-sync-alt"></i> Cập nhật Trạng thái</button>
             <button class="btn" onclick="openEditInfoDiv(); setInforEditDiv(document.querySelector('h2 span').innerHTML)"><i class="fas fa-edit"></i> Chỉnh sửa Thông tin</button>
-            <button class="btn" onclick="viewInvoice(orderId)"><i class="fas fa-receipt"></i> In Hóa đơn</button>
+            <button class="btn"><i class="fas fa-receipt"></i> In Hóa đơn</button>
             <!-- <button class="btn"><i class="fas fa-envelope"></i> Gửi Email</button> -->
             <button class="btn btn-danger" onclick="showConfirmCancelOrder()"><i class="fas fa-trash-alt"></i> Hủy Đơn hàng</button>
         </div>
@@ -448,8 +448,8 @@ input[type="text"], textarea {
         <label for="statusSelect">Trạng thái:</label>
         <select id="statusSelect">
             <option value="Chờ xác nhận">Chờ xác nhận</option>
-            <option value="Đang vận chuyển">Đang vận chuyển</option>
-            <option value="Đã hoàn thành">Đã hoàn thành</option>
+            <option value="Xác nhận">Xác nhận</option>
+            <option value="Đã giao">Đã giao</option>
             <option value="Đã hủy">Đã hủy</option>
         </select>
         <button class="save-btn" onclick="saveStatus()">Lưu</button>
@@ -518,8 +518,6 @@ input[type="text"], textarea {
 <script>
     const orderId = sessionStorage.getItem('orderId');
     ShowDetailOrder(orderId);
-
 </script>
-
 </body>
 </html>

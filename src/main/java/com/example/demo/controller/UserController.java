@@ -8,6 +8,8 @@ import com.example.demo.repository.UserRepository;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 import java.io.IOException;
+import java.util.HashMap;
+import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -27,27 +29,58 @@ public class UserController {
     @Autowired
     private CartRepository cartRepository;
 
-    @PostMapping("/login")
-    public ResponseEntity<UserLoginResponse> login(@RequestBody UserLoginRequest loginRequest, HttpSession session) {
-        Optional<User> userOpt = userRepository.findByUsername(loginRequest.getUsername());
+//    @PostMapping("/login")
+//    public ResponseEntity<UserLoginResponse> login(@RequestBody UserLoginRequest loginRequest, HttpSession session) {
+//        Optional<User> userOpt = userRepository.findByUsername(loginRequest.getUsername());
+//
+//        if (userOpt.isPresent()) {
+//            User user = userOpt.get();
+//            if (user.getPassword().equals(loginRequest.getPassword())) {
+//                session.setAttribute("userId", user.getId());
+//                System.out.println("Set userId in session: " + session.getAttribute("userId"));
+//
+//                // Trả về thông tin người dùng bao gồm role
+//                return ResponseEntity.ok(new UserLoginResponse(user.getRole()));
+//            } else {
+//                return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(null);
+//            }
+//        } else {
+//            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
+//        }
+//    }
 
-        if (userOpt.isPresent()) {
-            User user = userOpt.get();
-            if (user.getPassword().equals(loginRequest.getPassword())) {
-                session.setAttribute("userId", user.getId());
-                System.out.println("Set userId in session: " + session.getAttribute("userId"));
+@PostMapping("/login")
+public ResponseEntity<Map<String, String>> login(@RequestBody UserLoginRequest loginRequest, HttpSession session) {
+    Map<String, String> response = new HashMap<>();
 
-                // Trả về thông tin người dùng bao gồm role
-                return ResponseEntity.ok(new UserLoginResponse(user.getRole()));
-            } else {
-                return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(null);
-            }
-        } else {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
+    Optional<User> userOpt = userRepository.findByUsername(loginRequest.getUsername());
+
+    if (userOpt.isPresent()) {
+        User user = userOpt.get();
+
+        // Kiểm tra nếu tài khoản bị khóa (status = 0)
+        if (Boolean.FALSE.equals(user.getStatus())) {
+            response.put("message", "Tài khoản bị khóa");
+            return ResponseEntity.status(HttpStatus.FORBIDDEN).body(response);
         }
+
+        // Kiểm tra mật khẩu
+        if (user.getPassword().equals(loginRequest.getPassword())) {
+            session.setAttribute("userId", user.getId());
+            System.out.println("Set userId in session: " + session.getAttribute("userId"));
+
+            response.put("role", user.getRole());
+            return ResponseEntity.ok(response);
+        } else {
+            response.put("message", "Sai tên đăng nhập hoặc mật khẩu!");
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(response);
+        }
+    } else {
+        response.put("message", "Người dùng không tồn tại");
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(response);
     }
 
-
+}
     @GetMapping("/is-logged-in")
     public ResponseEntity<Boolean> isLoggedIn(HttpSession session) {
         Long userId = (Long) session.getAttribute("userId");
@@ -55,6 +88,8 @@ public class UserController {
         System.out.println("Session ID: " + session.getId());  // Kiểm tra session ID
         return ResponseEntity.ok(userId != null);
     }
+
+   
 
 
 
@@ -86,7 +121,9 @@ public class UserController {
 //
 //        return ResponseEntity.ok("User registered successfully");
 //    }
-@PostMapping("/register")
+//@PostMapping("/register")
+
+    @PostMapping("/register")
 public ResponseEntity<String> register(@RequestBody UserRegistrationRequest registrationRequest) {
     // Kiểm tra xem tên đăng nhập đã tồn tại chưa
     if (userRepository.findByUsername(registrationRequest.getUsername()).isPresent()) {
@@ -103,6 +140,7 @@ public ResponseEntity<String> register(@RequestBody UserRegistrationRequest regi
     newUser.setUsername(registrationRequest.getUsername());
     newUser.setPassword(registrationRequest.getPassword()); // Lưu mật khẩu không mã hóa
     newUser.setRole("user");
+    newUser.setStatus(true);
     userRepository.save(newUser);
 
     // Tạo giỏ hàng rỗng cho người dùng mới
@@ -286,3 +324,4 @@ public ResponseEntity<String> register(@RequestBody UserRegistrationRequest regi
         }
     }
 }
+

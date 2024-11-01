@@ -27,7 +27,7 @@ public class ImgComicServiceImpl implements ImgComicService {
         this.imgComicRepository = imgComicRepository;
     }
 
-    private static final String UPLOAD_DIR = "C:/Users/NgocG/Documents/NLPM_WebComic_SNG/NLPM_WEBComic/src/main/resources/static/images/";
+    private static final String UPLOAD_DIR = "C:/Users/ASUS/Documents/NH/src/main/resources/static/images/";
     public String uploadImage(MultipartFile file) throws IOException {
         if (file.isEmpty()) {
             throw new IOException("File is empty!");
