@@ -269,15 +269,25 @@ function on_off_div(className){
             Off_div('#order-manage-container');
              Off_div('.admin-complaint-section');
             Off_div('.report-content');
-
+            Off_div('#form-manage-account');
         break;
+        case '#form-manage-account':
+                    Off_div('.admin-detail-section');// DIV main
+                    Off_div('.admin-product-section');
+                    Off_div('#order-manage-container');
+                    Off_div('.admin-complaint-section');
+                   Off_div('.report-content');
+                   On_div('#form-manage-account');
+         break;
         case '.admin-product-section':
             Off_div('.admin-detail-section');// DIV main
             On_div('.admin-product-section');
             Off_div('#order-manage-container');
             Off_div('.admin-complaint-section');
            Off_div('.report-content');
+           Off_div('#form-manage-account');
         break;
+
         case '#order-manage-container':
             console.log("click ");
             Off_div('.admin-detail-section'); // DIV main
@@ -285,6 +295,7 @@ function on_off_div(className){
             On_div('#order-manage-container');
             Off_div('.admin-complaint-section');
             Off_div('.report-content');
+            Off_div('#form-manage-account');
             ShowAllOrders();
             break;
         case '.admin-complaint-section':
@@ -293,6 +304,7 @@ function on_off_div(className){
                 Off_div('#order-manage-container');
                 On_div('.admin-complaint-section');
                 Off_div('.report-content');
+                Off_div('#form-manage-account');
                 break;
         case '.report-content' :
                Off_div('.admin-detail-section'); // DIV main
@@ -300,6 +312,7 @@ function on_off_div(className){
                Off_div('#order-manage-container');
                Off_div('.admin-complaint-section');
                On_div('.report-content');
+               Off_div('#form-manage-account');
             break;
         default:
             On_div_main();
@@ -307,6 +320,7 @@ function on_off_div(className){
             Off_div('#order-manage-container');
             Off_div('.admin-complaint-section');
             Off_div('.report-content');
+            Off_div('#form-manage-account');
     }
 }
 
