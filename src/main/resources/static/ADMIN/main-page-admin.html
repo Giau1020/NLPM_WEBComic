@@ -490,7 +490,7 @@
 <!-- Modal -->
 <div id="complaint-modal" class="modal">
     <div class="modal-response-content">
-        <span class="close" onclick="closeModal()">&times;</span>
+        <span class="close" onclick="closeModalComplaint()">&times;</span>
         <div id="modal-body">
             <!-- Chi tiết khiếu nại sẽ được hiển thị ở đây -->
         </div>
@@ -516,8 +516,8 @@
             <option value="Không hợp lệ">Không hợp lệ</option>
         </select>
         <br>
-        <label for="responseInput">Phản Hồi từ Admin:</label>
-        <textarea id="response" rows="4" required></textarea>
+        <label for="responses">Phản Hồi từ Admin:</label>
+        <textarea id="responses" rows="4" required></textarea>
         <br>
         <button type="submit" onclick="updateComplaint()">Gửi Phản Hồi</button>
     </div>
@@ -619,6 +619,37 @@
     <script src="./report.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.17.0/xlsx.full.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/exceljs@4.2.0/dist/exceljs.min.js"></script>
-   
+   <script>
+       function closeModalComplaint() {
+    const modal = document.getElementById('complaint-modal');
+    modal.style.display = "none";
+}
+function closeModals() {
+    const modal = document.getElementById('responseModal');
+    modal.style.display = "none";
+}
+function adminresponse() {
+    document.getElementById("responseModal").style.display = "block";
+}
+
+// lays id cho responseModal
+function adminresponses(id) {
+    // Mở modal
+    const modal = document.getElementById("responseModal");
+    modal.style.display = "block";
+
+    // Gọi API để lấy chi tiết khiếu nại
+    fetch(`http://localhost:8080/api/complaint/${id}`)
+        .then(response => response.json())
+        .then(data => {
+            // Gán giá trị ID khiếu nại vào input
+            document.getElementById('complaintId').value = data.id;
+        })
+        .catch(error => {
+            console.error('Lỗi khi lấy id khiếu nại:', error);
+        });
+}
+
+   </script>
 </body>
 </html>

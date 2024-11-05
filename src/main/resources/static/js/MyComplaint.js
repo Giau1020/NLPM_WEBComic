@@ -117,7 +117,7 @@ function viewComplaint(id) {
             let imageHTML = '';
             if (data.image) {
                 // Lấy tệp hình ảnh từ API
-                imageHTML = `<img src="/files/${data.image}" alt="Hình ảnh khiếu nại" style="max-width: 40%; height: auto;" />`;
+                imageHTML = `<img src="/images/${data.image}" alt="Hình ảnh khiếu nại" style="max-width: 40%; height: auto;" />`;
             } else {
                 imageHTML = '<p>Không có hình ảnh đính kèm.</p>';
             }
