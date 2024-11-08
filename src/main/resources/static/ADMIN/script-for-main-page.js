@@ -398,6 +398,7 @@ async function validatePassword() {
     togglePasswordFrame();
    }else {
     alert("Cap nhat mat khau that bai");
+
    }
 
     errorMessage.textContent = ""; // Xóa thông báo lỗi nếu không có lỗi
@@ -422,6 +423,23 @@ async function putDataToAPI(url, data) {
     } catch (error) {
         console.error('Có lỗi xảy ra:', error);
     }
+}
+
+function logout(){
+    
+    let api = `http://localhost:8080/api/v1/sng/admin/users/logout`;
+    fetch(api, {
+            method: 'POST',
+            credentials: 'same-origin'  // Đảm bảo gửi cookies (session) nếu cùng miền
+        })
+        .then(response => {
+            if (response.ok) {
+                window.location.href = '/TrangChu.html';  // Chuyển hướng về trang chủ nếu thành công
+            } else {
+                console.error('Logout failed');
+            }
+        })
+        .catch(error => console.error('Error:', error));
 }
 
 
