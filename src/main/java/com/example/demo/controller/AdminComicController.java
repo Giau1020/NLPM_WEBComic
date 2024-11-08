@@ -8,6 +8,8 @@ import com.example.demo.model.Genre;
 import com.example.demo.repository.AuthorRepository;
 import com.example.demo.repository.ComicAuthorRepository;
 import com.example.demo.repository.ComicRepository;
+import com.example.demo.repository.GenreRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -24,10 +26,11 @@ import java.util.Optional;
 public class AdminComicController {
     private final ComicServiceImpl comicService;
 
-    public AdminComicController(ComicServiceImpl comicService, ComicAuthorRepository comicAuthorRepository, AuthorRepository authorRepository) {
+    public AdminComicController(ComicServiceImpl comicService, ComicAuthorRepository comicAuthorRepository, AuthorRepository authorRepository, GenreRepository genreRepository) {
         this.comicService = comicService;
         this.comicAuthorRepository = comicAuthorRepository;
         this.authorRepository = authorRepository;
+        this.genreRepository = genreRepository;
     }
 private final ComicAuthorRepository comicAuthorRepository;
     private final AuthorRepository authorRepository;
@@ -164,6 +167,20 @@ public ResponseEntity<String> resetQuantityForComics(@RequestBody List<Long> com
                 .body("Error resetting sold count: " + e.getMessage());
     }
 }
+
+@GetMapping("/count_comic")
+    public ResponseEntity<Long> getQuantityComic(){
+            Long count = comicService.count();
+        return ResponseEntity.ok(count);
+    }
+//Hàm đếm số lượng thể loại
+    @Autowired
+    private final GenreRepository genreRepository;
+    @GetMapping("/count_genre")
+    public ResponseEntity<Long> getQuantityGenre(){
+        Long count = genreRepository.count();
+        return ResponseEntity.ok(count);
+    }
 
 
 }

@@ -29,7 +29,11 @@ public class AdminUserController {
         this.userRepository = userRepository;
         this.reviewRepository = reviewRepository;
     }
-
+    @GetMapping("/count")
+    public ResponseEntity<?> countUsers(){
+        Long count = userRepository.count();
+        return  ResponseEntity.ok(count);
+    }
     @GetMapping("")
     public ResponseEntity<?> getAllUser(){
         Optional<List<User>> list = Optional.of(userRepository.findAll());

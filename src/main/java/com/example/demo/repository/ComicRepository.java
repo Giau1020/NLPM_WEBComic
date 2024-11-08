@@ -52,6 +52,8 @@ List<Comic> findByFirstTwoWordsAndExcludeId(@Param("firstTwoWords") String first
             + "LOWER(a.name) LIKE LOWER(CONCAT('%', :keyword, '%')) OR "
             + "LOWER(g.name) LIKE LOWER(CONCAT('%', :keyword, '%'))")
     List<Comic> searchByKeyword(@Param("keyword") String keyword);
+
+
 }
 
 

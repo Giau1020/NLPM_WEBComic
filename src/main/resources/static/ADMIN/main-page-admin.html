@@ -205,31 +205,31 @@
             <div class="overview manage-product">
                 <span class="quantity-products">1</span>
                 <p>Sản phẩm</p>
-                <p class="detail">Chi tiết</p>
+                <p onclick="on_off_div('.admin-product-section'); " class="detail">Chi tiết</p>
             </div>
             <div class="overview manage-genre">
                 <span class="quantity-genre"></span>
                 <p>Loại sản phẩm</p>
-                <p class="detail">Chi tiết</p>
+                <p onclick=" window.location.href = '/html/manage-genre.html'; " class="detail">Chi tiết</p>
             </div>
             <div class="overview manage-order">
                 <span class="quantity-order"></span>
                 <p>Xử lý đơn hàng</p>
-                <p class="detail">Chi tiết</p>
+                <p onclick="on_off_div('#order-manage-container'); " class="detail">Chi tiết</p>
             </div>
             <div class="overview manage-report">
                 <span class="manage-report-detail"></span>
                 <p>Xử lý khiếu nại</p>
-                <p class="detail">Chi tiết</p></div>
+                <p onclick="on_off_div('.admin-complaint-section');" class="detail">Chi tiết</p></div>
             <div class="overview manage-flash-sale">
                 <span class="quantitys-flash-sale"></span>
-                <p>Khuyến mãi và giảm giá</p>
-                <p class="detail">Chi tiết</p>
+                <p>Báo cáo thống kê</p>
+                <p onclick="on_off_div('.report-content')" class="detail">Chi tiết</p>
             </div>
             <div class="overview manage-contact">
                 <span class="detail-contact"></span>
                 <p>Quản lý tài khoản</p>
-                <p class="detail">Chi tiết</p>
+                <p onclick="on_off_div('#form-manage-account'); getAllInforUser()" class="detail">Chi tiết</p>
             </div>
         </div>
        
@@ -623,6 +623,7 @@
     <script src="./report.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.17.0/xlsx.full.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/exceljs@4.2.0/dist/exceljs.min.js"></script>
+    <script src="./script/script-for-detail-section.js"></script>
    <script>
        function closeModalComplaint() {
     const modal = document.getElementById('complaint-modal');

@@ -3,6 +3,7 @@ package com.example.demo.controller;
 import java.time.LocalDateTime;
 import java.util.List;
 
+import com.example.demo.repository.ComplaintRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.ResponseEntity;
@@ -94,6 +95,14 @@ public class ComplaintController {
     public ResponseEntity<List<Complaint>> getComplaintsByUserId(@PathVariable String userId) {
         List<Complaint> complaints = complaintService.getComplaintsByUserId(userId);
         return ResponseEntity.ok(complaints);
+    }
+
+    @Autowired
+    private ComplaintRepository complaintRepository;
+    @GetMapping("/count")
+    public ResponseEntity<?> countComplaint(){
+        Long count = complaintRepository.count();
+        return ResponseEntity.ok(count);
     }
 
 }

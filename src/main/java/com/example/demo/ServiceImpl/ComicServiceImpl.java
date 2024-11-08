@@ -215,9 +215,16 @@ public class ComicServiceImpl implements ComicService {
         return comicRepository.findById(comicId).orElse(null);
     }
 
+    @Override
+    public Long count() {
+        return comicRepository.count();
+    }
+
     public void saveComic(Comic comic) {
         comicRepository.save(comic);
     }
+
+
 }
 
 

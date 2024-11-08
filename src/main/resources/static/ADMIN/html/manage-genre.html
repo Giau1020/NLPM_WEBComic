@@ -1,0 +1,423 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quản Lý Thể Loại</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #fff5f5;
+            margin: 0;
+            padding: 20px;
+           
+        }
+        h1 {
+            color: #ff5757;
+            text-align: center;
+        }
+        .container {
+            max-width: 800px;
+            margin: auto;
+            
+        }
+        .search-add {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 20px;
+        }
+        .search-add input[type="text"] {
+            width: 60%;
+            padding: 10px;
+            border: 2px solid #ff4d4d;
+            border-radius: 5px;
+        }
+        .search-add button {
+            padding: 10px 20px;
+            background-color: #ff5757;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        .search-add button:hover {
+            background-color: #ff4d4d;
+        }
+        table {
+    width: 100%;
+    max-height: 80vh;
+    border-collapse: collapse;
+    margin-bottom: 20px;
+    font-size: 16px;
+}
+
+thead th {
+    background-color: #f8d7d3;
+    color: #b54c4c;
+    padding: 10px;
+    border-bottom: 2px solid #e07b69;
+    text-align: center;
+}
+
+tbody td {
+    padding: 12px;
+    text-align: center;
+    color: #333;
+    border-bottom: 1px solid #e0e0e0;
+}
+
+tbody tr:nth-child(even) {
+    background-color: #fdf5f3;
+}
+
+tbody tr:hover {
+    background-color: #f8d7d3;
+}
+        .delete-btn {
+            padding: 5px 10px;
+            background-color: #ff4d4d;
+            color: white;
+            border: none;
+            border-radius: 3px;
+            cursor: pointer;
+        }
+        .delete-btn:hover {
+            background-color: #e04343;
+        }
+        /* Modal Styles */
+        .modal {
+            display: none; /* Hidden by default */
+            position: fixed; /* Stay in place */
+            z-index: 1; /* Sit on top */
+            padding-top: 100px; /* Location of the box */
+            left: 0;
+            top: 0;
+            width: 100%; 
+            height: 100%; 
+            overflow: auto; 
+            background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+        }
+        .modal-content {
+            background-color: #fefefe;
+            margin: auto;
+            padding: 20px;
+            border: 1px solid #888;
+            width: 40%;
+            border-radius: 10px;
+        }
+        .close {
+            color: #aaa;
+            float: right;
+            font-size: 24px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+        .close:hover,
+        .close:focus {
+            color: black;
+        }
+        .modal-content input[type="text"] {
+            width: 95%;
+            padding: 10px;
+            margin-top: 10px;
+            margin-bottom: 20px;
+            border: 2px solid #e07b69;
+            border-radius: 5px;
+        }
+        .modal-content button {
+            padding: 10px 20px;
+            background-color: #e07b69;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        .modal-content button:hover {
+            background-color: #ff4d4d;
+        }
+        #homeButton {
+    padding: 10px 20px;
+    background-color: #ff5757;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    display: inline-block;
+    margin-bottom: 20px;
+}
+#homeButton:hover {
+    background-color: #fd6f6f;
+}
+
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <button id="homeButton" onclick="goToHome()">Quay về Trang Chủ</button>
+
+        <h1>Quản Lý Thể Loại</h1>
+
+        <div class="search-add">
+            <input type="text" id="searchInput" placeholder="Tìm kiếm thể loại...">
+            <button id="addCategoryBtn">Thêm Thể Loại</button>
+        </div>
+
+        <table id="categoryTable">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Tên Thể Loại</th>
+                    <th>Hành Động</th>
+                </tr>
+            </thead>
+            <tbody>
+                <!-- Danh sách thể loại sẽ được hiển thị ở đây -->
+            </tbody>
+        </table>
+    </div>
+
+    <!-- Modal Thêm Thể Loại -->
+    <div id="addModal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h2>Thêm Thể Loại Mới</h2>
+            <input type="text" id="newCategoryName" placeholder="Tên thể loại" >
+            <button id="saveCategoryBtn">Lưu</button>
+        </div>
+    </div>
+
+    <script>
+        // Khai báo danh sách thể loại (sử dụng LocalStorage để lưu trữ)
+        async function getDataFromAPI(url) {
+            try {
+                const response = await fetch(url);
+                
+                if (!response.ok) {
+                    throw new Error(`Lỗi HTTP! Trạng thái: ${response.status}`);
+                }
+                
+                const data = await response.json();
+                return data;
+            } catch (error) {
+                console.error('Có lỗi xảy ra:', error);
+            }
+        }
+        let categories = JSON.parse(localStorage.getItem('categories')) || [];
+
+        const categoryTableBody = document.querySelector('#categoryTable tbody');
+        const searchInput = document.getElementById('searchInput');
+        const addCategoryBtn = document.getElementById('addCategoryBtn');
+        const addModal = document.getElementById('addModal');
+        const closeModal = document.querySelector('.close');
+        const saveCategoryBtn = document.getElementById('saveCategoryBtn');
+        const newCategoryName = document.getElementById('newCategoryName');
+
+        function displayCategories(filter = '') {
+            // Đảm bảo rằng categoryTableBody tồn tại
+            if (!categoryTableBody) {
+                console.error('Element categoryTableBody not found.');
+                return;
+            }
+
+            // Xóa toàn bộ nội dung cũ trước khi thêm các thể loại mới
+            categoryTableBody.innerHTML = '';
+
+            let api = `http://localhost:8080/api/v1/sng/admin/genres`;
+
+            // Gọi API để lấy danh sách thể loại
+            getDataFromAPI(api)
+                .then(genres => {
+                    // Kiểm tra genres có phải là mảng không
+                    if (!Array.isArray(genres)) {
+                        console.error('API response is not an array.');
+                        return;
+                    }
+
+                    // Lọc danh sách thể loại nếu có từ khóa tìm kiếm
+                    let filteredCategories = genres;
+                    if (filter) {
+                        const keywords = filter.toLowerCase().split(' ');
+                        filteredCategories = genres.filter(genre => {
+                            return keywords.every(keyword =>
+                                (genre.name && genre.name.toLowerCase().includes(keyword)) ||
+                                (genre.id && genre.id.toString().includes(keyword))
+                            );
+                        });
+                        console.log(filteredCategories.length);
+                        if (filteredCategories.length === 0) {
+                            categoryTableBody.innerHTML = '';
+                        const tr = document.createElement('tr');
+                        const td = document.createElement('td');
+                        td.colSpan = 3;
+                        td.style.textAlign = 'center';
+                        td.textContent = 'Không tìm thấy thể loại nào.';
+                        tr.appendChild(td);
+                        categoryTableBody.appendChild(tr);
+                        return;
+                    }
+                    }
+
+                    // Nếu không có kết quả nào, hiển thị thông báo và dừng hàm
+                    
+
+                    // Hiển thị thể loại đã được lọc
+                    categoryTableBody.innerHTML = '';
+                    filteredCategories.forEach(genre => {
+                        const tr = document.createElement('tr');
+
+                        const tdId = document.createElement('td');
+                        tdId.textContent = genre.id;
+                        tr.appendChild(tdId);
+
+                        const tdName = document.createElement('td');
+                        tdName.textContent = genre.name;
+                        tr.appendChild(tdName);
+
+                        const tdAction = document.createElement('td');
+                        const deleteBtn = document.createElement('button');
+                        deleteBtn.textContent = 'Xóa';
+                        deleteBtn.classList.add('delete-btn');
+                        deleteBtn.onclick = () => deleteCategory(genre.id);
+                        tdAction.appendChild(deleteBtn);
+                        tr.appendChild(tdAction);
+
+                        categoryTableBody.appendChild(tr);
+                    });
+                })
+                .catch(e => {
+                    console.error('Error fetching categories:', e);
+                    const tr = document.createElement('tr');
+                    const td = document.createElement('td');
+                    td.colSpan = 3;
+                    td.style.textAlign = 'center';
+                    td.textContent = 'Không thể tải dữ liệu. Vui lòng thử lại sau.';
+                    tr.appendChild(td);
+                    categoryTableBody.appendChild(tr);
+                });
+        }
+
+
+
+
+
+
+
+        // Hàm thêm thể loại mới
+        function addCategory(name) {
+            const newId = categories.length > 0 ? categories[categories.length - 1].id + 1 : 1;
+            const newCategory = { id: newId, name: name };
+            categories.push(newCategory);
+            localStorage.setItem('categories', JSON.stringify(categories));
+            displayCategories(searchInput.value);
+        }
+
+        // Hàm xóa thể loại
+       
+        function deleteCategory(id) {
+            if (confirm('Bạn có chắc chắn muốn xóa thể loại này?')) {
+                categories = categories.filter(category => category.id !== id);
+                localStorage.setItem('categories', JSON.stringify(categories));
+                displayCategories(searchInput.value);
+
+                let api = `http://localhost:8080/api/v1/sng/admin/genres/delete/${id}`;
+                fetch(api, {
+                    method: 'DELETE',
+                })
+                .then(response => {
+                    if (response.ok) {
+                        alert("Thể loại đã được xóa thành công.");
+                        // Sau khi xóa, gọi lại hàm displayCategories để cập nhật danh sách
+                        displayCategories('');
+                    } else {
+                        return response.text().then(text => {
+                            throw new Error(text);
+                        });
+                    }
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                    alert("Lỗi khi xóa thể loại: " + error.message);
+                });
+                
+            }
+        }
+
+        // Sự kiện tìm kiếm
+        searchInput.addEventListener('input', (e) => {
+            displayCategories(e.target.value);
+        });
+
+        // Sự kiện mở modal thêm thể loại
+        addCategoryBtn.addEventListener('click', () => {
+            addModal.style.display = 'block';
+            newCategoryName.value = '';
+            newCategoryName.focus();
+        });
+
+        // Sự kiện đóng modal
+        closeModal.addEventListener('click', () => {
+            addModal.style.display = 'none';
+        });
+
+        // Sự kiện lưu thể loại mới
+        saveCategoryBtn.addEventListener('click', () => {
+            const name = newCategoryName.value.trim();
+            if (name === '') {
+                alert('Vui lòng nhập tên thể loại.');
+                return;
+            }
+             // Dữ liệu gửi đến API
+                const genreData = {
+                    name: name
+                };
+
+                // Gửi yêu cầu POST đến server để thêm thể loại mới
+                fetch("http://localhost:8080/api/v1/sng/admin/genres/add", {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json"
+                    },
+                    body: JSON.stringify(genreData)
+                })
+                .then(response => {
+                    if (response.ok) {
+                        return response.json(); // Trả về JSON nếu thêm thành công
+                    } else {
+                        return response.text().then(text => {
+                            throw new Error(text); // Ném lỗi nếu không thành công
+                        });
+                    }
+                })
+                .then(data => {
+                    alert("Thể loại đã được thêm thành công.");
+
+                    // Gọi lại hàm displayCategories để cập nhật danh sách thể loại
+                    displayCategories();
+                })
+                .catch(error => {
+                    console.error("Error:", error);
+                    alert("Lỗi khi thêm thể loại: " + error.message);
+                });
+            addCategory(name);
+            addModal.style.display = 'none';
+        });
+
+        // Đóng modal khi click ra ngoài nội dung modal
+        window.onclick = function(event) {
+            if (event.target == addModal) {
+                addModal.style.display = 'none';
+            }
+        }
+
+        // Khởi tạo hiển thị danh sách thể loại khi tải trang
+        displayCategories();
+        function goToHome() {
+            window.location.href = '/main-page-admin.html'; 
+        }
+
+    </script>
+
+</body>
+</html>

@@ -41,6 +41,12 @@ public class AdminOrderController {
 
     }
 
+    @GetMapping("/count")
+    public ResponseEntity<Long> countOrders(){
+        Long count = orderRepository.count();
+        return ResponseEntity.ok(count);
+    }
+
     @PutMapping("/update_status")
     public ResponseEntity<String> updateOrderStatus(@RequestParam List<Long> ids, @RequestParam String newStatus) {
         List<Order> orders = orderRepository.findAllById(ids);
