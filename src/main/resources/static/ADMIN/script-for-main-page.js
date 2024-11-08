@@ -361,6 +361,68 @@ async function toggleColumnVisibility(index, shouldShow) {
     });
     return;
 }
+// Hàm để ẩn/hiện form đổi mật khẩu
+function togglePasswordFrame() {
+    const passwordFrame = document.getElementById("passwordFrame");
+    passwordFrame.style.display = passwordFrame.style.display === "none" ? "block" : "none";
+}
+
+// Hàm để kiểm tra tính hợp lệ của mật khẩu mới
+async function validatePassword() {
+    let api = `http://localhost:8080/api/v1/sng/admin/users/update_pass`;
+    const newPassword = document.getElementById("newPassword").value;
+    const confirmPassword = document.getElementById("confirmPassword").value;
+    const errorMessage = document.getElementById("errorMessage");
+    const userName = document.querySelector('#username').value;
+    const oldPass = document.querySelector('#currentPassword').value;
+
+    // Kiểm tra xem mật khẩu mới có khớp với mật khẩu xác nhận không
+    if (newPassword !== confirmPassword) {
+        errorMessage.textContent = "Mật khẩu mới và xác nhận mật khẩu không khớp.";
+        return false; // Ngăn không cho form được gửi đi
+    }
+
+    // Kiểm tra độ dài mật khẩu
+    if (newPassword.length < 8) {
+        errorMessage.textContent = "Mật khẩu mới phải có ít nhất 8 ký tự.";
+        return false; // Ngăn không cho form được pppp`;
+        }
+    let updateData = {
+        username: userName,
+        oldPass: oldPass,
+        newPass: newPassword
+    }
+   let response = await putDataToAPI(api, updateData);
+   if(response){
+    alert("Cap nhat mat khau thanh cong");
+    togglePasswordFrame();
+   }else {
+    alert("Cap nhat mat khau that bai");
+   }
+
+    errorMessage.textContent = ""; // Xóa thông báo lỗi nếu không có lỗi
+    return true; // Cho phép form được gửi đi
+}
+async function putDataToAPI(url, data) {
+    try {
+        const response = await fetch(url, {
+            method: 'PUT', // Hoặc 'PUT' tùy thuộc vào API
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(data),
+        });
+
+        if (!response.ok) {
+            throw new Error(`Lỗi HTTP! Trạng thái: ${response.status}`);
+        }
+
+        const responseData = await response.json();
+        return responseData;
+    } catch (error) {
+        console.error('Có lỗi xảy ra:', error);
+    }
+}
 
 
 
@@ -481,7 +543,3 @@ async function toggleColumnVisibility(index, shouldShow) {
 //         console.log("HI");
 //     };
 // }
-
-
-
-//

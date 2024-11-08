@@ -44,6 +44,7 @@ async function showAllComics() {
     
 }
 
+
 // document.addEventListener('DOMContentLoaded', function(){
     showAllComics();
  
@@ -52,6 +53,17 @@ async function showAllComics() {
    
 // });
 
+async function toggleColumnVisibility(index, shouldShow) {
+    const rows = document.querySelectorAll('.table_body tr');
+    rows.forEach(row => {
+        const cell = row.cells[index];
+        cell.style.setProperty('display', shouldShow ? 'table-cell' : 'none', 'important');
+          //  console.log(shouldShow ? "table-cell" : "none", cell); // Debugging output
+
+       
+    });
+    return;
+}
 function setupDetailComicButtons() {
     const buttonsDetail = document.querySelectorAll('.btn-detail-comic');
 

@@ -69,7 +69,7 @@ private final ReviewRepository reviewRepository;
         return ResponseEntity.ok(reviews);
     }
 
-    @PutMapping("update_pass")
+    @PutMapping("/update_pass")
     public ResponseEntity<?> updatePass(@RequestBody UpdatePassDTO updatePassDTO){
         Optional<User> userOptional = userRepository.findByUsername((updatePassDTO.getUsername()));
         User user =  userOptional.get();
