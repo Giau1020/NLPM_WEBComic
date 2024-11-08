@@ -667,3 +667,49 @@ function close_edit_mode(){
 
         showAllComics();
 }
+
+
+// Hiển thị toàn bộ account
+async function getDataFromAPI(url) {
+    try {
+        const response = await fetch(url);
+        
+        if (!response.ok) {
+            throw new Error(`Lỗi HTTP! Trạng thái: ${response.status}`);
+        }
+        
+        const data = await response.json();
+        return data;
+    } catch (error) {
+        console.error('Có lỗi xảy ra:', error);
+    }
+}
+async function getAllInforUser() {
+    let api = `http://localhost:8080/api/v1/sng/admin/users`;
+    getDataFromAPI(api)
+    .then(users => {
+        let element = document.querySelector('.tbody_manage_account');
+        element.innerHTML = ``; // Clear only once before the loop
+
+        users.forEach(user => {
+            let status  = user.status;
+            let TT;
+            if(status == true){
+                TT = 'Đang hoạt động';
+            }else if(status == false){
+                TT = 'Tài khoản đã bị khóa';
+            }
+            let row = document.createElement('tr');
+            row.innerHTML = `
+                <td>${user.username}</td>
+                <td>${user.email}</td>
+                <td>${TT}</td>
+
+            `;
+            element.appendChild(row);
+        });
+    })
+    .catch(error => {
+        console.log(error);
+    });
+}

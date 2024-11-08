@@ -23,7 +23,7 @@
             <a href="#" onclick="on_off_div('.admin-product-section'); "><img src="./images-Admin/grid.png" alt="admin-product-manage" >Sản phẩm</a>
             <a href="#" onclick="on_off_div('#order-manage-container'); "><img src="./images-Admin/checkout.png" alt="admin-order-manage">Quản lý đơn hàng</a>
 <!--            <a href="#"><img src="./images-Admin/accountant.png" alt="admin-account-manage">Quản lý tài khoản</a>-->
-            <a href="#" onclick="on_off_div('#form-manage-account')"><img src="./images-Admin/accountant.png" alt="admin-account-manage">Quản lý tài khoản</a>
+            <a href="#" onclick="on_off_div('#form-manage-account'); getAllInforUser()"><img src="./images-Admin/accountant.png" alt="admin-account-manage">Quản lý tài khoản</a>
             <a href="#" onclick="on_off_div('.admin-complaint-section');"><img src="./images-Admin/complain.png" alt="admin-complain-manage">Xử lý khiếu nại</a>
 <!--            <a href="#"><img src="./images-Admin/price-tag.png" alt="admin-promotion-manage">Khuyến mãi & giảm giá</a>-->
             <a href="#"  style="margin-bottom: 10%;" onclick="on_off_div('.report-content')"><img src="./images-Admin/dashboard.png" alt="admin-report-manage">Báo cáo và thống kê</a>
@@ -41,7 +41,7 @@
             </div>
             <div class="detail-container">
                 <div class="left-container">
-                    <img class="img-cover" src="" alt="">
+                    <img  class="img-cover" src="" alt="">
                     <h2 class="name">Arya Bàn Bên Lại Trêu Ghẹo Tôi Bằng Tiếng Nga - Tập 5</h2>
                     <div style="display: flex; flex-direction: row;justify-content: center; align-items: center; text-align: center; "><p class="price" style="color: red; font-size: 30px;">12000</p><p style="color: red; font-size: 30px;">&#160; VND</p></div>
                     
@@ -325,7 +325,10 @@
                 <button onclick="window.location.href='/html/update-status-user.html';" class="btn-admin update_status_account">Cập nhật trạng thái</button>
                 <button onclick="window.location.href='/html/list-edit-user.html';" class="btn-admin edit_infor_account">Xem chi tiết</button>
             </div>
-            <table>
+            <div class="table-account">
+
+            
+            <table >
                 <thead>
                     <tr>
                         <th>Username</th>
@@ -352,6 +355,7 @@
                     <!-- Thêm các dòng người dùng khác tại đây -->
                 </tbody>
             </table>
+        </div>
         </div>
      </div>
         <!-- DIV của phần chỉnh sửa -->
