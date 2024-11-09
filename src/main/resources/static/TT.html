@@ -163,23 +163,7 @@ h2 {
                     
                 </form>
             </div>
-            <!-- <div class="payment">
-                <h2>Hình thức thanh toán</h2>
-                <div style="border: blue solid 1px; width: 400px;">
-                <div class="radio-container" style=" width: 250px; height: 50px; ">
-                    <input type="radio" name="payment" id="option1" value="Thanh toán khi nhận hàng">
-                    <span style="white-space: nowrap; font-size: 18px;" >Thanh toán khi nhận hàng </span>
-                </div>
-                </div>
-                <br>
-                <div style="border: blue solid 1px; width: 400px;">
-                <div class="radio-container" style=" width: 250px; height: 50px;">
-                    <input type="radio" name="payment" id="option2" value="Thanh toán trục tuyến">
-                    <span style="white-space: nowrap; font-size: 18px;">Thanh toán khi trực tuyến</span>
-                </div></div>
-                <br>
-                
-            </div> -->
+          
             <div class="payment">
                 <h2>HÌNH THỨC THANH TOÁN</h2>
                 <div style="border: rgb(222, 222, 226) solid 1px; width: 480px;">
@@ -214,19 +198,7 @@ h2 {
   
     <script src="js/Header.js"></script>
     <script>
-//           fetch('header.html')
-// .then(response => response.text())
-// .then(data => {
-//     document.getElementById('header').innerHTML = data;
-//     checkLoginStatus(); // Sau khi header được tải, kiểm tra trạng thái đăng nhập
-// })
-// .catch(error => console.error('Error loading header:', error));
-// // Tải footer
-// fetch("footer.html")
-// .then((response) => response.text())
-// .then((data) => {
-// document.getElementById("footer").innerHTML = data;
-// });
+
         // Hàm định dạng giá tiền với dấu phân cách hàng nghìn
         function formatPrice(price) {
             return price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
@@ -443,6 +415,12 @@ setTimeout(function() {
 const urlParams = new URLSearchParams(window.location.search);
 // Lấy giá trị của tham số "st"
 const stValue = urlParams.get('st');
+// Hàm kiểm tra số điện thoại Việt Nam hợp lệ
+function isValidPhoneNumber(phoneNumber) {
+        // Biểu thức chính quy cho số điện thoại Việt Nam
+        const phoneRegex = /^(0[3|5|7|8|9])+([0-9]{8})$/;
+        return phoneRegex.test(phoneNumber);
+    }
         document.getElementById('checkoutButton').addEventListener('click', function() {
 const option1 = document.getElementById('option1');   
 const option2 = document.getElementById('option2');
@@ -461,6 +439,11 @@ const fullName = document.getElementById("fullName").value.trim();
         amount: totalPrice,
         orderInfo: "Thông tin đơn hàng ví dụ"
     };
+     // Kiểm tra số điện thoại
+     if (!isValidPhoneNumber(phoneNumber)) {
+            alert("Số điện thoại không hợp lệ. Vui lòng nhập số điện thoại hợp lệ.");
+            return; // Dừng lại nếu số điện thoại không hợp lệ
+        }
     if(stValue==0 && option2.checked){
         if (!fullName || !phoneNumber || !province || !district || !ward || !address) {
     alert("Vui lòng điền đầy đủ thông tin.");
