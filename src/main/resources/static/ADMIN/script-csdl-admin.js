@@ -706,6 +706,10 @@ async function getAllInforUser() {
         users.forEach(user => {
             let status  = user.status;
             let TT;
+            let email = user.email;
+            if(user.email === null){
+                email = "Chưa cập nhật";
+            }
             if(status == true){
                 TT = 'Đang hoạt động';
             }else if(status == false){
@@ -714,7 +718,7 @@ async function getAllInforUser() {
             let row = document.createElement('tr');
             row.innerHTML = `
                 <td>${user.username}</td>
-                <td>${user.email}</td>
+                <td>${email}</td>
                 <td>${TT}</td>
 
             `;

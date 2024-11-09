@@ -337,6 +337,10 @@ table thead th {
                 users.forEach(user => {
                     let status  = user.status;
                     let TT;
+                    let email = user.email;
+                    if(email === null){
+                        email = "Chưa cập nhật";
+                    }
                     if(status == true){
                         TT = 'Đang hoạt động';
                     }else if(status == false){
@@ -346,7 +350,7 @@ table thead th {
                     row.innerHTML = `
                         <th><input type="checkbox" id="selectUser" value = "${user.id}"></th>
                         <td>${user.username}</td>
-                        <td>${user.email}</td>
+                        <td>${email}</td>
                         <td>${TT}</td>
                     `;
                     element.appendChild(row);
