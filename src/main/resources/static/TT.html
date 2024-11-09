@@ -439,17 +439,18 @@ const fullName = document.getElementById("fullName").value.trim();
         amount: totalPrice,
         orderInfo: "Thông tin đơn hàng ví dụ"
     };
-     // Kiểm tra số điện thoại
+    
    
-    if(stValue==0 && option2.checked){
-        if (!fullName || !phoneNumber || !province || !district || !ward || !address) {
-    alert("Vui lòng điền đầy đủ thông tin.");
-    return;
-  }
   if (!isValidPhoneNumber(phoneNumber)) {
             alert("Số điện thoại không hợp lệ. Vui lòng nhập số điện thoại hợp lệ.");
             return; // Dừng lại nếu số điện thoại không hợp lệ
         }
+        if (!fullName || !phoneNumber || !province || !district || !ward || !address) {
+    alert("Vui lòng điền đầy đủ thông tin.");
+    return;
+  }
+    if(stValue==0 && option2.checked){
+      
   // Lưu thông tin vào localStorage
 localStorage.setItem('fullName', fullName);
 localStorage.setItem('phoneNumber', phoneNumber);
