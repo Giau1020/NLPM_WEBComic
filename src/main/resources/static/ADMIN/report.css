@@ -1,23 +1,88 @@
-
-.report-content {
-    width: 74%;
+/* Style the dropdown */
+.dropdown {
+  position: relative;
+  display: inline-block;
 }
+
+/* Style the dropdown */
+.dropdown {
+  position: relative;
+  display: inline-block;
+}
+
+.dropdown-content {
+  display: none;
+  position: absolute;
+  background-color: #fff;
+  min-width: 160px;
+  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+  z-index: 1;
+  border-radius: 8px;
+}
+
+.dropdown-content .revenue-option {
+  color: black;
+  padding: 12px 16px;
+  text-decoration: none;
+  display: block;
+  border: none;
+  width: 100%;
+  text-align: left;
+  background-color: white;
+  cursor: pointer;
+}
+
+.dropdown-content .revenue-option:hover {
+  background-color: #f1f1f1;
+}
+
+/* Show the dropdown content when hovering */
+.dropdown:hover .dropdown-content {
+  display: block;
+}
+
+/* General styles for .report-content */
+.report-content {
+  width: 74%;
+}
+
 /* Styling buttons within the report-content section */
 .report-content .report-comic,
 .report-content .report-quantity,
 .report-content .report-cart,
-.report-content .report-excel {
-    width: 258px;
-    height: 90%;
-    border: 2px solid #ff5757;
-    background-color: white;
-    text-align: center;
-    border-radius: 50px;
-    margin-right: 10px;
-    cursor: pointer;
-    font-size: 15px;
-    font-weight: bold;
+.report-content .report-excel,
+.report-content .report-low-comic,
+.report-content .low-stock-quantity,
+.graphBtn{
+  width: 150px;
+  height: 40px;
+  border: 2px solid #ff5757;
+  background-color: white;
+  text-align: center;
+  border-radius: 50px;
+  margin-right: 10px;
+  cursor: pointer;
+  font-size: 15px;
+  font-weight: bold;
 }
+.graphBtn {
+    margin-top:5px;
+}
+
+/* Specific styling for the "Doanh Thu" button */
+.proceeds-cart {
+  width: 150px;
+  height: 40px;
+  border: 2px solid #ff5757;
+  background-color: white;
+  text-align: center;
+  border-radius: 50px;
+  margin-right: 10px;
+  cursor: pointer;
+  font-size: 15px;
+  font-weight: bold;
+}
+
 
 .report-content .report-comic:hover,
 .report-content .report-quantity:hover,
@@ -31,7 +96,9 @@
 /* Styling tables within the report-content section */
 .report-content .table-comic,
 .report-content .table-sold,
-.report-content .table-cart {
+.report-content .table-cart ,
+.report-content .table-low-comic,
+.report-content .table-low-stock{
     width: 100%;
     border-collapse: collapse;
     display: none; /* Hide tables by default */
@@ -71,4 +138,50 @@
 
 .table-comic, .table-sold ,.table-cart {
     display: none; /* Ẩn bảng mặc định */
+}
+
+   /* Tạo kiểu chung cho các nút */
+       .revenueStatisticsContainer button {
+            background-color: #ffff; /* Màu nền xanh lá cây */
+            border: 1px solid red; /* Không có viền */
+            color: black; /* Màu chữ trắng */
+            padding: 15px 32px; /* Đệm cho nút */
+            text-align: center; /* Căn giữa văn bản */
+            text-decoration: none; /* Loại bỏ gạch chân nếu có */
+            display: inline-block; /* Hiển thị inline-block để có thể áp dụng margin */
+            font-size: 16px; /* Kích thước chữ */
+            margin: 4px 2px; /* Khoảng cách giữa các nút */
+            cursor: pointer; /* Hiển thị con trỏ chuột khi di chuột vào nút */
+            border-radius: 4px; /* Bo góc */
+            transition: background-color 0.3s ease; /* Hiệu ứng chuyển màu nền khi di chuột */
+        }
+
+
+
+
+
+/* Kiểu cho label */
+.revenueStatisticsContainer label {
+    display: block;
+    margin-bottom: 8px;
+    font-size: 20px;
+    color: black;
+}
+
+/* Kiểu cho input và select */
+.revenueStatisticsContainer input[type="number"], select {
+    width: 15%;
+    padding: 10px;
+    font-size: 16px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    margin-bottom: 15px;
+    box-sizing: border-box; /* Bao gồm padding và border trong kích thước tổng thể */
+    transition: border-color 0.3s ease;
+}
+
+/* Thêm hiệu ứng khi focus vào input/select */
+input[type="number"]:focus, select:focus {
+    border-color: red;
+    outline: none;
 }

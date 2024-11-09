@@ -23,7 +23,7 @@
             <a href="#" onclick="on_off_div('.admin-product-section'); "><img src="./images-Admin/grid.png" alt="admin-product-manage" >Sản phẩm</a>
             <a href="#" onclick="on_off_div('#order-manage-container'); "><img src="./images-Admin/checkout.png" alt="admin-order-manage">Quản lý đơn hàng</a>
 <!--            <a href="#"><img src="./images-Admin/accountant.png" alt="admin-account-manage">Quản lý tài khoản</a>-->
-            <a href="#" onclick="on_off_div('#form-manage-account')"><img src="./images-Admin/accountant.png" alt="admin-account-manage">Quản lý tài khoản</a>
+            <a href="#" onclick="on_off_div('#form-manage-account'); getAllInforUser()"><img src="./images-Admin/accountant.png" alt="admin-account-manage">Quản lý tài khoản</a>
             <a href="#" onclick="on_off_div('.admin-complaint-section');"><img src="./images-Admin/complain.png" alt="admin-complain-manage">Xử lý khiếu nại</a>
 <!--            <a href="#"><img src="./images-Admin/price-tag.png" alt="admin-promotion-manage">Khuyến mãi & giảm giá</a>-->
             <a href="#"  style="margin-bottom: 10%;" onclick="on_off_div('.report-content')"><img src="./images-Admin/dashboard.png" alt="admin-report-manage">Báo cáo và thống kê</a>
@@ -41,7 +41,7 @@
             </div>
             <div class="detail-container">
                 <div class="left-container">
-                    <img class="img-cover" src="" alt="">
+                    <img  class="img-cover" src="" alt="">
                     <h2 class="name">Arya Bàn Bên Lại Trêu Ghẹo Tôi Bằng Tiếng Nga - Tập 5</h2>
                     <div style="display: flex; flex-direction: row;justify-content: center; align-items: center; text-align: center; "><p class="price" style="color: red; font-size: 30px;">12000</p><p style="color: red; font-size: 30px;">&#160; VND</p></div>
                     
@@ -325,7 +325,10 @@
                 <button onclick="window.location.href='/html/update-status-user.html';" class="btn-admin update_status_account">Cập nhật trạng thái</button>
                 <button onclick="window.location.href='/html/list-edit-user.html';" class="btn-admin edit_infor_account">Xem chi tiết</button>
             </div>
-            <table>
+            <div class="table-account">
+
+            
+            <table >
                 <thead>
                     <tr>
                         <th>Username</th>
@@ -352,6 +355,7 @@
                     <!-- Thêm các dòng người dùng khác tại đây -->
                 </tbody>
             </table>
+        </div>
         </div>
      </div>
         <!-- DIV của phần chỉnh sửa -->
@@ -531,10 +535,15 @@
 <!-- báo cáo thống kê-->
 <div class="report-content" style="display: none;">
     <div class="products-tool">
-        <button class="report-comic" id="report-comic">Truyện bán chạy nhất</button>
-        <button class="report-quantity" id="report-quantity">Quản lý tồn kho</button>
-        <button class="report-cart" id="report-cart">Truyện có nhiều trong giỏ hàng</button>
-        <button class="report-excel" id="report-excel">Xuất file Excel</button>
+        <button class="report-comic" id="report-comic">Truyện bán chạy</button>
+        <button class="report-low-comic" id="report-low-comic">Truyện bán chậm</button>
+        <button class="report-quantity" id="report-quantity">tồn kho</button>
+        <button class="low-stock-quantity" id="low-stock-quantity">Hàng tồn kho thấp</button>
+        <button class="report-cart" id="report-cart">giỏ hàng</button>
+        <!-- "Doanh Thu" button with dropdown options -->
+            <button class="proceeds-cart" id="proceeds-cart">Doanh Thu</button>
+
+        <button class="report-excel" id="report-excel">Excel</button>
     </div>
 
     <!-- Bảng truyện bán chạy nhất -->
@@ -551,6 +560,25 @@
             </thead>
             <tbody id="report-table">
                 <!-- Nội dung sẽ được thêm vào đây -->
+            </tbody>
+        </table>
+
+    </div>
+    <button id="graphBtn" class="graphBtn">Biểu Đồ</button>
+    <!-- Bảng truyện bán chậm nhất -->
+    <div class="table table-low-comic" id="table-low-comic">
+        <table>
+            <thead>
+            <tr>
+                <th>ID Truyện</th>
+                <th>Tên Truyện</th>
+                <th>Tên Tác Giả</th>
+                <th>Nhà Xuất Bản</th>
+                <th>Số Lượt Bán</th>
+            </tr>
+            </thead>
+            <tbody id="report-low-table">
+            <!-- Nội dung sẽ được thêm vào đây -->
             </tbody>
         </table>
     </div>
@@ -573,6 +601,78 @@
         </table>
     </div>
     <!--div tồn kho-->
+
+    <!-- Bảng low-stock -->
+    <div class="table table-low-stock" id="table-low-stock">
+        <table>
+            <thead>
+            <tr>
+                <th>ID Truyện</th>
+                <th>Tên Truyện</th>
+                <th>Tên Tác Giả</th>
+                <th>Nhà Xuất Bản</th>
+                <th>SL tồn kho</th>
+            </tr>
+            </thead>
+            <tbody id="report-lowstock-table">
+            <!-- Nội dung sẽ được thêm vào đây -->
+            </tbody>
+        </table>
+    </div>
+    <!--div low-stock-->
+
+    <!--div báo cáo doanh thu-->
+    <div class="revenueStatisticsContainer" id="revenueStatisticsContainer">
+
+        <h2>Thống kê Doanh Thu</h2>
+
+        <!-- Buttons to toggle form visibility -->
+        <button id="showMonthlyForm">Thống kê doanh thu theo tháng</button>
+        <button id="showQuarterlyForm">Thống kê doanh thu theo quý</button>
+
+        <!-- Form to enter Year and Month -->
+        <div id="monthlyForm" class="form-container" style="display: none;">
+            <h3>Theo Tháng</h3>
+            <form id="monthlyRevenueForm">
+                <label for="year">năm:</label>
+                <input type="number" id="year" name="year" required min="2000" max="2100">
+
+                <label for="month">tháng:</label>
+                <input type="number" id="month" name="month" required min="1" max="12">
+
+                <button type="submit">Thống kê doanh thu theo tháng</button>
+            </form>
+        </div>
+
+        <!-- Form to enter Year and Quarter -->
+        <div id="quarterlyForm" class="form-container" style="display: none;">
+            <h3>Theo Quý</h3>
+            <form id="quarterlyRevenueForm">
+                <label for="yearQ">năm:</label>
+                <input type="number" id="yearQ" name="year" required min="2000" max="2100">
+
+                <label for="quarter">Quý:</label>
+                <select id="quarter" name="quarter" required>
+                    <option value="1">Q1</option>
+                    <option value="2">Q2</option>
+                    <option value="3">Q3</option>
+                    <option value="4">Q4</option>
+                </select>
+
+                <button type="submit">Thống kê doanh thu theo quý</button>
+            </form>
+        </div>
+
+<!--        &lt;!&ndash; Displaying the Revenue &ndash;&gt;-->
+<!--        <h2>Revenue Result</h2>-->
+<!--        <div id="revenueResult">-->
+<!--            <p><strong>Total Revenue:</strong> <span id="revenueValue"></span></p>-->
+<!--        </div>-->
+
+    </div>
+
+
+    <!--div báo cáo doanh thu-->
 
     <!--div truyện nhiều trong giỏ hàng-->
     <div class="table table-cart" id="table-cart">
@@ -619,6 +719,7 @@
     <script src="./report.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.17.0/xlsx.full.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/exceljs@4.2.0/dist/exceljs.min.js"></script>
+    <script src="./revenue.js"></script>
    <script>
        function closeModalComplaint() {
     const modal = document.getElementById('complaint-modal');
@@ -651,5 +752,8 @@ function adminresponses(id) {
 }
 
    </script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+
 </body>
 </html>

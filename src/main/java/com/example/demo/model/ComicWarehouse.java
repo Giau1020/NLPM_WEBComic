@@ -1,22 +1,40 @@
 package com.example.demo.model;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
+
+import java.util.List;
 
 @Entity
 @Table(name = "Comic")
 public class ComicWarehouse {
 
     @Id
+    @Column(name = "id")  // Đảm bảo cột id trong cơ sở dữ liệu là `id`
     private Long id;
 
+    @Column(name = "name")
     private String name;
-    private String Publisher;
-    private String Author;
+
+    @Column(name = "publisher")
+    private String publisher;
+
+    @Column(name = "quantity")
     private int quantity;
 
+    @Transient  // Không phải là cột trong bảng, lấy từ bảng Author
+//    private String author;  // Tên tác giả lấy từ bảng Author thông qua bảng comic_author
+    private List<String> authors;
     // Getters and Setters
+
+//
+    public List<String> getAuthors() {
+        return authors;
+    }
+
+    public void setAuthors(List<String> authors) {
+        this.authors = authors;
+    }
+
     public Long getId() {
         return id;
     }
@@ -34,19 +52,11 @@ public class ComicWarehouse {
     }
 
     public String getPublisher() {
-        return Publisher;
+        return publisher;
     }
 
-    public void setPublisher(String Publisher) {
-        this.Publisher = Publisher;
-    }
-
-    public String getAuthor() {
-        return Author;
-    }
-
-    public void setAuthor(String Author) {
-        this.Author = Author;
+    public void setPublisher(String publisher) {
+        this.publisher = publisher;
     }
 
     public int getQuantity() {
@@ -56,4 +66,12 @@ public class ComicWarehouse {
     public void setQuantity(int quantity) {
         this.quantity = quantity;
     }
+//
+//    public String getAuthor() {
+//        return author;
+//    }
+//
+//    public void setAuthor(String author) {
+//        this.author = author;
+//    }
 }

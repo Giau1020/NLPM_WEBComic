@@ -1,43 +1,10 @@
-//document.getElementById("proceeds-cart").addEventListener("click", function(event) {
-//  event.stopPropagation(); // Prevents the dropdown from closing immediately
-//  const options = document.getElementById("revenue-options");
-//  options.style.display = options.style.display === "block" ? "none" : "block";
-//});
-//
-//document.addEventListener("click", function() {
-//  document.getElementById("revenue-options").style.display = "none";
-//});
-//
-//function showWeeklyReport() {
-//  alert("Hiển thị báo cáo theo tuần");
-//  // Code to show weekly report
-//}
-//
-//function showMonthlyReport() {
-//  alert("Hiển thị báo cáo theo tháng");
-//  // Code to show monthly report
-//}
-//
-//function showQuarterlyReport() {
-//  alert("Hiển thị báo cáo theo quý");
-//  // Code to show quarterly report
-//}
-
-
-
 // Lấy các phần tử nút và bảng
 const reportComicBtn = document.querySelector('.report-comic');
 const reportQuantityBtn = document.querySelector('.report-quantity');
-const reportCartbtn = document.querySelector('.report-cart');
-const reportlowstockbtn = document.querySelector('.low-stock-quantity');
-const reportlowcomicbtn = document.querySelector('.report-low-comic');
-const reportproceedbtn = document.querySelector('.proceeds-cart');
+const reportCartbtn = document.querySelector('.report-cart')
 const comicTable = document.querySelector('.table-comic');
 const quantityTable = document.querySelector('.table-sold');
 const cartTable = document.querySelector('.table-cart');
-const lowcomicTable = document.querySelector('.table-low-comic');
-const lowstockTable = document.querySelector('.table-low-stock');
-const revenue = document.querySelector('.revenueStatisticsContainer');
 
 
 ////
@@ -47,9 +14,6 @@ document.addEventListener("DOMContentLoaded", function () {
     comicTable.style.display = 'block';
     quantityTable.style.display = 'none';
     cartTable.style.display ='none';
-     lowcomicTable.style.display = 'none';
-      lowstockTable.style.display ='none';
-      revenue.style.display='none';
     // Fetch dữ liệu cho bảng bestseller
     fetch('/api/comics/top-sellers') // Thay thế bằng API thực tế của bạn
         .then(response => response.json())
@@ -72,109 +36,31 @@ document.addEventListener("DOMContentLoaded", function () {
         })
         .catch(error => console.error('Error fetching data for bestseller:', error));
 
-        //Fetch API cho truyện bán chậm nhất
-       fetch('/api/comics/lowest-selling')
-           .then(response => response.json())
-           .then(data => {
-               const tableBody = document.getElementById("report-low-table");
-               tableBody.innerHTML = ""; // Xóa nội dung cũ trong bảng
-
-               // Tạo nội dung cho bảng bằng Document Fragment để tối ưu hiệu suất
-               const rows = document.createDocumentFragment();
-
-               data.forEach(comic => {
-                   const row = document.createElement("tr");
-                   row.innerHTML = `
-                       <td>${comic.comic_id}</td>
-                        <td>${comic.comic_name}</td>
-                       <td>${comic.author_names}</td>
-                         <td>${comic.publisher}</td>
-                         <td>${comic.total_sales}</td>
-                   `;
-                   rows.appendChild(row);
-               });
-
-               // Thêm tất cả các hàng vào bảng cùng một lúc
-               tableBody.appendChild(rows);
-           })
-           .catch(error => console.error('Error fetching data for lowest-selling comics:', error));
-
     // Fetch dữ liệu cho quản lý tồn kho
-//    fetch('/api/comics/with-author')  // Đường dẫn đến API của bạn
-//        .then(response => response.json())
-//        .then(data => {
-//            const tableBody = document.getElementById('report-sold-table');
-//            tableBody.innerHTML = ''; // Xóa nội dung cũ trước khi thêm mới
-//
-//            data.forEach(comic => {
-//                const row = document.createElement('tr');
-//                row.innerHTML = `
-//                    <td>${comic.id}</td>
-//                    <td>${comic.name}</td>
-//                    <td>${comic.author}</td>
-//                    <td>${comic.publisher}</td>
-//                    <td>${comic.quantity}</td>
-//                `;
-//                tableBody.appendChild(row);
-//            });
-//
-//            // Hiển thị bảng "tồn kho" nếu cần
-//            // quantityTable.style.display = 'block'; // Không cần nếu đã ẩn ở đầu
-//        })
-//        .catch(error => {
-//            console.error('Lỗi khi lấy dữ liệu tồn kho:', error);
-//        });
-fetch('/api/comics/with-authors')  // Sửa lại đường dẫn đúng với API
-    .then(response => response.json())
-    .then(data => {
-        const tableBody = document.getElementById('report-sold-table');
-        tableBody.innerHTML = ''; // Xóa nội dung cũ trước khi thêm mới
+    fetch('/api/comics')  // Đường dẫn đến API của bạn
+        .then(response => response.json())
+        .then(data => {
+            const tableBody = document.getElementById('report-sold-table');
+            tableBody.innerHTML = ''; // Xóa nội dung cũ trước khi thêm mới
 
-        data.forEach(comic => {
-            const row = document.createElement('tr');
-            row.innerHTML = `
-                <td>${comic.id}</td>
-                <td>${comic.name}</td>
-                <td>${comic.authors.join(', ')}</td> <!-- Nối tên các tác giả bằng dấu phẩy -->
-                <td>${comic.publisher}</td>
-                <td>${comic.quantity}</td>
-            `;
-            tableBody.appendChild(row);
+            data.forEach(comic => {
+                const row = document.createElement('tr');
+                row.innerHTML = `
+                    <td>${comic.id}</td>
+                    <td>${comic.name}</td>
+                    <td>${comic.author}</td>
+                    <td>${comic.publisher}</td>
+                    <td>${comic.quantity}</td>
+                `;
+                tableBody.appendChild(row);
+            });
+
+            // Hiển thị bảng "tồn kho" nếu cần
+            // quantityTable.style.display = 'block'; // Không cần nếu đã ẩn ở đầu
+        })
+        .catch(error => {
+            console.error('Lỗi khi lấy dữ liệu tồn kho:', error);
         });
-
-        // Hiển thị bảng "tồn kho" nếu cần
-        // quantityTable.style.display = 'block'; // Không cần nếu đã ẩn ở đầu
-    })
-    .catch(error => {
-        console.error('Lỗi khi lấy dữ liệu tồn kho:', error);
-    });
-//Fetch API cho low stock
-fetch('/api/comics/low-stock')
-    .then(response => response.json())
-    .then(data => {
-        const tableBody = document.getElementById("report-lowstock-table");
-        tableBody.innerHTML = ""; // Xóa nội dung cũ của bảng
-
-        // Tạo nội dung cho bảng
-        const rows = document.createDocumentFragment();
-
-        data.forEach(comic => {
-            const row = document.createElement("tr");
-            row.innerHTML = `
-                <td>${comic.comic_id}</td> <!-- comic_id -->
-                <td>${comic.comic_name}</td> <!-- comic_name -->
-                 <td>${comic.author_names}</td> <!-- author_names -->
-                <td>${comic.publisher}</td> <!-- publisher -->
-                 <td>${comic.quantity}</td> <!-- quantity -->
-            `;
-            rows.appendChild(row);
-        });
-
-        // Thêm tất cả các hàng vào bảng cùng một lúc
-        tableBody.appendChild(rows);
-    })
-    .catch(error => console.error('Error fetching data for low stock comics:', error));
-
 
         //fetch api cho giỏ hàng
         fetch('/api/carts/top-comics') // Thay thế bằng API thực tế của bạn
@@ -209,9 +95,6 @@ reportComicBtn.addEventListener('click', () => {
     comicTable.style.display = 'block';  // Hiển thị bảng truyện bán chạy nhất
     quantityTable.style.display = 'none'; // Ẩn bảng quản lý tồn kho
     cartTable.style.display ='none';
-    lowcomicTable.style.display = 'none';
-    lowstockTable.style.display ='none';
-    revenue.style.display='none';
 });
 
 // Sự kiện khi nhấn nút "Quản lý tồn kho"
@@ -219,44 +102,12 @@ reportQuantityBtn.addEventListener('click', () => {
     quantityTable.style.display = 'block'; // Hiển thị bảng quản lý tồn kho
     comicTable.style.display = 'none';      // Ẩn bảng truyện bán chạy nhất
     cartTable.style.display ='none';
-    lowcomicTable.style.display = 'none';
-    lowstockTable.style.display ='none';
-    revenue.style.display='none';
 });
-// giỏ hàng
 reportCartbtn.addEventListener('click', () =>{
     quantityTable.style.display = 'none'; // Hiển thị bảng quản lý tồn kho
     comicTable.style.display = 'none';      // Ẩn bảng truyện bán chạy nhất
     cartTable.style.display ='block';
-    lowcomicTable.style.display = 'none';
-    lowstockTable.style.display ='none';
-    revenue.style.display='none';
 });
-reportlowcomicbtn.addEventListener('click', () =>{
-    quantityTable.style.display = 'none'; // Hiển thị bảng quản lý tồn kho
-    comicTable.style.display = 'none';      // Ẩn bảng truyện bán chạy nhất
-    cartTable.style.display ='none';
-    lowcomicTable.style.display = 'block';
-    lowstockTable.style.display ='none';
-    revenue.style.display='none';
-});
-
-reportlowstockbtn.addEventListener('click', () =>{
-    quantityTable.style.display = 'none'; // Hiển thị bảng quản lý tồn kho
-    comicTable.style.display = 'none';      // Ẩn bảng truyện bán chạy nhất
-    cartTable.style.display ='none';
-    lowcomicTable.style.display = 'none';
-    lowstockTable.style.display ='block';
-    revenue.style.display='none';
-});
-reportproceedbtn.addEventListener('click', () =>{
-quantityTable.style.display = 'none'; // Hiển thị bảng quản lý tồn kho
-comicTable.style.display = 'none';      // Ẩn bảng truyện bán chạy nhất
-cartTable.style.display ='none';
-lowcomicTable.style.display = 'none';
-lowstockTable.style.display ='none';
-revenue.style.display='block';
-                });
 
 
 // //  xuất file excel

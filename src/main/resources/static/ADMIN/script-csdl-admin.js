@@ -14,7 +14,7 @@ async function showAllComics() {
         throw new TypeError('Dữ liệu không phải là một mảng');
     }
     comics.forEach(comic => {
-       
+
         const row = document.createElement('tr');
         row.innerHTML = `
         <td class="id_comic_detail">${comic.id}</td>

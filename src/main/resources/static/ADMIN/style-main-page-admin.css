@@ -24,6 +24,16 @@ body{
     text-align: justify;
     
 }
+.tbody_manage_account{
+    width: 100%;
+    flex-grow: 1;
+    max-height: 54.4vh;
+    height: fit-content;
+    border: 1.75px solid #ff5757;
+    border-collapse: collapse;
+    overflow-y: auto;
+    overflow-x: auto;
+}
 .admin-manage img{
     width: 12%;
     height: 12%;
@@ -137,7 +147,7 @@ body{
  }
 
   /* CSS của bảng sản phẩm */
-  .table,table {
+  .table,table , .table-account{
     position: relative;
    width: 100%;
    flex-grow: 1;
