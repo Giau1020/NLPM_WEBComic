@@ -49,6 +49,6 @@ public interface ComicService {
 public void deleteComicsByIds(List<Long> comicIds) ;
 
     public Comic findComicById(Long comicId);
-
+    Long count();
 
 }

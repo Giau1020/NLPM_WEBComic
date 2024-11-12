@@ -1,0 +1,722 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Danh Sách Truyện và Thống Kê</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script> <!-- Thư viện Chart.js -->
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f5f5f5;
+            margin: 0;
+            padding: 20px;
+            color: #333;
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 1200px;
+            width: 100%;
+            margin: 0 auto;
+        }
+
+        h1 {
+            text-align: center;
+            color: #333;
+        }
+
+        .table-container {
+            max-height: 600px;
+            overflow-y: auto;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            background-color: #fff;
+            width: 100%;
+            margin-bottom: 30px;
+        }
+
+        #comic-table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        #comic-table th, #comic-table td {
+            padding: 12px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+
+        #comic-table th {
+            background-color: #f1f1f1;
+            font-weight: bold;
+            position: sticky;
+            top: 0;
+            z-index: 1;
+        }
+
+        #comic-table tbody tr:hover {
+            background-color: #f9f9f9;
+        }
+
+        .detail-container {
+            margin-bottom: 30px;
+            display: flex;
+            justify-content: space-between;
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            width: 100%;
+            max-width: 1200px;
+<!--            margin: 0 auto;-->
+            margin-bottom:20px;
+        }
+
+        .comic-detail {
+            width: 70%;
+        }
+
+        .stat-select-container {
+            width: 28%;
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .stat-select-container select,
+        .stat-select-container input {
+            width: 100%;
+            padding: 8px;
+            margin-bottom: 20px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+        }
+
+        .stat-display {
+            display: none;
+            margin-top: 20px;
+        }
+
+        .comic-detail h2 {
+            margin-top: 0;
+        }
+
+        .back-button {
+            margin-top: 20px;
+            padding: 10px 20px;
+            background-color: #007BFF;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        .back-button:hover {
+            background-color: #0056b3;
+        }
+
+  .stat-chart-container {
+    margin-top: 40px;
+    margin-bottom: 40px;
+    padding: 20px;
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    width: 100%;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+#stat-chart {
+    width: 50%;
+    height: 300px;
+}
+
+    </style>
+
+</head>
+<body>
+
+<div class="container">
+    <h1>Danh Sách Truyện</h1>
+
+    <!-- Bảng thông tin truyện -->
+    <div class="table-container">
+        <table id="comic-table">
+            <thead>
+            <tr>
+                <th>ID</th>
+                <th>Tên truyện</th>
+                <th>Giá</th>
+                <th>Thể loại</th>
+                <th>Tác giả</th>
+                <th>Số lượng bán</th>
+                <th>Nhà xuất bản</th>
+            </tr>
+            </thead>
+            <tbody id="comic-table-body">
+            <!-- Thông tin truyện sẽ được hiển thị ở đây -->
+            </tbody>
+        </table>
+    </div>
+
+    <!-- Phần hiển thị thông tin chi tiết truyện -->
+    <div id="detail-container" class="detail-container" style="display:none;">
+        <div class="comic-detail">
+            <h2>Thông Tin Truyện</h2>
+            <p><strong>ID:</strong> <span id="comic-id"></span></p>
+            <p><strong>Tên truyện:</strong> <span id="comic-name"></span></p>
+            <p><strong>Giá:</strong> <span id="comic-price"></span> ₫</p>
+            <p><strong>Thể loại:</strong> <span id="comic-genres"></span></p>
+            <p><strong>Tác giả:</strong> <span id="comic-authors"></span></p>
+            <p><strong>Số lượng bán:</strong> <span id="comic-sold"></span></p>
+            <p><strong>Nhà xuất bản:</strong> <span id="comic-publisher"></span></p>
+
+            <!-- Quay lại bảng -->
+            <button class="back-button" onclick="goBack()">Quay lại danh sách truyện</button>
+        </div>
+
+        <!-- Chọn thống kê theo tháng, quý, năm -->
+        <div class="stat-select-container">
+            <label for="stat-select">Chọn loại thống kê:</label>
+            <select id="stat-select">
+                <option>Chọn thời gian</option>
+                <option value="month">Tháng</option>
+                <option value="quarter">Quý</option>
+                <option value="year">Năm (12 tháng)</option>
+                <option value="yearQ">Năm (4 quý)</option>
+            </select>
+
+            <!-- Form nhập liệu cho Tháng, Quý, Năm -->
+            <div id="month-inputs" style="display:none;">
+                <label for="year-input">Năm:</label>
+                <input type="number" id="year-input" placeholder="Nhập năm">
+                <label for="month-input">Tháng:</label>
+                <input type="number" id="month-input" placeholder="Nhập tháng" min="1" max="12">
+                <button id="generate-month-chart-btn" onclick="generateMonthlyChart()">Tạo biểu đồ</button>
+            </div>
+
+            <div id="quarter-inputs" style="display:none;">
+                <label for="year-input-quarter">Năm:</label>
+                <input type="number" id="year-input-quarter" placeholder="Nhập năm">
+                <label for="quarter-input">Quý:</label>
+                <input type="number" id="quarter-input" placeholder="Nhập quý (1-4)" min="1" max="4">
+                <button id="generate-quarter-chart-btn" onclick="generateQuarterlyChart()">Tạo biểu đồ</button>
+            </div>
+
+            <div id="year-inputs" style="display:none;">
+                <label for="year-input-only">Năm:</label>
+                <input type="number" id="year-input-only" placeholder="Nhập năm">
+                <button id="generate-chart-btn" onclick="generateYearlyChart()">Tạo biểu đồ</button>
+            </div>
+            <div id="year-quarterly-inputs" style="display:none;">
+                <label for="year-input-quarterly-only">Năm:</label>
+                <input type="number" id="year-input-quarterly-only" placeholder="Nhập năm">
+                <button id="generate-quarterly-chart-btn" onclick="generateYearlyQuarterChart()">Tạo biểu đồ</button>
+            </div>
+
+
+            <div id="stat-display" class="stat-display">
+                <!-- Biểu đồ hoặc thống kê sẽ hiển thị ở đây -->
+                <p id="stat-info">Thông tin thống kê sẽ hiển thị ở đây.</p>
+            </div>
+
+
+        </div>
+    </div>
+
+    <!-- Biểu đồ thống kê -->
+    <div class="stat-chart-container" id="stat-chart-container" style="display:none;">
+        <canvas id="stat-chart"></canvas>
+    </div>
+
+</div>
+
+<script>
+    function generateYearlyQuarterChart() {
+    const year = document.getElementById('year-input-quarterly-only').value;
+    const comicId = document.getElementById('comic-id').textContent;
+
+    // Kiểm tra nếu năm không hợp lệ
+    if (!year) {
+        alert('Vui lòng nhập năm hợp lệ.');
+        return;
+    }
+
+    // URL API lấy dữ liệu theo năm (4 quý)
+    const apiUrl = `http://localhost:8080/sales/v1/quarterly/${comicId}?year=${year}`;
+
+    // Gọi API để lấy dữ liệu
+    fetch(apiUrl)
+        .then(response => response.json())
+        .then(data => {
+            console.log("Dữ liệu trả về từ API: ", data); // Kiểm tra dữ liệu trả về
+
+            // Kiểm tra dữ liệu trả về là mảng
+            if (!Array.isArray(data) || data.length === 0) {
+                console.error("Dữ liệu trả về không phải là mảng hoặc không có dữ liệu.");
+                alert("Không có dữ liệu hợp lệ.");
+                return;
+            }
+
+            // Kiểm tra và hủy biểu đồ cũ nếu có
+            if (window.myChart) {
+                window.myChart.destroy();
+            }
+
+            const ctx = document.getElementById('stat-chart').getContext('2d');
+
+            // Các quý trong năm
+            const quarters = ['Q1', 'Q2', 'Q3', 'Q4'];
+            const sales = quarters.map((quarter) => {
+                const salesData = data.find(item => item.quarter === quarter); // Tìm dữ liệu theo quý dưới dạng chuỗi
+                return salesData ? salesData.totalQuantity : 0; // Nếu không có dữ liệu cho quý, trả về 0
+            });
+
+            // Tạo biểu đồ mới
+            window.myChart = new Chart(ctx, {
+                type: 'line',
+                data: {
+                    labels: quarters,  // Các quý trong năm
+                    datasets: [{
+                        label: 'Số lượng sản phẩm bán ra',
+                        data: sales,  // Dữ liệu cho số lượng sản phẩm bán ra theo từng quý
+                        backgroundColor: 'rgba(75, 192, 192, 0.2)',
+                        borderColor: 'rgba(75, 192, 192, 1)',
+                        borderWidth: 1
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    scales: {
+                        y: { beginAtZero: true },
+                        x: { ticks: { stepSize: 1 } }
+                    },
+                    plugins: {
+                        legend: {
+                            display: true,
+                            position: 'top'
+                        },
+                        tooltip: {
+                            callbacks: {
+                                label: function(context) {
+                                    return `Số lượng: ${context.raw}`;
+                                }
+                            }
+                        }
+                    }
+                }
+            });
+
+            // Hiển thị biểu đồ
+            document.getElementById('stat-chart-container').style.display = 'block';
+        })
+        .catch(error => {
+            console.error('Có lỗi xảy ra khi lấy dữ liệu:', error);
+            alert('Không thể lấy dữ liệu thống kê');
+        });
+}
+
+
+
+                document.addEventListener("DOMContentLoaded", () => {
+                  fetchComics();
+                  handleStatSelectChange();
+              });
+
+             function fetchComics() {
+                // Lấy danh sách truyện
+                fetch('/api/v1/sng/admin/comics')
+                    .then(response => {
+                        if (!response.ok) {
+                            throw new Error('Network response was not ok');
+                        }
+                        return response.json();
+                    })
+                    .then(comics => {
+                        const comicTableBody = document.getElementById('comic-table-body');
+                        comicTableBody.innerHTML = '';
+
+                        // Gọi API sales/total-sales để lấy tổng số lượng bán của tất cả các truyện
+                        fetch('http://localhost:8080/sales/total-sales')
+                            .then(response => response.json())
+                            .then(totalSales => {
+                                comics.forEach(comic => {
+                                    const row = document.createElement('tr');
+
+                                    const authors = comic.authors && comic.authors.length > 0
+                                        ? comic.authors.map(author => author.name).join(', ')
+                                        : 'Chưa có tác giả';
+
+                                    const genres = comic.genres && comic.genres.length > 0
+                                        ? comic.genres.map(genre => genre.name).join(', ')
+                                        : 'Chưa có thể loại';
+
+                                    // Tìm totalQuantity cho comic hiện tại
+                                    const comicSales = totalSales.find(item => item.comicId === comic.id);
+                                    const totalQuantity = comicSales ? comicSales.totalQuantity : 0; // Nếu không tìm thấy, mặc định là 0
+
+                                    row.innerHTML = `
+                                        <td>${comic.id}</td>
+                                        <td>${comic.name}</td>
+                                        <td>${comic.price} ₫</td>
+                                        <td>${genres}</td>
+                                        <td>${authors}</td>
+                                        <td>${totalQuantity}</td> <!-- Hiển thị tổng số lượng bán -->
+                                        <td>${comic.publisher || 'Chưa có nhà xuất bản'}</td>
+                                    `;
+
+                                    row.addEventListener("click", () => showComicDetail(comic));
+
+                                    comicTableBody.appendChild(row);
+                                });
+                            })
+                            .catch(error => {
+                                console.error('Có lỗi khi lấy dữ liệu từ API sales/total-sales:', error);
+                                alert('Không thể lấy dữ liệu số lượng bán.');
+                            });
+                    })
+                    .catch(error => {
+                        console.error('Có lỗi xảy ra khi lấy dữ liệu danh sách truyện:', error);
+                        alert('Không thể tải danh sách truyện. Vui lòng thử lại sau.');
+                    });
+            }
+
+             function showComicDetail(comic) {
+                document.querySelector('.table-container').style.display = 'none';
+                document.getElementById('detail-container').style.display = 'flex';
+
+                // Hiển thị thông tin cơ bản của truyện
+                document.getElementById('comic-id').textContent = comic.id;
+                document.getElementById('comic-name').textContent = comic.name;
+                document.getElementById('comic-price').textContent = comic.price;
+                document.getElementById('comic-genres').textContent = comic.genres ? comic.genres.map(genre => genre.name).join(', ') : 'Chưa có thể loại';
+                document.getElementById('comic-authors').textContent = comic.authors ? comic.authors.map(author => author.name).join(', ') : 'Chưa có tác giả';
+                document.getElementById('comic-publisher').textContent = comic.publisher || 'Chưa có nhà xuất bản';
+
+                // Gọi API để lấy tổng số lượng bán cho từng truyện
+                fetch(`http://localhost:8080/sales/total-sales`)
+                    .then(response => response.json())
+                    .then(data => {
+                        // Tìm kiếm totalQuantity của truyện hiện tại
+                        const comicSales = data.find(item => item.comicId === comic.id);
+                        if (comicSales) {
+                            // Cập nhật totalQuantity vào thông tin truyện
+                            document.getElementById('comic-sold').textContent = comicSales.totalQuantity;
+                        } else {
+                            // Nếu không tìm thấy dữ liệu, hiển thị 0
+                            document.getElementById('comic-sold').textContent = 0;
+                        }
+                    })
+                    .catch(error => {
+                        console.error('Error fetching total sales:', error);
+                        document.getElementById('comic-sold').textContent = 0;  // Hiển thị 0 nếu có lỗi
+                    });
+
+                // Xử lý thay đổi loại thống kê
+                const statSelect = document.getElementById('stat-select');
+                statSelect.addEventListener('change', (e) => {
+                    const statType = e.target.value;
+                    handleStatTypeChange(statType);
+                });
+            }
+
+
+              function goBack() {
+                  document.querySelector('.table-container').style.display = 'block';
+                  document.getElementById('detail-container').style.display = 'none';
+                  document.getElementById('stat-chart-container').style.display = 'none';
+              }
+
+              function handleStatSelectChange() {
+                  const statSelect = document.getElementById('stat-select');
+                  statSelect.addEventListener('change', function (e) {
+                      const statType = e.target.value;
+                      handleStatTypeChange(statType);
+                  });
+              }
+
+            <!--  function handleStatTypeChange(statType) {-->
+            <!--      const monthInputs = document.getElementById('month-inputs');-->
+            <!--      const quarterInputs = document.getElementById('quarter-inputs');-->
+            <!--      const yearInputs = document.getElementById('year-inputs');-->
+
+
+            <!--      monthInputs.style.display = 'none';-->
+            <!--      quarterInputs.style.display = 'none';-->
+            <!--      yearInputs.style.display = 'none';-->
+
+            <!--      if (statType === 'month') {-->
+            <!--          monthInputs.style.display = 'block';-->
+            <!--      } else if (statType === 'quarter') {-->
+            <!--          quarterInputs.style.display = 'block';-->
+            <!--      } else if (statType === 'year') {-->
+            <!--          yearInputs.style.display = 'block';-->
+            <!--      }-->
+            <!--  }-->
+
+            function handleStatTypeChange(statType) {
+                const monthInputs = document.getElementById('month-inputs');
+                const quarterInputs = document.getElementById('quarter-inputs');
+                const yearInputs = document.getElementById('year-inputs');
+                const yearQuarterlyInputs = document.getElementById('year-quarterly-inputs');
+
+                // Ẩn tất cả các form nhập liệu
+                monthInputs.style.display = 'none';
+                quarterInputs.style.display = 'none';
+                yearInputs.style.display = 'none';
+                yearQuarterlyInputs.style.display = 'none';
+
+                // Hiển thị form nhập liệu tương ứng với lựa chọn thống kê
+                if (statType === 'month') {
+                    monthInputs.style.display = 'block';
+                } else if (statType === 'quarter') {
+                    quarterInputs.style.display = 'block';
+                } else if (statType === 'year') {
+                    yearInputs.style.display = 'block';
+                } else if (statType === 'yearQ') {
+                    yearQuarterlyInputs.style.display = 'block';
+                }
+            }
+
+            function generateYearlyChart() {
+                const year = document.getElementById('year-input-only').value;
+                const comicId = document.getElementById('comic-id').textContent;
+
+                // Kiểm tra nếu năm không hợp lệ
+                if (!year) {
+                    alert('Vui lòng nhập năm hợp lệ.');
+                    return;
+                }
+
+                // URL API lấy dữ liệu theo năm (12 tháng)
+                const apiUrl = `http://localhost:8080/sales/v1/monthly/${comicId}?year=${year}`;
+
+                // Gọi API để lấy dữ liệu
+                fetch(apiUrl)
+                    .then(response => response.json())
+                    .then(data => {
+                        // Kiểm tra dữ liệu trả về
+                        if (!Array.isArray(data) || data.length === 0) {
+                            console.error("Dữ liệu trả về không phải là mảng hoặc không có dữ liệu.");
+                            alert("Không có dữ liệu hợp lệ.");
+                            return;
+                        }
+
+                        // Kiểm tra và hủy biểu đồ cũ nếu có
+                        if (window.myChart) {
+                            window.myChart.destroy();
+                        }
+
+                        const ctx = document.getElementById('stat-chart').getContext('2d');
+
+                        // Dữ liệu tháng và tổng số lượng bán
+                        const months = ['Tháng 1', 'Tháng 2', 'Tháng 3', 'Tháng 4', 'Tháng 5', 'Tháng 6', 'Tháng 7', 'Tháng 8', 'Tháng 9', 'Tháng 10', 'Tháng 11', 'Tháng 12'];
+                        const sales = months.map((month, index) => {
+                            const salesData = data.find(item => item.month === (index + 1)); // Tìm dữ liệu cho tháng
+                            return salesData ? salesData.totalQuantity : 0; // Nếu không có dữ liệu cho tháng, trả về 0
+                        });
+
+                        // Tạo biểu đồ mới
+                        window.myChart = new Chart(ctx, {
+                            type: 'line',
+                            data: {
+                                labels: months,  // Các tháng trong năm
+                                datasets: [{
+                                    label: 'Số lượng bán',
+                                    data: sales,  // Dữ liệu cho số lượng bán
+                                    backgroundColor: 'rgba(75, 192, 192, 0.2)',
+                                    borderColor: 'rgba(75, 192, 192, 1)',
+                                    borderWidth: 1
+                                }]
+                            },
+                            options: {
+                                responsive: true,
+                                scales: {
+                                    y: { beginAtZero: true },
+                                    x: { ticks: { stepSize: 1 } }
+                                }
+                            }
+                        });
+
+                        // Hiển thị biểu đồ
+                        document.getElementById('stat-chart-container').style.display = 'block';
+                    })
+                    .catch(error => {
+                        console.error('Có lỗi xảy ra khi lấy dữ liệu:', error);
+                        alert('Không thể lấy dữ liệu thống kê');
+                    });
+            }
+
+
+
+            function generateMonthlyChart() {
+                const year = document.getElementById('year-input').value;
+                const month = document.getElementById('month-input').value;
+                const comicId = document.getElementById('comic-id').textContent;
+
+                // Kiểm tra nếu năm hoặc tháng không hợp lệ
+                if (!year || !month) {
+                    alert('Vui lòng nhập năm và tháng hợp lệ.');
+                    return;
+                }
+
+                // URL API lấy dữ liệu theo ngày trong tháng
+                const apiUrl = `http://localhost:8080/sales/daily/comic/${comicId}?year=${year}&month=${month}`;
+
+                // Gọi API để lấy dữ liệu
+                fetch(apiUrl)
+                    .then(response => response.json())
+                    .then(data => {
+                        // Kiểm tra dữ liệu trả về là mảng
+                        if (!Array.isArray(data)) {
+                            console.error("Dữ liệu trả về không phải là mảng:", data);
+                            alert("Dữ liệu không hợp lệ.");
+                            return;
+                        }
+
+                        // Kiểm tra và hủy biểu đồ cũ nếu có
+                        if (window.myChart) {
+                            window.myChart.destroy();
+                        }
+
+                        const ctx = document.getElementById('stat-chart').getContext('2d');
+
+                        // Tạo mảng ngày trong tháng và số lượng bán
+                        let days = Array.from({ length: 31 }, (_, i) => `Ngày ${i + 1}`);
+                        let sales = Array(31).fill(0);
+
+                        // Cập nhật số lượng bán cho từng ngày trong tháng
+                        data.forEach(item => {
+                            const dayIndex = item.day - 1;
+                            sales[dayIndex] = item.totalQuantity;
+                        });
+
+                        // Tạo biểu đồ mới
+                        window.myChart = new Chart(ctx, {
+                            type: 'line',
+                            data: {
+                                labels: days,
+                                datasets: [{
+                                    label: 'Số lượng bán',
+                                    data: sales,
+                                    backgroundColor: 'rgba(75, 192, 192, 0.2)',
+                                    borderColor: 'rgba(75, 192, 192, 1)',
+                                    borderWidth: 1
+                                }]
+                            },
+                            options: {
+                                responsive: true,
+                                scales: {
+                                    y: { beginAtZero: true },
+                                    x: { ticks: { stepSize: 1 } }
+                                }
+                            }
+                        });
+
+                        // Hiển thị biểu đồ
+                        document.getElementById('stat-chart-container').style.display = 'block';
+                    })
+                    .catch(error => {
+                        console.error('Có lỗi xảy ra khi lấy dữ liệu:', error);
+                        alert('Không thể lấy dữ liệu thống kê');
+                    });
+            }
+            function generateQuarterlyChart() {
+                const year = document.getElementById('year-input-quarter').value;
+                const quarter = document.getElementById('quarter-input').value;
+                const comicId = document.getElementById('comic-id').textContent;
+
+                // Kiểm tra nếu năm hoặc quý không hợp lệ
+                if (!year || !quarter) {
+                    alert('Vui lòng nhập năm và quý hợp lệ.');
+                    return;
+                }
+
+                // Kiểm tra nếu quý không hợp lệ (chỉ từ 1 đến 4)
+                if (quarter < 1 || quarter > 4) {
+                    alert('Vui lòng nhập quý hợp lệ từ 1 đến 4.');
+                    return;
+                }
+
+                // Tháng trong từng quý
+                const monthsInQuarter = {
+                    1: [1, 2, 3],  // Q1: Tháng 1, Tháng 2, Tháng 3
+                    2: [4, 5, 6],  // Q2: Tháng 4, Tháng 5, Tháng 6
+                    3: [7, 8, 9],  // Q3: Tháng 7, Tháng 8, Tháng 9
+                    4: [10, 11, 12] // Q4: Tháng 10, Tháng 11, Tháng 12
+                };
+
+                // URL API lấy dữ liệu theo quý
+                const apiUrl = `http://localhost:8080/sales/quarterly/${comicId}?year=${year}&quarter=${quarter}`;
+
+                // Gọi API để lấy dữ liệu
+                fetch(apiUrl)
+                    .then(response => response.json())
+                    .then(data => {
+                        console.log("Dữ liệu trả về từ API: ", data); // Kiểm tra dữ liệu trả về
+
+                        // Kiểm tra dữ liệu trả về là mảng
+                        if (!Array.isArray(data) || data.length === 0) {
+                            console.error("Dữ liệu trả về không phải là mảng hoặc không có dữ liệu.");
+                            alert("Không có dữ liệu hợp lệ.");
+                            return;
+                        }
+
+                        // Kiểm tra và hủy biểu đồ cũ nếu có
+                        if (window.myChart) {
+                            window.myChart.destroy();
+                        }
+
+                        const ctx = document.getElementById('stat-chart').getContext('2d');
+
+                        // Các quý trong năm
+                        const quarters = ['Q1', 'Q2', 'Q3', 'Q4'];
+                        const months = monthsInQuarter[quarter];
+                        const sales = months.map(month => {
+                            const salesData = data.find(item => item.month === month); // Tìm dữ liệu theo tháng
+                            return salesData ? salesData.totalQuantity : 0; // Nếu không có dữ liệu cho tháng, trả về 0
+                        });
+
+                        // Tạo biểu đồ mới
+                        window.myChart = new Chart(ctx, {
+                            type: 'line',
+                            data: {
+                                labels: months.map(month => `Tháng ${month}`), // Các tháng trong quý
+                                datasets: [{
+                                    label: 'Số lượng bán',
+                                    data: sales,  // Dữ liệu cho số lượng bán
+                                    backgroundColor: 'rgba(75, 192, 192, 0.2)',
+                                    borderColor: 'rgba(75, 192, 192, 1)',
+                                    borderWidth: 1
+                                }]
+                            },
+                            options: {
+                                responsive: true,
+                                scales: {
+                                    y: { beginAtZero: true },
+                                    x: { ticks: { stepSize: 1 } }
+                                }
+                            }
+                        });
+
+                        // Hiển thị biểu đồ
+                        document.getElementById('stat-chart-container').style.display = 'block';
+                    })
+                    .catch(error => {
+                        console.error('Có lỗi xảy ra khi lấy dữ liệu:', error);
+                        alert('Không thể lấy dữ liệu thống kê');
+                    });
+            }
+
+
+</script>
+
+</body>
+</html>

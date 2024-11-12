@@ -73,17 +73,24 @@ async function ShowDetailOrder(id) {
             container.appendChild(shippingInfo); // Thêm thông tin vận chuyển vào container
             
             let payStatus;
+            let payOrder;
             if(order.Payment == "Thanh toán trực tuyến"){
                 payStatus = 'Đã thanh toán';
+                payOrder = "VNPay";
             }else{
                 payStatus = 'Chưa thanh toán';
+                payOrder = "COD";
+            }
+
+            if(order.orderStatus == "Đã hoàn thành"){
+                payStatus = 'Đã thanh toán';
             }
             // Tạo thông tin Thanh toán
             const paymentInfo = document.createElement('div');
             paymentInfo.className = 'card';
             paymentInfo.innerHTML = `
                 <h3><i class="fas fa-credit-card"></i> Thông tin Thanh toán</h3>
-                <p><strong>Phương thức thanh toán:</strong> ${order.Payment}</p>
+                <p><strong>Phương thức thanh toán:</strong> ${payOrder}</p>
                 <p><strong>Trạng thái thanh toán:</strong> ${payStatus}</p>
                 <p><strong>Tổng tiền sản phẩm:</strong> ${order.totalPrice}</p>
                 <p><strong>Phí vận chuyển:</strong> 0VND</p>

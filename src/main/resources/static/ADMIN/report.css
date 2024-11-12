@@ -1,45 +1,4 @@
-/* Style the dropdown */
-.dropdown {
-  position: relative;
-  display: inline-block;
-}
 
-/* Style the dropdown */
-.dropdown {
-  position: relative;
-  display: inline-block;
-}
-
-.dropdown-content {
-  display: none;
-  position: absolute;
-  background-color: #fff;
-  min-width: 160px;
-  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
-  z-index: 1;
-  border-radius: 8px;
-}
-
-.dropdown-content .revenue-option {
-  color: black;
-  padding: 12px 16px;
-  text-decoration: none;
-  display: block;
-  border: none;
-  width: 100%;
-  text-align: left;
-  background-color: white;
-  cursor: pointer;
-}
-
-.dropdown-content .revenue-option:hover {
-  background-color: #f1f1f1;
-}
-
-/* Show the dropdown content when hovering */
-.dropdown:hover .dropdown-content {
-  display: block;
-}
 
 /* General styles for .report-content */
 .report-content {
@@ -66,7 +25,8 @@
   font-weight: bold;
 }
 .graphBtn {
-    margin-top:5px;
+    margin-top:7px;
+   margin-left:40%;
 }
 
 /* Specific styling for the "Doanh Thu" button */
@@ -185,3 +145,54 @@ input[type="number"]:focus, select:focus {
     border-color: red;
     outline: none;
 }
+
+.products-tool {
+    position: relative;
+}
+
+#report-excel {
+    position: relative;
+}
+
+ /* Style cho container dropdown */
+    .dropdown {
+        position: relative;
+        display: inline-block;
+    }
+
+    /* Style cho nội dung của dropdown */
+    .dropdown-content {
+        display: none;
+        position: absolute;
+        background-color: #f9f9f9;
+        min-width: 160px;
+        box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.2);
+        z-index: 1;
+    }
+
+    /* Style cho các button trong dropdown */
+    .dropdown-content button {
+        color: black;
+        padding: 12px 16px;
+        text-align: left;
+        background-color: #f9f9f9;
+        border: none;
+        width: 100%;
+        cursor: pointer;
+    }
+
+    /* Chuyển màu khi hover vào button */
+    .dropdown-content button:hover {
+        background-color: red;
+    }
+
+    /* Hiển thị dropdown khi hover vào button PDF */
+    .dropdown:hover .dropdown-content {
+        display: block;
+    }
+
+    /* Thay đổi màu nền khi hover vào button PDF */
+    .dropdown:hover .report-excel {
+        background-color: #3e8e41;
+        color: white;
+    }
