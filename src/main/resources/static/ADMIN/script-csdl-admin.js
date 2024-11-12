@@ -44,6 +44,7 @@ async function showAllComics() {
     
 }
 
+
 // document.addEventListener('DOMContentLoaded', function(){
     showAllComics();
  
@@ -52,6 +53,17 @@ async function showAllComics() {
    
 // });
 
+async function toggleColumnVisibility(index, shouldShow) {
+    const rows = document.querySelectorAll('.table_body tr');
+    rows.forEach(row => {
+        const cell = row.cells[index];
+        cell.style.setProperty('display', shouldShow ? 'table-cell' : 'none', 'important');
+          //  console.log(shouldShow ? "table-cell" : "none", cell); // Debugging output
+
+       
+    });
+    return;
+}
 function setupDetailComicButtons() {
     const buttonsDetail = document.querySelectorAll('.btn-detail-comic');
 
@@ -694,6 +706,10 @@ async function getAllInforUser() {
         users.forEach(user => {
             let status  = user.status;
             let TT;
+            let email = user.email;
+            if(user.email === null){
+                email = "Chưa cập nhật";
+            }
             if(status == true){
                 TT = 'Đang hoạt động';
             }else if(status == false){
@@ -702,7 +718,7 @@ async function getAllInforUser() {
             let row = document.createElement('tr');
             row.innerHTML = `
                 <td>${user.username}</td>
-                <td>${user.email}</td>
+                <td>${email}</td>
                 <td>${TT}</td>
 
             `;

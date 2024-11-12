@@ -130,7 +130,10 @@ public class ComicServiceImpl implements ComicService {
 
 
     // Upload img
-    private static final String UPLOAD_DIR = "/src/main/resources/static/images/";
+    //private static final String UPLOAD_DIR = "/src/main/resources/static/images";
+    private static final String UPLOAD_DIR = new File("src/main/resources/static/images").getAbsolutePath();
+    
+    //private static final String UPLOAD_DIR = "C:/Users/NgocG/Documents/NLPM_9112014/NLPM_WEBComic/src/main/resources/static/images/";
 
     public String uploadImage(MultipartFile file) throws IOException {
         if (file.isEmpty()) {
@@ -144,12 +147,12 @@ public class ComicServiceImpl implements ComicService {
         }
 
         // Tạo đường dẫn cho file
-        String filePath = UPLOAD_DIR + file.getOriginalFilename();
+        String filePath = UPLOAD_DIR +"/"+ file.getOriginalFilename();
         Path path = Paths.get(filePath);
 
         // Lưu tệp
         Files.write(path, file.getBytes());
-        return "../images/" + file.getOriginalFilename(); // Trả về đường dẫn tệp đã tải lên
+        return "images/" + file.getOriginalFilename(); // Trả về đường dẫn tệp đã tải lên
     }
 
 
