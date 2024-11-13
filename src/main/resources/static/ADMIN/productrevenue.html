@@ -5,6 +5,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Danh Sách Truyện và Thống Kê</title>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script> <!-- Thư viện Chart.js -->
+<!--    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script> &lt;!&ndash; jsPDF for PDF export &ndash;&gt;-->
+<!--    <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.17.5/xlsx.full.min.js"></script> &lt;!&ndash; SheetJS for Excel export &ndash;&gt;-->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -73,7 +77,7 @@
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
             width: 100%;
             max-width: 1200px;
-<!--            margin: 0 auto;-->
+       /* margin: 0 auto; */
             margin-bottom:20px;
         }
 
@@ -143,7 +147,7 @@
 </head>
 <body>
 
-<div class="container">
+<div class="container" id="container">
     <h1>Danh Sách Truyện</h1>
 
     <!-- Bảng thông tin truyện -->
@@ -180,6 +184,7 @@
 
             <!-- Quay lại bảng -->
             <button class="back-button" onclick="goBack()">Quay lại danh sách truyện</button>
+            <button class="back-button" onclick="generatePDF()">Xuất Báo Cáo</button>
         </div>
 
         <!-- Chọn thống kê theo tháng, quý, năm -->
@@ -295,7 +300,11 @@
                 options: {
                     responsive: true,
                     scales: {
-                        y: { beginAtZero: true },
+                        y: { beginAtZero: true ,
+                          ticks: {
+                                        stepSize: 1,  // Đặt bước nhảy trục Y là 10 (hoặc giá trị mà bạn muốn)
+                                 }
+                        },
                         x: { ticks: { stepSize: 1 } }
                     },
                     plugins: {
@@ -442,24 +451,6 @@
                   });
               }
 
-            <!--  function handleStatTypeChange(statType) {-->
-            <!--      const monthInputs = document.getElementById('month-inputs');-->
-            <!--      const quarterInputs = document.getElementById('quarter-inputs');-->
-            <!--      const yearInputs = document.getElementById('year-inputs');-->
-
-
-            <!--      monthInputs.style.display = 'none';-->
-            <!--      quarterInputs.style.display = 'none';-->
-            <!--      yearInputs.style.display = 'none';-->
-
-            <!--      if (statType === 'month') {-->
-            <!--          monthInputs.style.display = 'block';-->
-            <!--      } else if (statType === 'quarter') {-->
-            <!--          quarterInputs.style.display = 'block';-->
-            <!--      } else if (statType === 'year') {-->
-            <!--          yearInputs.style.display = 'block';-->
-            <!--      }-->
-            <!--  }-->
 
             function handleStatTypeChange(statType) {
                 const monthInputs = document.getElementById('month-inputs');
@@ -539,7 +530,11 @@
                             options: {
                                 responsive: true,
                                 scales: {
-                                    y: { beginAtZero: true },
+                                    y: { beginAtZero: true,
+                                       ticks: {
+                                        stepSize: 1,  // Đặt bước nhảy trục Y là 10 (hoặc giá trị mà bạn muốn)
+                                    }
+                                     },
                                     x: { ticks: { stepSize: 1 } }
                                 }
                             }
@@ -614,7 +609,10 @@
                             options: {
                                 responsive: true,
                                 scales: {
-                                    y: { beginAtZero: true },
+                                    y: { beginAtZero: true,
+                                     ticks: {
+                                        stepSize: 1,  // Đặt bước nhảy trục Y là 10 (hoặc giá trị mà bạn muốn)
+                                    } },
                                     x: { ticks: { stepSize: 1 } }
                                 }
                             }
@@ -700,7 +698,11 @@
                             options: {
                                 responsive: true,
                                 scales: {
-                                    y: { beginAtZero: true },
+                                    y: { beginAtZero: true,
+                                    ticks: {
+                                            stepSize: 1,  // Đặt bước nhảy trục Y là 10 (hoặc giá trị mà bạn muốn)
+                                        }
+                                     },
                                     x: { ticks: { stepSize: 1 } }
                                 }
                             }
@@ -714,9 +716,19 @@
                         alert('Không thể lấy dữ liệu thống kê');
                     });
             }
+// xuất file
+<!--function generatePDF() {-->
+<!--    const element = document.getElementById('container');  // Lấy phần tử HTML cần xuất thành PDF-->
 
+<!--    // Tạo PDF từ phần tử HTML-->
+<!--    html2pdf()-->
+<!--        .from(element)  // Chỉ định phần tử HTML cần chuyển đổi-->
+<!--        .save('comic-report.pdf');  // Lưu file PDF với tên 'comic-report.pdf'-->
+<!--}-->
 
 </script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.9.2/html2pdf.bundle.js"></script>
+
 
 </body>
 </html>

@@ -535,6 +535,7 @@
 
 <!-- báo cáo thống kê-->
 
+
 <div class="report-content" id="report-content" style="display: none;">
     <div class="products-tool">
         <button class="report-comic" id="report-comic">Bán Chạy Nhất</button>
@@ -543,7 +544,7 @@
         <button class="low-stock-quantity" id="low-stock-quantity">Hàng Tồn Kho Thấp</button>
         <button class="report-cart" id="report-cart">Giỏ Hàng</button>
         <button class="proceeds-cart" id="proceeds-cart">Thống kê</button>
-        <button class="report-excel" id="report-excel">PDF</button>
+<!--        <button class="report-excel" id="report-excel" onclick="window.location.href='chart.html'">PDF</button>-->
         <!-- Dropdown for PDF -->
 <!--        <div class="dropdown">-->
 <!--            <button class="report-excel" id="report-excel">PDF</button>-->
@@ -656,8 +657,8 @@
     <!--div truyện trong giỏ hàng-->
     <!--Doanh Thu-->
     <div class="revenueStatisticsContainer" id="mainContainer">
-        <h2>Thống Kê Doanh Thu</h2>
-        <button id="showMonthlyForm" onclick="window.location.href='revenue.html'">Thống kê Doanh Thu</button>
+        <h2>Thống Kê</h2>
+        <button id="showMonthlyForm" onclick="window.location.href='revenueReport.html'">Thống kê Doanh Thu</button>
         <button id="showQuarterlyForm" onclick="window.location.href='productrevenue.html'">Thống kê sản phẩm</button>
     </div>
 
@@ -691,14 +692,12 @@
 <!--    <script src="./revenue.js"></script>-->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.17.0/xlsx.full.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/exceljs@4.2.0/dist/exceljs.min.js"></script>
-<<<<<<< HEAD
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
-    <script>
-=======
-    <script src="./script/script-for-detail-section.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+ <script src="./script/script-for-detail-section.js"></script>
+
+   
    <script>
->>>>>>> e787cc1904cef699f4e64292695c286a7473cbee
        function closeModalComplaint() {
     const modal = document.getElementById('complaint-modal');
     modal.style.display = "none";

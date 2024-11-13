@@ -1,8 +1,8 @@
-document.getElementById("report-excel").addEventListener("click", function(event) {
-    event.stopPropagation(); // Ngăn không cho sự kiện lan ra ngoài
-    const options = document.getElementById("pdf-options");
-    options.classList.toggle("show"); // Thêm hoặc gỡ bỏ lớp 'show' để hiển thị/ẩn menu
-});
+//document.getElementById("report-excel").addEventListener("click", function(event) {
+//    event.stopPropagation(); // Ngăn không cho sự kiện lan ra ngoài
+//    const options = document.getElementById("pdf-options");
+//    options.classList.toggle("show"); // Thêm hoặc gỡ bỏ lớp 'show' để hiển thị/ẩn menu
+//});
 
 // Đóng menu khi nhấn bất kỳ nơi nào bên ngoài
 //document.addEventListener("click", function() {
@@ -20,10 +20,7 @@ function showSlowSellingComics() {
     // Thêm mã để hiển thị báo cáo Truyện Bán Chậm
 }
 
-// chuyển hướng đênns chart.html
-document.getElementById("report-excel").addEventListener("click", function() {
-        window.location.href = "chart.html"; // Chuyển hướng đến trang 'newpage.html'
-    });
+
 
 
 
@@ -261,32 +258,32 @@ revenue.style.display='block';
                 });
 
 
-// //  xuất file excel
+ //  xuất file excel
 //  document.getElementById("report-excel").addEventListener("click", function() {
 //     const reportcomic = document.getElementById("table-comic");
 //     const reportquantity = document.getElementById("table-sold");
 //     const reportcart = document.getElementById("table-cart");
-
+//
 //     if (!reportcomic || !reportquantity || !reportcart) {
 //         console.error("Không tìm thấy một trong các bảng!");
 //         return;
 //     }
-
+//
 //     // Tạo một workbook mới
 //     const wb = XLSX.utils.book_new();
-
+//
 //     // Chuyển đổi bảng bestseller thành sheet
 //     const reportcomicSheet = XLSX.utils.table_to_sheet(reportcomic);
 //     XLSX.utils.book_append_sheet(wb, reportcomicSheet, "Truyện bán chạy nhất");
-
+//
 //     // Chuyển đổi bảng tồn kho thành sheet
 //     const reportquantitySheet = XLSX.utils.table_to_sheet(reportquantity);
 //     XLSX.utils.book_append_sheet(wb, reportquantitySheet, "Tồn Kho");
-
+//
 //     // chuyển đổi bảng sản phẩm có nhiều trong giỏ hàng
 //     const reportcartSheet = XLSX.utils.table_to_sheet(reportcart);
 //     XLSX.utils.book_append_sheet(wb, reportcartSheet, "Giỏ hàng");
-
+//
 //     // Xuất file Excel
 //     XLSX.writeFile(wb, "BaoCaoThongKe.xlsx");
 // });
