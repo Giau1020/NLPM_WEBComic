@@ -8,14 +8,13 @@
 
     <title>Danh sách Đơn Hàng</title>
     <style>
+       
         .main {
-            display: flex;
-            align-items: center;
-            flex-direction: column;
-            flex-grow: 1;
-            justify-content: center;
-        }
-
+        display: flex;
+        align-items: center;
+        flex-direction: column;
+        flex-grow: 1;
+      }
         .order-list-container {
             margin-top: 30px;
             width: 80%; 
@@ -229,7 +228,90 @@
         .star.selected {
             color: rgb(220, 41, 41);
         }
-
+        @media (max-width: 1024px) {
+    .order-list-container {
+        width: 90% !important;
+        max-width: none !important; /* Loại bỏ giới hạn max-width */
+    }
+    h1{
+        font-size: 24px ;
+    }
+    .status-button{
+        width: 20% !important;
+        padding: 5px 20px;
+            
+    }
+}
+@media (max-width: 768px) {
+    .order-list-container {
+        width: 100% !important;
+        margin-top: 5px !important;
+        border-radius: 0px !important;
+    }
+    h1{
+        font-size: 23px ;
+    }
+    .status-button{
+        width: 20% !important;
+        padding: 3px 12px;   
+    }
+    .order-item{
+        font-size: 12px !important;
+    }
+    .details-button,.cancel-button,
+   .review-button{
+    width: 22% !important;
+    font-size: 14px !important;
+   }
+}
+@media (max-width: 510px) {
+    h1{
+        font-size: 21px ;
+    }
+    .status-button{
+        width: 20% !important;
+        padding: 3px 12px;
+           font-size: 11px !important; 
+    }
+    .details-button,.cancel-button,
+   .review-button{
+    width: 30% !important;
+    font-size: 12px !important;
+   }
+}
+@media (max-width: 444px) {
+    h1{
+        font-size: 18px ;
+    }
+    .status-button{
+        width: 24% !important;
+        padding: 3px 12px;
+           font-size: 10px !important; 
+    }
+    .order-item{
+        font-size: 10px !important;
+    }
+    .details-button,.cancel-button,
+   .review-button{
+    width: 30% !important;
+    font-size: 10px !important;
+   }
+}
+@media (max-width: 350px) {
+    h1{
+        font-size: 16px ;
+    }
+    .status-button{
+        width: 24% !important;
+        padding: 3px 12px;
+           font-size: 8px !important; 
+    }
+   .details-button,.cancel-button,
+   .review-button{
+    width: 35% !important;
+    font-size: 9px !important;
+   }
+}
     </style>
 </head>
 <body>

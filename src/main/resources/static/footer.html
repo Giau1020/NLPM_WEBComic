@@ -1,13 +1,47 @@
+<style>
+    footer{
+        width: 100% !important;
+    }
+    @media (max-width: 1050px) {
+        footer{
+            font-size: 12px !important;
+        }
+        #lgft{
+            width: 90px !important;
+            height: auto;
+        }
+        #em{
+            height: 20px;
+        }
+} @media (max-width: 800px) {
+      footer{
+        display: flex;
+        flex-direction: column;
+        height: auto;
+      }
+      .footer-section{
+        width: 100%;
+        border: none;
+            margin: 0;
+            padding: 0;
+      }
+     #a{
+        display: flex;
+        text-align: center;
+     }
+}
+</style>
 <footer>
-    <div class="footer-section">
+  
+    <div class="footer-section" id="f1">
         <div>
             <img src="images/logo.svg" alt="" id="lgft">
             <br><br>
-            <p class="justified-text">SNG nhận đặt hàng trực tuyến và giao hàng tận nơi. <br>KHÔNG hỗ trợ đặt mua và nhận hàng trực tiếp tại văn <br>phòng cũng như các tất cả hệ thống SNG trên toàn quốc. <br></p>
+            <p id="a" class="justified-text">SNG nhận đặt hàng trực tuyến và giao hàng tận nơi. KHÔNG hỗ trợ đặt mua và nhận hàng trực tiếp tại văn phòng cũng như các tất cả hệ thống SNG trên toàn quốc. </p>
             <br>
         </div>
     </div>
-    <div class="footer-section">
+    <div class="footer-section" >
         <div>
             <h3>Thông tin liên hệ</h3>
             <p>Địa chỉ: 123 Đường ABC, Thành phố XYZ</p>
@@ -27,8 +61,9 @@
         <div>
             <h3>Đăng ký nhận tin</h3>
             <p>Nhập email để nhận tin tức mới nhất từ chúng tôi:</p>
-            <input type="email" placeholder="Nhập email của bạn">
+            <input type="email" id="em" placeholder="Nhập email của bạn">
             <button>Đăng ký</button>
         </div>
     </div>
+
 </footer>
