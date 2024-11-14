@@ -1,0 +1,396 @@
+<!--<!DOCTYPE html>-->
+<!--<html lang="en">-->
+<!--<head>-->
+<!--    <meta charset="UTF-8">-->
+<!--    <meta name="viewport" content="width=device-width, initial-scale=1.0">-->
+<!--    <title>Biểu Đồ</title>-->
+<!--    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>-->
+<!--    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.4.0/jspdf.umd.min.js"></script>-->
+<!--    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>-->
+<!--    <style>-->
+<!--        body, html {-->
+<!--              display: flex;-->
+<!--              flex-direction: column;-->
+<!--              align-items: center;-->
+<!--              height: 100vh;-->
+<!--              margin: 0;-->
+<!--              background-color: #f4f4f9;-->
+<!--              font-family: Arial, sans-serif;-->
+<!--          }-->
+<!--          .chart-container {-->
+<!--              width: 90vw;-->
+<!--              max-width: 900px;-->
+<!--              text-align: center;-->
+<!--              padding: 20px;-->
+<!--              box-sizing: border-box;-->
+<!--              background-color: #ffffff;-->
+<!--              border-radius: 8px;-->
+<!--              box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);-->
+<!--              margin-bottom: 20px;-->
+<!--              display: none; /* Ẩn biểu đồ ban đầu */-->
+<!--          }-->
+<!--          canvas {-->
+<!--              width: 100% !important;-->
+<!--              height: 400px !important;-->
+<!--              background-color: #f9f9f9;-->
+<!--          }-->
+<!--          #savePdfBtn, #chartSelect, #fileNameInput {-->
+<!--              margin-top: 20px;-->
+<!--              padding: 10px 20px;-->
+<!--              border: none;-->
+<!--              border-radius: 6px;-->
+<!--              cursor: pointer;-->
+<!--              font-size: 16px;-->
+<!--          }-->
+<!--          #savePdfBtn {-->
+<!--              background-color: #4CAF50;-->
+<!--              color: white;-->
+<!--              transition: background-color 0.3s ease;-->
+<!--          }-->
+<!--          #savePdfBtn:hover {-->
+<!--              background-color: #45a049;-->
+<!--          }-->
+<!--    </style>-->
+<!--</head>-->
+<!--<body>-->
+
+<!--&lt;!&ndash; Chọn loại biểu đồ để hiển thị &ndash;&gt;-->
+<!--<select id="chartSelect">-->
+<!--    <option value="none">Chọn Biểu Đồ</option>-->
+<!--    <option value="totalSalesContainer">Tổng Lượt Bán</option>-->
+<!--    <option value="lowSalesContainer">Bán Chậm</option>-->
+<!--    <option value="stockContainer">Tồn Kho</option>-->
+<!--    <option value="lowStockContainer">Tồn Kho Thấp</option>-->
+<!--</select>-->
+
+<!--&lt;!&ndash; Biểu đồ Tổng Lượt Bán &ndash;&gt;-->
+<!--<div class="chart-container" id="totalSalesContainer">-->
+<!--    <h2>Tổng Lượt Bán</h2>-->
+<!--    <canvas id="totalSalesChart"></canvas>-->
+<!--</div>-->
+
+<!--&lt;!&ndash; Biểu đồ Bán Chậm &ndash;&gt;-->
+<!--<div class="chart-container" id="lowSalesContainer">-->
+<!--    <h2>Bán Chậm</h2>-->
+<!--    <canvas id="lowSalesChart"></canvas>-->
+<!--</div>-->
+
+<!--&lt;!&ndash; Biểu đồ Tồn Kho &ndash;&gt;-->
+<!--<div class="chart-container" id="stockContainer">-->
+<!--    <h2>Tồn Kho</h2>-->
+<!--    <canvas id="stockChart"></canvas>-->
+<!--</div>-->
+
+<!--&lt;!&ndash; Biểu đồ Tồn Kho Thấp &ndash;&gt;-->
+<!--<div class="chart-container" id="lowStockContainer">-->
+<!--    <h2>Tồn Kho Thấp</h2>-->
+<!--    <canvas id="lowStockChart"></canvas>-->
+<!--</div>-->
+
+<!--<button id="savePdfBtn">Lưu Biểu Đồ Dưới Dạng PDF</button>-->
+
+<!--<script>-->
+<!--    // Hàm tạo biểu đồ với dữ liệu từ localStorage-->
+<!--    function createChart(canvasId, labels, data, label) {-->
+<!--        const ctx = document.getElementById(canvasId).getContext('2d');-->
+<!--        return new Chart(ctx, {-->
+<!--            type: 'bar',-->
+<!--            data: {-->
+<!--                labels: labels,-->
+<!--                datasets: [{-->
+<!--                    label: label,-->
+<!--                    data: data,-->
+<!--                    backgroundColor: 'rgba(75, 192, 192, 0.2)',-->
+<!--                    borderColor: 'rgba(75, 192, 192, 1)',-->
+<!--                    borderWidth: 1-->
+<!--                }]-->
+<!--            },-->
+<!--            options: {-->
+<!--                responsive: true,-->
+<!--                scales: {-->
+<!--                    y: {-->
+<!--                        beginAtZero: true-->
+<!--                    }-->
+<!--                }-->
+<!--            }-->
+<!--        });-->
+<!--    }-->
+
+<!--    // Lấy dữ liệu từ localStorage và tạo biểu đồ-->
+<!--    const comicNamesSales = JSON.parse(localStorage.getItem("comicNames_sales"));-->
+<!--    const salesDataSales = JSON.parse(localStorage.getItem("salesData_sales"));-->
+<!--    createChart("totalSalesChart", comicNamesSales, salesDataSales, 'Tổng Lượt Bán');-->
+
+<!--    const comicNamesLowSales = JSON.parse(localStorage.getItem("comicNames_lowSales"));-->
+<!--    const salesDataLowSales = JSON.parse(localStorage.getItem("salesData_lowSales"));-->
+<!--    createChart("lowSalesChart", comicNamesLowSales, salesDataLowSales, 'Bán Chậm');-->
+
+<!--    const comicNamesStock = JSON.parse(localStorage.getItem("comicNames_stock"));-->
+<!--    const stockData = JSON.parse(localStorage.getItem("salesData_stock"));-->
+<!--    createChart("stockChart", comicNamesStock, stockData, 'Tồn Kho');-->
+
+<!--    const comicNamesLowStock = JSON.parse(localStorage.getItem("comicNames_lowStock"));-->
+<!--    const lowStockData = JSON.parse(localStorage.getItem("salesData_lowStock"));-->
+<!--    createChart("lowStockChart", comicNamesLowStock, lowStockData, 'Tồn Kho Thấp');-->
+
+<!--    // Hiển thị biểu đồ theo lựa chọn-->
+<!--    document.getElementById("chartSelect").addEventListener("change", function() {-->
+<!--        const selectedChart = this.value;-->
+
+<!--        // Ẩn tất cả các biểu đồ-->
+<!--        document.querySelectorAll(".chart-container").forEach(container => {-->
+<!--            container.style.display = "none";-->
+<!--        });-->
+
+<!--        // Hiển thị biểu đồ đã chọn-->
+<!--        if (selectedChart !== "none") {-->
+<!--            document.getElementById(selectedChart).style.display = "block";-->
+<!--        }-->
+<!--    });-->
+
+<!--&lt;!&ndash;    // Chuyển biểu đồ hiện tại thành PDF&ndash;&gt;-->
+<!--&lt;!&ndash;    document.getElementById("savePdfBtn").addEventListener("click", function() {&ndash;&gt;-->
+<!--&lt;!&ndash;        const { jsPDF } = window.jspdf;&ndash;&gt;-->
+<!--&lt;!&ndash;        const pdf = new jsPDF("landscape");&ndash;&gt;-->
+
+<!--&lt;!&ndash;        const selectedChart = document.getElementById("chartSelect").value;&ndash;&gt;-->
+<!--&lt;!&ndash;        if (selectedChart !== "none") {&ndash;&gt;-->
+<!--&lt;!&ndash;            html2canvas(document.getElementById(selectedChart)).then(canvas => {&ndash;&gt;-->
+<!--&lt;!&ndash;                const imgData = canvas.toDataURL("image/png");&ndash;&gt;-->
+<!--&lt;!&ndash;                const imgWidth = 260;&ndash;&gt;-->
+<!--&lt;!&ndash;                const imgHeight = canvas.height * imgWidth / canvas.width;&ndash;&gt;-->
+<!--&lt;!&ndash;                pdf.addImage(imgData, 'PNG', 15, 15, imgWidth, imgHeight);&ndash;&gt;-->
+<!--&lt;!&ndash;                pdf.save("SelectedChart.pdf");&ndash;&gt;-->
+<!--&lt;!&ndash;            });&ndash;&gt;-->
+<!--&lt;!&ndash;        } else {&ndash;&gt;-->
+<!--&lt;!&ndash;            alert("Vui lòng chọn một biểu đồ để lưu.");&ndash;&gt;-->
+<!--&lt;!&ndash;        }&ndash;&gt;-->
+<!--&lt;!&ndash;    });&ndash;&gt;-->
+<!--       // Chuyển biểu đồ hiện tại thành PDF và yêu cầu tên tệp-->
+<!-- document.getElementById("savePdfBtn").addEventListener("click", function() {-->
+<!--    const { jsPDF } = window.jspdf;-->
+<!--    const pdf = new jsPDF("landscape");-->
+
+<!--    const chartSelect = document.getElementById("chartSelect");-->
+<!--    const fileNameInput = document.getElementById("fileNameInput");-->
+
+<!--    if (!chartSelect || !fileNameInput) {-->
+<!--        console.error("Không tìm thấy phần tử cần thiết.");-->
+<!--        return;-->
+<!--    }-->
+
+<!--    const selectedChart = chartSelect.value;-->
+<!--    const fileName = fileNameInput.value || "SelectedChart"; // Tên mặc định nếu không nhập-->
+
+<!--    if (selectedChart !== "none") {-->
+<!--        const chartElement = document.getElementById(selectedChart);-->
+<!--        if (chartElement) {-->
+<!--            html2canvas(chartElement).then(canvas => {-->
+<!--                const imgData = canvas.toDataURL("image/png");-->
+<!--                const imgWidth = 260;-->
+<!--                const imgHeight = canvas.height * imgWidth / canvas.width;-->
+<!--                pdf.addImage(imgData, 'PNG', 15, 15, imgWidth, imgHeight);-->
+<!--                pdf.save(`${fileName}.pdf`);-->
+<!--            });-->
+<!--        } else {-->
+<!--            console.error("Không tìm thấy phần tử biểu đồ đã chọn.");-->
+<!--        }-->
+<!--    } else {-->
+<!--        alert("Vui lòng chọn một biểu đồ để lưu.");-->
+<!--    }-->
+<!--});-->
+
+<!--</script>-->
+
+<!--</body>-->
+<!--</html>-->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Biểu Đồ</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.4.0/jspdf.umd.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+    <style>
+        body, html {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            background-color: #f4f4f9;
+            font-family: Arial, sans-serif;
+        }
+        .chart-container {
+            width: 90vw;
+            max-width: 900px;
+            text-align: center;
+            padding: 20px;
+            box-sizing: border-box;
+            background-color: #ffffff;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            margin-bottom: 20px;
+            display: none; /* Ẩn biểu đồ ban đầu */
+        }
+        canvas {
+            margin-top:20px;
+            width: 100% !important;
+            height: 400px !important;
+            background-color: #f9f9f9;
+        }
+        #savePdfBtn, #chartSelect {
+            margin-top: 50px;
+            margin-bottom: 50px;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+        #savePdfBtn {
+            background-color: #4CAF50;
+            color: white;
+            transition: background-color 0.3s ease;
+        }
+        #savePdfBtn:hover {
+            background-color: #45a049;
+        }
+    </style>
+</head>
+<body>
+<div>
+    <select id="chartSelect">
+        <option value="none">Chọn Biểu Đồ</option>
+        <option value="totalSalesContainer">Tổng Lượt Bán</option>
+        <option value="lowSalesContainer">Bán Chậm</option>
+        <option value="stockContainer">Tồn Kho</option>
+        <option value="lowStockContainer">Tồn Kho Thấp</option>
+    </select>
+</div>
+<!-- Chọn loại biểu đồ để hiển thị -->
+
+
+<!-- Biểu đồ Tổng Lượt Bán -->
+<div class="chart-container" id="totalSalesContainer">
+    <h2>Tổng Lượt Bán</h2>
+    <canvas id="totalSalesChart"></canvas>
+</div>
+
+<!-- Biểu đồ Bán Chậm -->
+<div class="chart-container" id="lowSalesContainer">
+    <h2>Bán Chậm</h2>
+    <canvas id="lowSalesChart"></canvas>
+</div>
+
+<!-- Biểu đồ Tồn Kho -->
+<div class="chart-container" id="stockContainer">
+    <h2>Tồn Kho</h2>
+    <canvas id="stockChart"></canvas>
+</div>
+
+<!-- Biểu đồ Tồn Kho Thấp -->
+<div class="chart-container" id="lowStockContainer">
+    <h2>Tồn Kho Thấp</h2>
+    <canvas id="lowStockChart"></canvas>
+</div>
+
+<button id="savePdfBtn">Lưu Biểu Đồ Dưới Dạng PDF</button>
+
+<script>
+    // Hàm tạo biểu đồ với dữ liệu từ localStorage
+    function createChart(canvasId, labels, data, label) {
+        const ctx = document.getElementById(canvasId).getContext('2d');
+        return new Chart(ctx, {
+            type: 'bar',
+            data: {
+                labels: labels,
+                datasets: [{
+                    label: label,
+                    data: data,
+                    backgroundColor: 'rgba(75, 192, 192, 0.2)',
+                    borderColor: 'rgba(75, 192, 192, 1)',
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                responsive: true,
+                scales: {
+                    y: {
+                        beginAtZero: true
+                    }
+                }
+            }
+        });
+    }
+
+    // Lấy dữ liệu từ localStorage và tạo biểu đồ
+    const comicNamesSales = JSON.parse(localStorage.getItem("comicNames_sales"));
+    const salesDataSales = JSON.parse(localStorage.getItem("salesData_sales"));
+    createChart("totalSalesChart", comicNamesSales, salesDataSales, 'Tổng Lượt Bán');
+
+    const comicNamesLowSales = JSON.parse(localStorage.getItem("comicNames_lowSales"));
+    const salesDataLowSales = JSON.parse(localStorage.getItem("salesData_lowSales"));
+    createChart("lowSalesChart", comicNamesLowSales, salesDataLowSales, 'Bán Chậm');
+
+    const comicNamesStock = JSON.parse(localStorage.getItem("comicNames_stock"));
+    const stockData = JSON.parse(localStorage.getItem("salesData_stock"));
+    createChart("stockChart", comicNamesStock, stockData, 'Tồn Kho');
+
+    const comicNamesLowStock = JSON.parse(localStorage.getItem("comicNames_lowStock"));
+    const lowStockData = JSON.parse(localStorage.getItem("salesData_lowStock"));
+    createChart("lowStockChart", comicNamesLowStock, lowStockData, 'Tồn Kho Thấp');
+
+    // Hiển thị biểu đồ theo lựa chọn
+    document.getElementById("chartSelect").addEventListener("change", function() {
+        const selectedChart = this.value;
+
+        // Ẩn tất cả các biểu đồ
+        document.querySelectorAll(".chart-container").forEach(container => {
+            container.style.display = "none";
+        });
+
+        // Hiển thị biểu đồ đã chọn
+        if (selectedChart !== "none") {
+            document.getElementById(selectedChart).style.display = "block";
+        }
+    });
+
+    // Lưu biểu đồ đã chọn dưới dạng PDF
+    document.getElementById("savePdfBtn").addEventListener("click", function() {
+        const { jsPDF } = window.jspdf;
+        const pdf = new jsPDF("landscape");
+
+        // Lấy biểu đồ hiện tại đang hiển thị từ lựa chọn
+        const selectedChart = document.getElementById("chartSelect").value;
+        if (selectedChart === "none") {
+            alert("Vui lòng chọn một biểu đồ để lưu.");
+            return;
+        }
+
+        const chartElement = document.querySelector(`#${selectedChart} canvas`);
+        if (chartElement) {
+            html2canvas(chartElement).then(canvas => {
+                const imgData = canvas.toDataURL("image/png");
+                const imgWidth = 260;
+                const imgHeight = (canvas.height * imgWidth) / canvas.width;
+
+                pdf.addImage(imgData, 'PNG', 15, 15, imgWidth, imgHeight);
+                pdf.save("chart.pdf");
+            });
+        } else {
+            alert("Không tìm thấy biểu đồ để lưu.");
+        }
+    });
+
+    document.getElementById("backtoreport").addEventListener("click", function() {
+            window.location.href = "main-page-admin.html#report-content";
+    });
+
+</script>
+
+</body>
+</html>
+

@@ -1,11 +1,8 @@
 package com.example.demo.model;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
+
+import java.util.List;
 
 @Entity
 @Table(name = "order_items")
@@ -25,7 +22,21 @@ public class ComicSale {
     private int quantity;
     private int price;
 
+
+    @Transient  // Không phải là cột trong bảng, lấy từ bảng Author
+//    private String author;  // Tên tác giả lấy từ bảng Author thông qua bảng comic_author
+    private List<String> authors;
     // Getters and Setters
+
+
+    public List<String> getAuthors() {
+        return authors;
+    }
+
+    public void setAuthors(List<String> authors) {
+        this.authors = authors;
+    }
+
     /**
      * @return Long return the id
      */

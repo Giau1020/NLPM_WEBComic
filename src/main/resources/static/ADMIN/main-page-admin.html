@@ -244,6 +244,7 @@
                 
                 <p class="select-all-comic" style="display: none;">Chọn tất cả <input type="checkbox" name="checkbox-delete-comic" id="checkbox-delete-comic">
                 </p>
+                <img src="../images/img1_BangTranh.png" alt="">
                 <button class="btn-delete-comic" style="display: none;" onclick="deleteComic()">Xóa</button>
                 <button class="btn-close-delete-mode" >&times;</button>
 
@@ -533,15 +534,35 @@
 
 
 <!-- báo cáo thống kê-->
-<div class="report-content" style="display: none;">
+
+
+<div class="report-content" id="report-content" style="display: none;">
     <div class="products-tool">
-        <button class="report-comic" id="report-comic">Truyện bán chạy nhất</button>
-        <button class="report-quantity" id="report-quantity">Quản lý tồn kho</button>
-        <button class="report-cart" id="report-cart">Truyện có nhiều trong giỏ hàng</button>
-        <button class="report-excel" id="report-excel">Xuất file Excel</button>
+        <button class="report-comic" id="report-comic">Bán Chạy Nhất</button>
+        <button class="report-low-comic" id="report-low-comic">Bán Chậm Nhất</button>
+        <button class="report-quantity" id="report-quantity">Tồn Kho</button>
+        <button class="low-stock-quantity" id="low-stock-quantity">Hàng Tồn Kho Thấp</button>
+        <button class="report-cart" id="report-cart">Giỏ Hàng</button>
+        <button class="proceeds-cart" id="proceeds-cart">Thống kê</button>
+<!--        <button class="report-excel" id="report-excel" onclick="window.location.href='chart.html'">PDF</button>-->
+        <!-- Dropdown for PDF -->
+<!--        <div class="dropdown">-->
+<!--            <button class="report-excel" id="report-excel">PDF</button>-->
+<!--            <div class="dropdown-content">-->
+<!--                <button id="showChartBtn">Bán chạy</button>-->
+<!--                <button id="showChartlowcomicBtn">Bán chậm</button>-->
+<!--                <button id="showChartsoldtableBtn">tồn kho</button>-->
+<!--                <button id="showChartlowstockBtn">Hàng tồn kho thấp</button>-->
+<!--                <button id="pdf-option-5">Giỏ hàng</button>-->
+<!--                <button id="pdf-option-6">Doanh Thu</button>-->
+
+<!--            </div>-->
+<!--        </div>-->
     </div>
 
+
     <!-- Bảng truyện bán chạy nhất -->
+
     <div class="table table-comic" id="table-comic">
         <table>
             <thead>
@@ -557,7 +578,27 @@
                 <!-- Nội dung sẽ được thêm vào đây -->
             </tbody>
         </table>
+        <canvas id="salesChart" width="400" height="200" style="display: none;"></canvas>
     </div>
+
+    <!-- Bảng truyện bán chậm nhất -->
+    <div class="table table-low-comic" id="table-low-comic">
+        <table>
+            <thead>
+            <tr>
+                <th>ID Truyện</th>
+                <th>Tên Truyện</th>
+                <th>Tên Tác Giả</th>
+                <th>Nhà Xuất Bản</th>
+                <th>Số Lượt Bán</th>
+            </tr>
+            </thead>
+            <tbody id="report-low-table">
+            <!-- Nội dung sẽ được thêm vào đây -->
+            </tbody>
+        </table>
+    </div>
+
 
     <!-- Bảng quản lý tồn kho -->
     <div class="table table-sold" id="table-sold">
@@ -577,6 +618,24 @@
         </table>
     </div>
     <!--div tồn kho-->
+    <!-- Bảng low stock -->
+    <div class="table table-low-stock" id="table-low-stock">
+        <table>
+            <thead>
+            <tr>
+                <th>ID Truyện</th>
+                <th>Tên Truyện</th>
+                <th>Tên Tác Giả</th>
+                <th>Nhà Xuất Bản</th>
+                <th>SL tồn kho</th>
+            </tr>
+            </thead>
+            <tbody id="report-lowstock-table">
+            <!-- Nội dung sẽ được thêm vào đây -->
+            </tbody>
+        </table>
+    </div>
+    <!--div low stock-->
 
     <!--div truyện nhiều trong giỏ hàng-->
     <div class="table table-cart" id="table-cart">
@@ -596,6 +655,15 @@
         </table>
     </div>
     <!--div truyện trong giỏ hàng-->
+    <!--Doanh Thu-->
+    <div class="revenueStatisticsContainer" id="mainContainer">
+        <h2>Thống Kê</h2>
+        <button id="showMonthlyForm" onclick="window.location.href='revenueReport.html'">Thống kê Doanh Thu</button>
+        <button id="showQuarterlyForm" onclick="window.location.href='productrevenue.html'">Thống kê sản phẩm</button>
+    </div>
+
+    <!--Doanh Thu-->
+
 </div>
  <!--báo cáoo thống kê-->
 
@@ -621,9 +689,14 @@
     <script src="./script/script-for-order-manage.js"></script>
     <script src="./complaint-section.js"></script>
     <script src="./report.js"></script>
+<!--    <script src="./revenue.js"></script>-->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.17.0/xlsx.full.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/exceljs@4.2.0/dist/exceljs.min.js"></script>
-    <script src="./script/script-for-detail-section.js"></script>
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+ <script src="./script/script-for-detail-section.js"></script>
+
+   
    <script>
        function closeModalComplaint() {
     const modal = document.getElementById('complaint-modal');
