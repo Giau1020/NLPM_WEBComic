@@ -155,6 +155,89 @@ form button:hover {
     margin-top: 20px;
 }
 
+        /* Phần chứa ô nhập năm và nút tải báo cáo */
+.stat-item {
+    background-color: #eaf3f3;  /* Màu nền cho phần stat-item */
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);  /* Tạo bóng đổ cho phần tử */
+    margin-bottom: 10px;
+    flex: 1;
+    margin-right: 10px;
+    text-align: center;
+}
+
+/* Thẻ label cho ô nhập năm */
+.stat-item label {
+    display: block;
+    font-size: 18px;
+    color: #333;
+    margin-bottom: 8px;
+}
+
+/* Phần ô input cho năm */
+.stat-item input[type="number"] {
+    width: 50%;
+    padding: 10px;
+    font-size: 16px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    margin-bottom: 20px;  /* Khoảng cách giữa input và nút */
+    box-sizing: border-box; /* Bao gồm padding và border trong kích thước tổng thể */
+    transition: border-color 0.3s ease;
+}
+
+/* Tạo hiệu ứng khi focus vào ô input */
+.stat-item input[type="number"]:focus {
+    border-color: #f44336;
+    outline: none;
+}
+
+/* Nút tải báo cáo */
+.stat-item button {
+    background-color: #fff;
+    border: 1px solid #f44336;
+    color: black;
+    padding: 10px 30px;
+    text-align: center;
+    font-size: 16px;
+    cursor: pointer;
+    border-radius: 4px;
+    transition: background-color 0.3s ease;
+}
+
+/* Hiệu ứng khi di chuột vào nút */
+.stat-item button:hover {
+    background-color: #f44336;
+    color: white;
+}
+/* Định dạng cho thẻ <a> với class btn-nav */
+.btn-nav {
+    display: inline-block; /* Hiển thị nút như một phần tử inline-block */
+    padding: 12px 24px; /* Khoảng cách bên trong nút */
+    background-color: #f44336; /* Màu nền đỏ */
+    color: white; /* Màu chữ trắng */
+    text-decoration: none; /* Loại bỏ gạch chân mặc định */
+    font-size: 16px; /* Kích thước chữ */
+    border-radius: 4px; /* Bo góc cho nút */
+    text-align: center; /* Căn giữa văn bản */
+    cursor: pointer; /* Hiển thị con trỏ chuột khi di chuột vào */
+    transition: background-color 0.3s ease, transform 0.3s ease; /* Hiệu ứng khi di chuột vào */
+    margin-bottom:20px;
+}
+
+/* Hiệu ứng khi di chuột vào nút */
+.btn-nav:hover {
+    background-color: #d32f2f; /* Thay đổi màu nền khi hover */
+    transform: translateY(-3px); /* Tạo hiệu ứng nhấc lên khi hover */
+}
+
+/* Tạo hiệu ứng khi nhấn nút */
+.btn-nav:active {
+    transform: translateY(2px); /* Giảm hiệu ứng nhấc lên khi nhấn */
+}
+
+
     </style>
 </head>
 <body>
@@ -175,8 +258,10 @@ form button:hover {
             <p id="totalComicsSold">0</p>
         </div>
         <div class="stat-item">
-            <h3>Khách Hàng Mua Nhiều Nhất</h3>
-            <p id="topCustomer">Chưa có dữ liệu</p>
+            <!-- Input field for year selection -->
+            <label for="yearInput">Nhập năm để tải báo cáo:</label>
+            <input type="number" id="yearInput" placeholder="Nhập năm">
+            <button onclick="downloadReport()">Tải Báo Cáo PDF</button>
         </div>
     </div>
 
@@ -203,6 +288,9 @@ form button:hover {
                 <option value="yearly-quarters">Thống kê tất cả các quý trong năm</option>
                 <option value="contribute">Đóng góp của sản phẩm vào doanh thu</option>
             </select>
+
+
+
 
             <!-- Monthly Revenue Form -->
             <div id="monthlyForm" style="display: none;">
@@ -343,6 +431,7 @@ function formatCurrency(amount) {
                 }
        } else if (selectedValue === 'contribute') {
             fetchRevenueContribution(); // Fetch contribution data when selected
+            document.getElementById('resultContainer').style.display = 'none';
             const h2Element = document.querySelector('.right-side h2');  // Lấy thẻ <h2> đầu tiên
                 if (h2Element) {
                     h2Element.textContent = 'Đóng góp doanh thu của sản phẩm';
@@ -682,6 +771,86 @@ fetchDashboardData();
     function goBack() {
     window.history.back();
 }
+// tải file pdf
+// async function downloadReport() {
+//      const yearInput = document.getElementById('yearInput').value;
+
+//     // Gửi yêu cầu GET đến API để tải file PDF
+//     fetch(`http://localhost:8080/api/reports/admin/export-revenue-pdf?year=${yearInput}`)
+//         .then(response => {
+//             if (!response.ok) {
+//                 alert("!!!!");
+//                 return;
+//                // throw new Error('Không thể tải báo cáo');
+//             }
+//             else {
+//                 const link = document.createElement('a');
+//                 link.href = URL.createObjectURL(blob);
+//                 link.download = 'revenue_report.pdf';  // Tên file khi tải xuống
+//                 link.click();  // Tự động nhấn vào link để tải xuống
+//             }
+//           //  return response.blob();  // Lấy dữ liệu dưới dạng blob (file)
+//         })
+        
+//         .catch(error => {
+//             console.error('Lỗi khi tải báo cáo:', error);
+//          //   alert('Có lỗi xảy ra khi tải báo cáo.');
+//         });
+   
+// }
+async function downloadReport() {
+    const yearInput = document.getElementById('yearInput').value;
+
+    // Gửi yêu cầu GET đến API để tải file PDF
+    fetch(`http://localhost:8080/api/reports/admin/export-revenue-pdf?year=${yearInput}`)
+        .then(response => {
+            if (!response.ok) {
+                if (response.status === 400) {
+                    // Nếu mã lỗi là 400 (Bad Request), xử lý thông báo lỗi với text
+                    response.text().then(message => {
+                        alert("Lỗi: " + message); // Hiển thị thông báo cho người dùng
+                    });
+                } else {
+                    // Xử lý các mã lỗi khác (ví dụ: 500)
+                    alert("Có lỗi xảy ra khi tải báo cáo!!!!");
+                }
+                return;
+            }
+
+            // Kiểm tra phản hồi xem có phải là văn bản (có thể là thông báo lỗi)
+            response.text().then(message => {
+                if (message === "No data available for the given year.") {
+                    alert("Không có dữ liệu cho năm đã chọn.");
+                    return; // Dừng lại, không tải file PDF
+                }
+
+                // Nếu phản hồi không phải là thông báo văn bản, tiếp tục xử lý như file PDF
+                // Đảm bảo rằng không có lỗi và có dữ liệu hợp lệ
+                fetch(`http://localhost:8080/api/reports/admin/export-revenue-pdf?year=${yearInput}`)
+                    .then(response => response.blob())
+                    .then(blob => {
+                        const link = document.createElement('a');
+                        link.href = URL.createObjectURL(blob);
+                        link.download = 'revenue_report.pdf';  // Tên file khi tải xuống
+                        link.click();  // Tự động nhấn vào link để tải xuống
+                    })
+                    .catch(error => {
+                        console.error("Lỗi khi tải file PDF: ", error);
+                        alert("Có lỗi xảy ra khi xử lý file PDF.");
+                    });
+            }).catch(textError => {
+                // Lỗi khi đọc văn bản (thông báo lỗi chẳng hạn)
+                console.error("Lỗi khi đọc text: ", textError);
+                alert("Có lỗi xảy ra khi đọc dữ liệu phản hồi.");
+            });
+        })
+        .catch(error => {
+            // Xử lý lỗi trong trường hợp không thể gửi yêu cầu fetch
+            console.error('Lỗi khi tải báo cáo:', error);
+            alert('Có lỗi xảy ra khi tải báo cáo.');
+        });
+}
+
 
 
 </script>

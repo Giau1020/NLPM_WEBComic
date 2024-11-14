@@ -1,5 +1,6 @@
 package com.example.demo.repository;
 
+import com.example.demo.DTO.SalesStatisticsDTO;
 import com.example.demo.model.OrderItem;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
@@ -18,6 +19,20 @@ public interface SalesDetailRepository extends JpaRepository<OrderItem, Long> {
             "GROUP BY oi.comic.id, oi.comic.name " +
             "ORDER BY totalRevenue DESC")
     List<Object[]> getSalesStatistics();
+
+    @Query("SELECT YEAR(o.orderTime) AS orderYear, oi.comic.id, oi.comic.name, SUM(oi.quantity) AS totalQuantity, CAST(SUM(oi.quantity * oi.price) AS DOUBLE) AS totalRevenue " +
+            "FROM OrderItem oi JOIN oi.comic c JOIN oi.order o " +
+            "WHERE YEAR(o.orderTime) = :year " +
+            "GROUP BY YEAR(o.orderTime), oi.comic.id, oi.comic.name " +
+            "ORDER BY totalRevenue DESC")
+    List<Object[]> getSalesStatisticsByYear(int year);
+
+
+
+
+
+
+
 
 
     // Truy vấn doanh thu theo khoảng thời gian
@@ -51,5 +66,7 @@ public interface SalesDetailRepository extends JpaRepository<OrderItem, Long> {
             "GROUP BY oi.comic.id, oi.comic.name, quarter " +
             "ORDER BY quarter ASC")
     List<Object[]> getQuarterlySalesStatistics(@Param("comicId") Long comicId, @Param("year") int year);
+
+
 
 }

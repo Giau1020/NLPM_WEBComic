@@ -123,6 +123,23 @@ public class ReportService {
 
         return monthlyQuantity;
     }
+    // Phương thức lấy tổng doanh thu trong năm
+    public double getTotalRevenue(int year) {
+        Double totalRevenue = orderRepository.calculateTotalRevenueByYear(year);
+        return totalRevenue != null ? totalRevenue : 0.0;
+    }
+
+    // Phương thức lấy tổng số đơn hàng trong năm
+    public int getTotalOrders(int year) {
+        Integer totalOrders = orderRepository.countTotalOrdersByYear(year);
+        return totalOrders != null ? totalOrders : 0;
+    }
+
+    // Phương thức lấy tổng số lượng truyện đã bán trong năm
+    public int getTotalComicsSold(int year) {
+        Integer totalComicsSold = orderRepository.calculateTotalComicsSoldByYear(year);
+        return totalComicsSold != null ? totalComicsSold : 0;
+    }
 // Phương thức lấy doanh thu theo tháng (theo ngày trong tháng)
 //public ReportService(OrderRepository orderRepository) {
 //    this.orderRepository = orderRepository;

@@ -20,6 +20,14 @@ public interface OrderRepository extends JpaRepository<Order, Long> {
     Optional<Order> findByIdAndUserId(Long orderId, Long userId);
 
     Optional<Order> findById(long id);
+    @Query("SELECT SUM(o.totalPrice) FROM Order o WHERE YEAR(o.orderTime) = :year")
+    Double calculateTotalRevenueByYear(int year);
+
+    @Query("SELECT COUNT(o) FROM Order o WHERE YEAR(o.orderTime) = :year")
+    Integer countTotalOrdersByYear(int year);
+
+    @Query("SELECT SUM(oi.quantity) FROM OrderItem oi JOIN oi.order o WHERE YEAR(o.orderTime) = :year")
+    Integer calculateTotalComicsSoldByYear(int year);
 
     // Truy vấn các đơn hàng đã thanh toán trong một khoảng thời gian nhất định
     @Query("SELECT o FROM Order o WHERE o.orderTime >= :startDate AND o.orderTime <= :endDate AND o.orderStatus = 'Paid'")

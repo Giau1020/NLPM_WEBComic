@@ -10,6 +10,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
 
     <style>
+
         body {
             font-family: Arial, sans-serif;
             background-color: #f5f5f5;
@@ -142,6 +143,20 @@
     height: 300px;
 }
 
+ #generate-month-chart-btn,#generate-quarter-chart-btn, #generate-chart-btn
+ ,#generate-quarterly-chart-btn{
+    background-color: #007BFF; /* Màu nền xanh */
+    color: white; /* Màu chữ trắng */
+    border: none; /* Không viền */
+    padding: 12px 25px; /* Khoảng cách bên trong nút */
+    font-size: 16px; /* Kích thước chữ */
+    border-radius: 5px; /* Bo tròn góc */
+    cursor: pointer; /* Hiển thị con trỏ chuột khi di chuột vào */
+    transition: background-color 0.3s; /* Hiệu ứng chuyển màu nền khi hover */
+}
+
+
+
     </style>
 
 </head>
@@ -184,7 +199,6 @@
 
             <!-- Quay lại bảng -->
             <button class="back-button" onclick="goBack()">Quay lại danh sách truyện</button>
-            <button class="back-button" onclick="generatePDF()">Xuất Báo Cáo</button>
         </div>
 
         <!-- Chọn thống kê theo tháng, quý, năm -->
