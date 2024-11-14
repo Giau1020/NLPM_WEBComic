@@ -7,12 +7,22 @@
   <link rel="stylesheet" href="css/styles.css">
   <title>Document</title>
   <style>
+    .main {
+        display: flex;
+        /* justify-content: center; /* Căn giữa theo chiều ngang */
+        align-items: center;
+        flex-direction: column;
+        flex-grow: 1; /* Chiếm không gian còn lại của trang */
+        /* Căn giữa văn bản trong các phần tử */
+      }
     .CTSP {
       height: 600px;
       width: 1200px;
       background-color: #f0efef;
       display: flex;
       margin-top: 20px;
+      margin-left: auto;
+      margin-right: auto; /* Hoặc margin: 0 auto; để căn giữa */
     }
 
     .CTSP1 {
@@ -169,6 +179,7 @@
       justify-content: space-between;
       gap: 10px;
       padding: 10px;
+      justify-content: flex-start;
     }
 
     /* Thiết lập kích thước đồng nhất cho các sản phẩm */
@@ -273,6 +284,7 @@
       height: 100%;
       background-color: rgba(0, 0, 0, 0.5);
       /* Hiệu ứng mờ */
+     
     }
 
     #openModal,
@@ -297,6 +309,7 @@
       /* Canh trái nội dung */
       border-radius: 10px;
       /* Bo góc modal */
+      
     }
 
     /* Nút để đóng modal */
@@ -355,9 +368,9 @@
       /* Điều chỉnh khoảng cách của modal từ phía trên */
       padding: 20px;
       border: 1px solid #888;
-      width: 50%;
+      width: 70%;
       /* Tăng chiều rộng của modal lên 70% thay vì 40% */
-      max-width: 1000px;
+      max-width: 500px;
       /* Giới hạn chiều rộng tối đa */
       text-align: center;
       border-radius: 10px;
@@ -366,7 +379,7 @@
 
     .modal1 img {
       width: 100%;
-      max-height: 400px;
+      height: auto;
       /* Tăng chiều cao tối đa của hình ảnh */
       object-fit: contain;
       display: block;
@@ -484,14 +497,11 @@
 
 
     .review-summary {
-
       display: flex;
       justify-content: space-between;
       align-items: center;
       padding: 20px;
-
       border-bottom: 1px solid rgb(212, 203, 203);
-
       width: 1200px;
     }
 
@@ -553,6 +563,332 @@
       width: 50px;
       text-align: right;
     }
+   #b1,#b2{
+    display: none;
+   }
+   #publisher2,#tloai2,#tg2,#kt2,#tl2,#st2{
+    margin-left: 10px;
+   }
+    @media (max-width: 1224px) {
+    .MTSP{
+      width: 90% !important;
+    }
+   
+   .CTSP{
+    width: 90% !important;
+   }
+   .CTSP1{
+    width: 40% !important;
+   }
+   .CTSP2{
+    width: 60% !important;
+   }
+   .CTSP2-top,.CTSP2-bottom{
+    width: 100% !important;
+   }
+   .button{
+    width: 80%;
+   }
+   .Name{
+    width: 100% ;
+    display: flex ;
+    flex-direction: column ;
+    align-items: center ; 
+    justify-content: center ; 
+    text-align: center ; 
+   }
+   .p3{
+    width: 90%;
+   
+   }
+   .review-section{
+    width: 90%;
+   }
+   .review-summary{
+    width: 100% !important;
+   }
+}
+@media (max-width: 1024px) {
+  .MTSP{
+      width: 100% !important;
+    }
+   
+   .CTSP{
+    width: 100% !important;
+   }
+   .CTSP1{
+    width: 40% !important;
+   }
+   .CTSP2{
+    width: 60% !important;
+   }
+   .CTSP2-top,.CTSP2-bottom{
+    width: 100% !important;
+   }
+   .button{
+    width: 80%;
+
+   }
+   .btn-rounded{
+    font-size: 12px;
+   }
+ 
+   .Name{
+    width: 95% ;
+    display: flex ;
+    flex-direction: column ;
+    align-items: center ; 
+    justify-content: center ; 
+    text-align: center ;
+    height: auto; 
+  
+   }
+   #Name1{
+    width: 90% !important;
+    word-wrap: break-word;
+    overflow-wrap: break-word; 
+   }
+   .p3{
+    width: 100%;
+    
+   }
+   .review-section{
+    width: 100%;
+   }
+
+   .i4-comic {
+        flex: 0 1 calc(25% - 10px) !important; 
+        width: 100% !important;
+        margin-bottom: 10px;
+        height: auto;
+    }
+}
+@media (max-width: 768px) {
+  .i4-comic {
+        flex: 0 1 calc(33.3% - 10px) !important; 
+        width: 100% !important;
+        margin-bottom: 10px;
+        height: auto;
+    }
+  .MTSP{
+    margin-top: 5px !important;
+      width: 100% !important;
+      border-radius: 0px;
+    }
+    #t1{
+      display: none;
+    }
+    #t2{
+      display: none;
+    }
+    .CTSP {
+      width: 100% !important; 
+      margin-top: 5px !important;
+      display: block; 
+      border-radius: 0px;
+  }
+
+  .CTSP1 {
+      width: 100% !important;
+      margin-top: 0px !important;
+      border-radius: 0px;
+      margin-bottom: 0px !important;
+  }
+  .CTSP2,.CTSP2-top{
+    width: 100% !important;
+    margin-left: 0px !important;
+    margin-top: 2px !important;
+    margin-bottom: 0px !important;
+      border-radius: 0px;
+  }
+  #b1{
+    display: block;
+   
+   margin-bottom: 0px !important;
+  }
+  #b2{
+    display: block;
+    margin-top: 5px !important;
+   border-radius: 0px;
+  }
+  .button{
+    width: 100%;
+   
+    margin-left: 0px !important;
+    display: flex;
+    justify-content: center;
+   }
+   .review-summary{
+    width: 100%;
+   
+   }
+   .average-rating{
+    width: 25% !important;
+    
+    margin-right: 2%;
+    margin-left: -2%;
+   }
+   .ratings-breakdown{
+    width: 75%;
+  
+   }
+   .rating-item{
+    width: 100% !important;
+    
+    font-size: 15px !important;
+   }
+   .rating-bar{
+    width: 60%;
+   }
+  
+   .tt{
+    font-size: 18px;
+   }
+   #openModal,#previewButton{
+    font-size: 15px !important;
+   }
+   .chinhsach{
+      padding-left: 0px;
+      margin-left: 10px;
+    }
+    #mt,.tt,#openModal,#previewButton,.cs2{
+    font-size: 18px !important;
+  }
+  #Name1{
+    font-size: 21px !important;
+  }
+   #dgsp,#sptt1, #mtsp,#ttct2{
+    font-size: 22px;
+   }
+   .review-section-title,.title{
+    height: 50px;
+    border-radius: 0px !important;
+   }
+   .review-section{
+    margin-top: 5px !important;
+    border-radius: 0px !important;
+   }
+   .p3{
+    margin-top: 5px !important;
+    border-radius: 0px !important;
+   }
+   #myModal{
+    width: 100% !important;
+    height: 100% !important;
+   }
+   .modal-content {
+  width: 100%;       
+  max-width: none;   
+  margin: 0;         
+  border-radius: 0;  
+  overflow-y: auto;
+}
+ 
+   #modalBody{
+    height: 100% !important;
+    width: 100% !important;
+   }
+   .modal-content {
+    font-size: 14px; /* Adjust font size as needed */
+  }
+
+  .modal-description {
+    font-size: 18px; /* Smaller font size for modal content */
+  }
+
+  
+}
+
+
+@media (max-width: 450px) {
+  .i4-comic {
+        flex: 0 1 calc(50% - 10px) !important; /* Đảm bảo chỉ hiển thị 2 sản phẩm trên một hàng */
+        width: 100% !important;
+        margin-bottom: 10px;
+        height: auto;
+    }
+    
+    #img-id{
+      width: 120px !important;
+      height: 180px !important;
+      margin-top: 80px !important;
+      margin-bottom: 35px !important;
+    }
+    .CTSP2-bottom{
+      height: auto;
+      
+    }
+    
+    .chinhsach{
+      padding-left: 0px;
+      margin-left: 10px;
+    }
+    
+    #mt,.tt,#openModal,#previewButton,.cs2{
+    font-size: 16px !important;
+  }
+  #Name1{
+    font-size: 19px !important;
+  }
+   #dgsp,#sptt1, #mtsp,#ttct2{
+    font-size: 21px;
+   }
+   .review-section-title,.title{
+    height: 45px;
+   }
+   .button{
+    width: 100%;
+   height: auto;
+    margin-left: 0px !important;
+    display: flex;
+    justify-content: center;
+    font-size: 10px !important;
+   }
+   #addToCartButton{
+    width: 30%;
+    height: 50px !important;
+   }
+   #buyNowButton{
+    width: 30%;
+   }
+   #img4{
+    width: 100px !important;
+    height: 150px !important;
+   }
+}
+
+
+@media (max-width: 355px) {
+  
+    .CTSP2-bottom{
+      height: auto;
+      
+    }
+    .chinhsach{
+      padding-left: 0px;
+      margin-left: 10px;
+    }
+    #mt,.tt,#openModal,#previewButton,.cs2{
+    font-size: 14px !important;
+  }
+  #Name1{
+    font-size: 18px !important;
+  }
+   #dgsp,#sptt1, #mtsp,#ttct2{
+    font-size: 20px;
+   }
+   .review-section-title,.title{
+    height: 40px;
+   }
+   #addToCartButton{
+    width: 35%;
+    height: 50px !important;
+   }
+   #buyNowButton{
+    width: 35%;
+   }
+   
+}
   </style>
 </head>
 
@@ -560,11 +896,11 @@
   <div class="container">
     <div id="header"></div>
     <main class="main">
-      <div class="CTSP">
+      <div class="CTSP">  
         <div class="CTSP1">
           <img class="image" src="" alt="" id="img-id">
           <div class="Name">
-            <div style=" font-size: 20px; width: 350px;" id="Name1"></div>
+            <div style=" font-size: 20px; width: 350px;" id="Name1">ccccc ccccccccccc ccccccccc ccccccccccc cccccccccccc cccccccccccc ccccccccccc ccccc</div>
             <div style="color: red; font-size: 20px; font-weight: bold  ; margin-top: 10px;" id="Price"></div>
           </div>
           <div class="button">
@@ -583,8 +919,8 @@
           </a>
         </div>
         <div class="CTSP2" style="margin-left: 20px; ">
-          <div class="CTSP2-top ">
-            <div style=" font-size: 30px; padding-top: 25px; padding-left: 15px;"><b>Thông tin chi tiết: </b></div>
+          <div class="CTSP2-top " id="t1">
+            <div style=" font-size: 30px; padding-top: 25px; padding-left: 15px;"  ><b id="ttct1">Thông tin chi tiết: </b></div>
             <div class="tt">
               <div>Nhà xuất bản:</div>
               <div id="publisher"></div>
@@ -610,9 +946,9 @@
               <div id="st"></div>
             </div>
           </div>
-          <div class="CTSP2-bottom">
-            <div style=" font-size: 22px; padding-top:15px; padding-left: 15px;">
-              <b>Chính sách ưu đãi của SNG Comics </b>
+          <div class="CTSP2-bottom" id="t2">
+            <div style=" font-size: 22px; padding-top:15px; padding-left: 15px;" id="ttcs">
+              <b id="zz">Chính sách ưu đãi của SNG Comics </b>
             </div>
             <a href="CSGiaoHang.html">
               <div class="chinhsach">
@@ -640,13 +976,71 @@
           </div>
         </div>
       </div>
+      <div class="CTSP2" style="margin-left: 20px; " >
+        <div class="CTSP2-top " id="b1" >
+          <div style=" font-size: 30px; padding-top: 25px; padding-left: 15px;"><b id="ttct2">Thông tin chi tiết: </b></div>
+          <div class="tt">
+            <div>Nhà xuất bản:</div>
+            <div id="publisher2"></div> 
+          </div>
+          <div class="tt">
+            <div>Thể loại:</div>
+            <div id="tloai2"></div>
+          </div>
+          <div class="tt">
+            <div>Tác giả:</div>
+            <div id="tg2"></div>
+          </div>
+          <div class="tt">
+            <div>Kích thước:</div>
+            <div id="kt2"></div>
+          </div>
+          <div class="tt">
+            <div>Trọng lượng:</div>
+            <div id="tl2"></div>
+          </div>
+          <div class="tt">
+            <div>Số trang:</div>
+            <div id="st2"></div>
+          </div>
+        </div>
+        <div class="CTSP2-bottom" id="b2">
+          <div style=" font-size: 20px; padding-top:15px; padding-left: 15px;">
+            <b>Chính sách ưu đãi của SNG Comics </b>
+          </div>
+          <a href="CSGiaoHang.html">
+            <div class="chinhsach" >
+              <img src="images/car.png" alt="" >
+              <div style="margin-left: 2px; font-size: 14px;"class="cs2" >
+                <b>Thời gian giao hàng:</b> Giao nhanh và uy tín
+              </div>
+            </div>
+          </a>
+          <a href="CSHoanTra.html">
+            <div class="chinhsach">
+              <img src="images/hoantra.png" alt="">
+              <div style="margin-left: 2px; font-size: 14px;" class="cs2">
+                <b>Chính sách đổi trả:</b> Đổi trả miễn phí toàn quốc
+              </div>
+            </div>
+          </a>
+          <a href="CSKhachSi.html">
+            <div class="chinhsach" >
+              <img src="images/khachsi.png" alt="">
+              <div style="margin-left: 4px; font-size: 14px;" class="cs2"> <b>Chính sách khách sỉ:</b> Ưu đãi khi mua số lượng lớn</div>
+            </div>
+          </a>
+
+        </div>
+      </div>
       <div class="MTSP">
-        <div style=" font-size: 22px; padding-top:15px; padding-left: 15px;"><b>Mô tả sản phẩm</b></div>
+   
+        <div style=" font-size: 22px; padding-top:15px; padding-left: 15px;" id="mtsp"><b>Mô tả sản phẩm</b></div>
         <div id="mt" style="font-size: 19px; padding-left: 15px; padding-bottom: 20px; padding-top: 20px;"></div>
       </div>
       <div class="p3">
         <div class="title">
-          <div class="title1">Sản phẩm tương tự</div>
+          <div class="title1" id="sptt1">Sản phẩm tương tự</div>
         </div>
         <div class="row" id="sptt"></div>
       </div>
@@ -674,13 +1068,14 @@
 
       <!-- Existing Review Section -->
       <div class="review-section">
-        <div class="review-section-title">Đánh giá sản phẩm</div>
+        <div class="review-section-title" id="dgsp">Đánh giá sản phẩm</div>
         <div class="review-summary">
           <div class="average-rating">
             <span class="average-score">0.0</span>
             <div class="stars-average"></div>
             <span class="total-reviews">(0 đánh giá)</span>
           </div>
+          
           <div class="ratings-breakdown">
             <div class="rating-item" data-rating="5">
               <span>5 sao</span>
@@ -745,18 +1140,14 @@
           document.getElementById('Price').innerText = formatPrice(data.price) + ' VND' || 'Không có sẵn';
           document.getElementById('publisher').innerText = data.publisher;
 
-          // Hiển thị danh sách tác giả (Authors)
-          const authorsList = data.authors.map(author => author.name).join(', ');
-          document.getElementById('tg').innerText = authorsList || 'Tác giả không có sẵn';
-
-          // Hiển thị danh sách thể loại (Genres)
-          const genresList = data.genres.map(genre => genre.name).join(', ');
-          document.getElementById('tloai').innerText = genresList || 'Thể loại không có sẵn';
-
-          document.getElementById('tl').innerText = data.weight;
-          document.getElementById('mt').innerText = data.description || 'Mô tả không có sẵn';
-          document.getElementById('st').innerText = data.pages;
-          document.getElementById('kt').innerText = data.size;
+          // Cập nhật cho tất cả phần tử 'publisher', 'tloai', 'tg', 'kt', 'tl', 'st'
+      document.querySelectorAll('#publisher, #publisher2').forEach(el => el.innerText = data.publisher);
+      document.querySelectorAll('#tloai, #tloai2').forEach(el => el.innerText = data.genres.map(genre => genre.name).join(', '));
+      document.querySelectorAll('#tg, #tg2').forEach(el => el.innerText = data.authors.map(author => author.name).join(', '));
+      document.querySelectorAll('#kt, #kt2').forEach(el => el.innerText = data.size);
+      document.querySelectorAll('#tl, #tl2').forEach(el => el.innerText = data.weight);
+      document.querySelectorAll('#st, #st2').forEach(el => el.innerText = data.pages);
+      document.getElementById('mt').innerText = data.description || 'Mô tả không có sẵn';
         })
         .catch(error => {
           console.error("Lỗi khi lấy chi tiết truyện:", error);
@@ -772,7 +1163,7 @@
       const stockStatus = comic.quantity === 0 ? '<span style="color:blue; ">(HẾT HÀNG)</span>' : ''
       comicDiv.innerHTML = `
           <a href="ChiTietSP.html?id=${comic.id}">
-            <img src="${comic.url || 'default-image.png'}" alt="Comic image" />
+            <img src="${comic.url || 'default-image.png'}" alt="Comic image" id="img4"/>
             <div class="name-comics">${comic.name}</div>
             <div class="price-comics">${formatPrice(comic.price)} VND ${stockStatus}</div>
           </a>

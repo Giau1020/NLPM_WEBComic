@@ -5,17 +5,18 @@ function checkLoginStatus() {
         .then(isLoggedIn => {
             const authLinks = document.getElementById("authLinks");
             const loggedInUser = document.getElementById("loggedInUser");
-
+          
             if (isLoggedIn) {
                 if (authLinks && loggedInUser) {
+                 
                     authLinks.style.display = "none";
                     loggedInUser.style.display = "block";
-
+                  
                     // Lấy thông tin người dùng
                     fetch('/user/info', { credentials: 'include' })
                         .then(response => response.json())
                         .then(userInfo => {
-                            const usernameDisplay = document.getElementById("usernameDisplay");
+                            const usernameDisplay = document.getElementsByClassName("usernameDisplay")[0];
                             if (usernameDisplay) {
                                 usernameDisplay.textContent = userInfo.username;
 
@@ -36,6 +37,28 @@ function checkLoginStatus() {
                                     }
                                 });
                             }
+
+                        const test=document.getElementsByClassName("usernameDisplay")[1];
+                        if (test) {
+                            
+
+                            // Xử lý menu người dùng khi nhấn vào tên
+                            test.addEventListener("click", function(event) {
+                                event.stopPropagation();
+                                const userMenu = document.getElementById("userMenu");
+                                if (userMenu) {
+                                    userMenu.style.display = (userMenu.style.display === "none" || userMenu.style.display === "") ? "block" : "none";
+                                }
+                            });
+
+                            // Ẩn menu khi nhấn ra ngoài
+                            window.addEventListener("click", function(event) {
+                                const userMenu = document.getElementById("userMenu");
+                                if (userMenu && !usernameDisplay.contains(event.target) && !userMenu.contains(event.target)) {
+                                    userMenu.style.display = "none";
+                                }
+                            });
+                        }
                         })
                         .catch(error => console.error('Error fetching user info:', error));
                 }

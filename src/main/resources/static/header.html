@@ -1,117 +1,135 @@
 <style>
-    #loggedInUser {
-        /*  Đặt độ rộng cố định tương tự như phần Đăng nhập/Đăng ký */
-        display: flex;
-        
-        justify-content: space-between; /* Căn chỉnh đều giữa các phần tử */
-        margin-left: 120px;
-    }
+  
+/* Mặc định: Hiển thị .s3 và ẩn .s4 */
 
+#us{
+        display: none;
+    }
+    #zzz{
+        display: none;
+    }
+    #w2{
+        display: none;
+    }
+/* Khi màn hình nhỏ hơn 500px: Ẩn .s3 và hiển thị .s4 */
+@media (max-width: 1224px) {
+   .hdk{
+    display: none;
+   }
+#us{
+   
+    display: flex;
+    align-items: center; /* Căn giữa theo chiều dọc */
+   margin-left: 35%;
+}
+    #sp{
+        display: none;
+    }
+   #authLinks{
+    width: 12%;
+   }
+    .s3 .search-container {
+       
+        height: 25px !important; /* Đảm bảo chiều cao này được áp dụng */
+        width: 70% !important; /* Đặt lại chiều rộng nếu cần */
+    }
+    .s3{height: 35px;}
+    #loggedInUser{
+        width: 10%;
+        font-size: 1.6vh;
+    }
+    #zzz{display: flex;}
+    #usn{
+        display: none;
+    }
+    #lgo{
+        height: 70%;
+        margin-top: 15%;
+    }
+}
+@media(max-width: 800px)
+{
+#w2{
+    display: flex;
+    height: 40px;
+}
+#w1{
+    display: none;
 
-    #usernameDisplay {
-        font-size: 22px; /* Kích thước chữ cho username */
-        font-weight: bold;
-        color: rgb(204, 12, 12); /* Màu sắc cho username */
-        
-    }
-    #usernameDisplay:hover {
-        cursor: pointer;
-        color: red;
-    }
-    #authLinks {
-        width: 220px; /* Đặt độ rộng tương tự như phần "loggedInUser" */
-        display: flex;
-        justify-content: space-between;
-        margin-left: 50px;
-    }
-    #userMenu {
-    display: none; /* Ẩn menu */
-    position: absolute;
-    background-color: white;
+}
+}
+@media(max-width: 600px)
+{
+#w2{
+    
+    height: 30px;
+}
+#loggedInUser {
+    display: flex; /* Đảm bảo các phần tử con nằm trên cùng một dòng */
+    align-items: center; /* Căn giữa theo chiều dọc */
+   
+}
+    #zzz, #usn {
+    margin: 0; /* Đảm bảo không có margin bất thường */
+}
+#userMenu {
+    display: block; /* Ẩn menu */
+    
+   font-size: 7px !important;
     border: 1px solid #ccc;
-    width: 150px;
+    width: 100px !important;
     z-index: 1;
-    top: 100%; 
-}
-
-#userMenu a {
-    display: block;
-    padding: 10px;
-    text-decoration: none;
-    color: black;
-    font-size: 18px;
-    border-bottom: 1px solid #ccc;
-}
-
-#userMenu a:hover {
-    background-color: #f0f0f0;
-}
-
-#usernameDisplay {
-    cursor: pointer;
-}
-
-#categoryMenu {
-    display: none; /* Ẩn menu theo mặc định */
-    position: absolute;
-    background-color: white;
-    top: 100%; /* Hiển thị ngay bên dưới "Danh mục sản phẩm" */
+    top: 100%;
     left: 0;
-    z-index: 10000;
-    border: 1px solid #ccc;
-    width: 150px;
+    transform: translateX(-70%); /* Đẩy menu sang trái để bắt đầu từ cạnh phải của phần tử chứa */
+}
+#userMenu {
+    font-size: 18px !important;
+    width: 130px !important;
 }
 
-#genreList {
-    list-style-type: none; /* Xóa dấu đầu dòng của danh sách */
-    padding: 0;
-    margin: 0;
+}
+@media(max-width: 400px)
+{
+.s3{
+    height: 30px;
+}
+#g3{
+    height: 20px;
 }
 
-#genreList li {
-    padding: 10px;
-    border-bottom: 1px solid #ccc;
+#khungsearch,#btsearch{
+    font-size: 10px;
+    
 }
-
-#genreList li a {
-    text-decoration: none;
-    color: black;
-    display: block;
-    width: 100%;
+#loggedInUser {
+    display: flex; /* Đảm bảo các phần tử con nằm trên cùng một dòng */
+    align-items: center; /* Căn giữa theo chiều dọc */
+    
 }
-
-#genreList li a:hover {
-    background-color: #f0f0f0;
+    #zzz, #usn {
+    margin: 0; /* Đảm bảo không có margin bất thường */
 }
-#danhmuc:hover #sp, 
-#danhmuc:hover img {
-    text-shadow: 0 0 15px red; /* Phát sáng chữ màu xanh dương */
-    transition: text-shadow 0.3s ease; /* Hiệu ứng chuyển mềm mại */
-    cursor: pointer;
+#userMenu a,#categoryMenu ul,#genreList li{
+   
+    font-size: 12px !important;
 }
-
-#danhmuc:hover img {
-    filter: drop-shadow(0 0 15px red); /* Phát sáng cho dấu 3 gạch */
-    transition: filter 0.3s ease;
 }
-
-
-
-
 </style>
 
  <header>
-    <div class="s1" style="width: 100%; height: 70px; align-items: center;">
-        <img src="images/top1.webp" alt="" style="width: 1263%; height: 60px;">
+    <div class="s1" style="width: 100%; height: auto; align-items: center; ">
+        <img src="images/top1.webp" alt="" style="width: 100%; " id="w1">
+        <img src="images/w2.png" alt="" style="width: 100%;" id="w2">
     </div>
     <div class="s3" >
-        <a href="TrangChu.html">
-            <img src="images/logo.svg" alt="" id="lgo">
+        <a href="TrangChu.html" style="height: 50px;">
+            <img src="images/logo.svg" alt="" id="lgo" >
         </a>
         <div style="position: relative; display: flex;  height: 50px;" id="danhmuc"  >
-        <img src="images/3Gach.svg" alt="Sample Image" style="height: 50%;" > 
+        <img src="images/3Gach.svg" alt="Sample Image" style="height: 50%;" id="g3"> 
        
-        <div id="sp" style="font-size: 20px;"><b>DANH MỤC SẢN PHẨM</b></div>
+        <div id="sp" style="font-size: 1.5vh;"><b>DANH MỤC SẢN PHẨM</b></div>
         <div id="categoryMenu" style="display: none; position: absolute; top: 100%; left: 0; background-color: white; border: 1px solid #ccc; width: 220px; z-index: 1;">
             <ul id="genreList"></ul> 
         </div>
@@ -124,12 +142,14 @@
         </div>
         
         <div id="authLinks" class="auth-links">
-            <a href="login.html">Đăng nhập</a>
-            <span style="margin-left: 10px;"><b>|</b></span>
-            <a href="dki.html">Đăng ký</a>
+            <a href="login.html" style="font-size: 1.6vh;" class="hdk">Đăng nhập</a>
+            <!-- <span style="margin-left: 10px;"><b>|</b></span> -->
+          <a href="login.html" id="us"><img src="images/us.jpg" alt="Sample Image" style="height: 25px; " > </a> 
+            <a href="dki.html" style="font-size: 1.6vh;" class="hdk">Đăng ký</a>
         </div>
         <div id="loggedInUser" style="display: none; position: relative; font-size: 22px;">
-            Xin chào <span id="usernameDisplay"></span>
+             <span class="usernameDisplay" id="usn"></span>
+             <span class="usernameDisplay" id="zzz"><img src="images/us.jpg" alt="Sample Image" style="height: 25px; margin-left: 10px;" > </span>   
             <div id="userMenu" style="display: none; position: absolute; top: 100%; left: 0; background-color: white; border: 1px solid #ccc; width: 220px; z-index: 1;">
                 <a href="TrangChu.html">Trang chủ</a>
                 <a href="./TrangCaNhan.html">Thông tin tài khoản</a>
@@ -140,6 +160,7 @@
             </div>
         </div>
     </div>
+   
 </header>
 
 

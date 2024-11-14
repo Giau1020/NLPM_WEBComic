@@ -61,7 +61,6 @@
         }
         .delete-button {
             cursor: pointer;
-           
             background: none;
             border: none;
             color: red;
@@ -119,7 +118,7 @@
     font-size: 18px;
     cursor: pointer;
     margin-top: 10px;
-    margin-left: 500px;
+    margin-left: 80%;
     margin-bottom: 20px;
     
 }
@@ -128,14 +127,99 @@
     background-color: darkgreen;
 }
 
+@media (max-width: 1024px) {
+    
+    .a{
+        width: 90%;
+        margin-top: 5px !important;
+        margin-bottom: 0px !important;
+    }
+    .b{
+        width: 90%;
+        margin-top: 5px !important;
+        margin-bottom: 0px !important;
+    }
+    #hh{
+        font-size: 25px;
+       
+    }
+    .checkout-button{
+        margin-left: 80%;
+        width: 15%;
+        height: auto;
+        
+    }
+}
+@media (max-width: 768px) {
+   
+    .a{
+        width: 100%;
+        border-radius: 0px !important;
+    }
+    .b{
+        width: 100%;
+        border-radius: 0px !important;
+    }
+    #gh{
+        font-size: 18.5px;
+       
+    }
+    .checkout-button{
+        margin-left: 73%;
+        width: 20%;
+        height: auto;
+        font-size: 15px;
+    }
+   
+    .final-total{
+       font-size: 18px !important;
+       margin-right: 10%;
+   }
+}
+@media (max-width: 530px){
+    .item-image{
+        width: 60px;
+        height: auto;
+    }
+}
+@media (max-width: 430px) {
+   
+   .a{
+       width: 100%;
+   }
+   .b{
+       width: 100%;
+   }
+   #gh{
+       font-size: 17px;
+      
+   }
+   .checkout-button{
+       margin-left: 60%;
+       width: 25%;
+       height: auto;
+       font-size: 10px;
+       margin-right: 10%;
+   }
+   .final-total{
+       font-size: 16px !important;
+       margin-right: 10%;
+   }
+   .item-info{
+    font-size: 12px !important;
+   }
+   .delete-button {
+    margin-left: 7% !important;
+}
+}
     </style>
-</head>
+</head> 
 <body>
     <div class="container">
         <div id="header"></div>
         <main class="main">
             <div class="a">
-                <h1>Giỏ Hàng</h1>
+                <h1 id="gh">Giỏ Hàng</h1>
                 <div id="totalProducts" style="margin-top: 10px;">Tổng số sản phẩm: 0</div>
                 
             </div>

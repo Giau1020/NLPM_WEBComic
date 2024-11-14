@@ -129,7 +129,17 @@
 .checkout-button:hover {
     background-color: darkgreen;
 }
-
+@media (max-width: 1024px) {
+    #div1{
+        width: 90% !important;
+    }
+}
+@media (max-width: 768px) {
+    #div1{
+        width: 100% !important;
+        font-size: 20px !important;
+    }
+}
     </style>
 </head>
 <body>
@@ -149,7 +159,7 @@
                 <form>
                     <ul class="form" method="put">
                         <li>
-                            <label for="username">Tên đăng nhập:</label>
+                            <label  for="username">Tên đăng nhập:</label>
                             <input type="text" id="username" name="username" readonly>
                         </li>
                         <li>

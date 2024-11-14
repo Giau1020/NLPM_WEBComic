@@ -17,7 +17,7 @@
             margin-top: 30px;
             width: 1200px;
             background-color: white;
-            height: 1500px;
+            height: auto;
         }
         .search h1 {
             text-align: center;
@@ -26,13 +26,16 @@
             display: grid;
             grid-template-columns: repeat(5, 1fr); /* 5 cột */
             margin-top: 20px;
+            justify-items: center; /* Căn giữa các phần tử theo chiều ngang */
+            align-items: center; /* Căn giữa các phần tử theo chiều dọc */
+            
         }
         .i4-comic {
             height: 320px;
             width: 230px;
             background-color: white;
             margin-top: 10px;
-            margin-left: 5px;
+          
             display: flex;
             flex-direction: column; /* Để đảm bảo các phần tử xếp theo cột */
             align-items: center; /* Căn giữa theo chiều ngang */
@@ -103,6 +106,136 @@
          a:hover{
           color: red;
         }
+        @media (max-width: 1200px) {
+        .search {
+            width: 90% !important;
+        }
+
+        .search-results {
+            grid-template-columns: repeat(5, 1fr); /* Display 4 comics per row */
+        }
+
+        .i4-comic {
+            width: 180px;
+            margin-bottom: 10px;
+            height: auto;
+            font-size: 14px !important;
+           gap: 5%;
+        }
+
+        .i4-comic img {
+            width: 60% !important;
+            height: auto;
+        }
+    }
+
+        @media (max-width: 1024px) {
+        .search {
+            width: 90% !important;
+        }
+
+        .search-results {
+            grid-template-columns: repeat(4, 1fr); /* Display 4 comics per row */
+        }
+
+        .i4-comic {
+            width: 170px;
+            margin-bottom: 10px;
+          
+            height: auto;
+            font-size: 14px !important;
+        }
+
+        .i4-comic img {
+            width: 60% !important;
+            height: auto;
+        }
+        h1{
+            font-size: 25px;
+        }
+        #totalResults,#sortOptions,#sx,.a{
+            font-size: 23px !important; 
+           
+        }
+        
+    }
+    @media (max-width: 768px) {
+        .search {
+            width: 100% !important;
+            margin-top: 1% !important;
+        }
+
+        .search-results {
+            grid-template-columns: repeat(3, 1fr); /* Display 4 comics per row */
+            
+        }
+
+        .i4-comic {
+            width: 170px;
+            margin-bottom: 10px;
+        
+            height: auto;
+            font-size: 14px !important;
+        }
+
+        .i4-comic img {
+            width: 60% !important;
+            height: auto;
+        }
+        #totalResults,#sortOptions,#sx{
+            font-size: 17px !important;
+           
+        }
+        h1{
+            font-size: 23px;
+        }
+        .a{
+            font-size: 17px;
+        }
+    }
+    @media (max-width: 550px) {
+        .i4-comic {
+            width: 150px;
+            margin-bottom: 10px;
+           
+            height: auto;
+            font-size: 13px !important;
+        }
+        #totalResults,#sortOptions,#sx,.a{
+            font-size: 17px !important; 
+        }
+        h1{
+            font-size: 21px;
+        }
+        
+    }
+    @media (max-width: 470px) {
+        .i4-comic {
+            width: 135px;
+            margin-bottom: 10px;
+          
+            height: auto;
+            font-size: 12px !important;
+        }
+    }
+    @media (max-width: 430px) {
+        .search-results {
+            grid-template-columns: repeat(2, 1fr); /* Display 4 comics per row */
+        }
+        .i4-comic {
+            width: 135px;
+            margin-bottom: 10px;
+          
+            height: auto;
+            font-size: 12px !important;
+        }
+        h1{
+            font-size: 19px;
+        }
+        #totalResults,#sortOptions,#sx,.a{
+            font-size: 16px !important; 
+        }
+    }
     </style>
 </head>
 <body>
@@ -116,13 +249,13 @@
                 <div id="totalResults" style="margin-bottom: 10px;"></div>
 
                 <!-- Thêm combobox để lựa chọn sắp xếp sản phẩm -->
-                <label for="sortOptions" style="font-size: 25px; margin-left: 30px;">Sắp xếp theo:</label>
+                <label for="sortOptions" style="font-size: 25px; margin-left: 30px;" id="sx">Sắp xếp theo:</label>
                 <select id="sortOptions">
-                    <option value="default">Mặc định</option>
-                    <option value="priceAsc">Giá tăng dần</option>
-                    <option value="priceDesc">Giá giảm dần</option>
-                    <option value="bestSelling">Bán chạy</option>
-                    <option value="newest">Mới nhất</option>
+                    <option value="default" class="a">Mặc định</option>
+                    <option value="priceAsc" class="a">Giá tăng dần</option>
+                    <option value="priceDesc" class="a">Giá giảm dần</option>
+                    <option value="bestSelling" class="a">Bán chạy</option>
+                    <option value="newest" class="a">Mới nhất</option>
                 </select>
                 <hr style="  border: 1px solid #f7f1f1; margin-top: 20px;" >
                 <div id="searchResults" class="search-results"></div>

@@ -83,8 +83,8 @@
     font-size: 18px;
     cursor: pointer;
     margin-top: 10px;
-    margin-left: 500px;
-    
+   margin-left: 80%;
+    width: 20%;
     
 }
 
@@ -100,14 +100,13 @@ h2 {
   
 
 .radio-container {
-    display: inline-flex;
-    align-items: center;
+    display: flex !important;
+    align-items: center !important;
   
 }
 
 .radio-container input[type="radio"] {
-    margin: 0 5px 0 0; 
-    vertical-align: middle; 
+    margin-right: 10px; /* Tạo khoảng cách giữa nút radio và chữ */
 }
 
 .radio-container label {
@@ -116,7 +115,72 @@ h2 {
     vertical-align: middle;
 }
 
+@media (max-width: 1024px) {
+    
+   .TTin,.SP, .payment{
+    width: 90%;
+   }
+   .checkout-button{
+    width: 15%;
+    font-size: 16px;
+   }
+   .final-total{
+    margin-right: 5% !important;
 
+   }
+   
+}
+@media (max-width: 768px) {
+    .TTin,.SP, .payment{
+    width: 100%;
+    border-radius: 0px !important;
+    margin-top: 5px !important;
+    margin-bottom: 0px !important;
+   }
+   .final-total{
+    margin-right: 5% !important;
+
+   }
+   .checkout-button{
+    font-size: 15px;
+   }
+}
+@media (max-width: 530px) {
+    .final-total{
+    margin-right: 5% !important;
+    font-size: 14px;
+   }
+   .checkout-button{
+    font-size: 11px;
+    margin-left: 70%;
+    width: 25%;
+   }
+   #o1,#o2{
+    font-size: 14px !important;
+   
+   }
+   .form-group{
+    font-size: 14px !important;
+   }
+   #fullName,#phoneNumber,#province,#district,#ward,#address{
+    font-size: 13px !important;
+   }
+   .TTin,.SP,.payment{
+    border-radius: 0%;
+    margin-top: 5px;
+   }
+   H2{
+    font-size: 14px;
+   }
+   .product-list{
+    font-size: 13px !important;
+   }
+   .product-image {
+            width: 60px;
+            height: auto;
+            margin-right: 15px;
+        }
+}
 
 
 
@@ -166,20 +230,18 @@ h2 {
           
             <div class="payment">
                 <h2>HÌNH THỨC THANH TOÁN</h2>
-                <div style="border: rgb(222, 222, 226) solid 1px; width: 480px;">
-                <div class="radio-container" style=" width: 450px; height: 50px; ">
-                    <input type="radio" name="payment" id="option1" value="Thanh toán khi nhận hàng">
-                    <span style="white-space: nowrap; font-size: 18px;" >Thanh toán bằng tiền mặt khi nhận hàng </span> <img src="images/mn.png" alt=""  style="width: 80px; height: 40px; margin-left: 30px;">
+                
+                <div class="radio-container" style="width: 100%; height: 50px; ">
+                    <input type="radio" name="payment" id="option1" value="Thanh toán khi nhận hàng" style="width: 10%;">
+                    <label for="option1" style="font-size: 18px;" id="o1">Thanh toán bằng tiền mặt khi nhận hàng</label>
                 </div>
+                
+                <div class="radio-container" style="width: 100%; height: 50px;">
+                    <input type="radio" name="payment" id="option2" value="Thanh toán trực tuyến"  style="width: 10%;">
+                    <label for="option2" style="font-size: 18px;" id="o2">Thanh toán khi trực tuyến</label>
                 </div>
-                <br>
-                <div style="border: rgb(222, 222, 226) solid 1px; width: 400px;">
-                <div class="radio-container" style=" width: 380px; height: 50px;">
-                    <input type="radio" name="payment" id="option2" value="Thanh toán trục tuyến">
-                    <span style="white-space: nowrap; font-size: 18px;">Thanh toán khi trực tuyến</span> 
-                    <img src="images/vnpay-logo.png" alt="" style="width: 100px; margin-left: 30px;">    
-                </div>
-            </div>
+                
+            
             </div>
 
 

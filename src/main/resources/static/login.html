@@ -1,3 +1,8 @@
+
+
+
+
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -6,7 +11,7 @@
     <link rel="stylesheet" href="/css/styles.css" />
     <title>Trang Thanh Toán</title>
     <style>
-        .main {
+      .main {
             display: flex;
             align-items: center;
             flex-direction: column;
@@ -33,7 +38,7 @@
         input[type="password"] {
             width: 100%;
             padding: 10px;
-            margin: 10px 0;
+           
             border: 1px solid #ccc;
             border-radius: 5px;
         }
@@ -71,6 +76,49 @@
         a:hover {
             color: red;
         }
+        #a {
+        text-align: right;
+        margin-top: 5px;
+        margin-bottom: 5px;
+        
+    }
+    #a a{
+       color: blue;
+    }
+    input::placeholder {
+        font-size: 15px;
+    }
+    @media (max-width: 620px) {
+        .login-container{
+            width: 100% !important;
+            height: auto;
+        }
+        .login-container{
+            padding: 10% 20%;
+        }
+    }
+    @media (max-width: 500px) {
+        #tdn,#mk,#username,#password{
+            font-size: 15px !important;
+        }
+        #username::placeholder {
+        font-size: 12px !important;
+    }#password::placeholder {
+        font-size: 12px !important;
+    }
+    }
+    @media (max-width: 425px) {
+        
+        .login-container{
+            padding: 5% 10%;
+        }
+        #btlg{
+            font-size: 14px !important;
+        }
+        #a{
+            font-size: 14px !important;
+        }
+    }
     </style>
 </head>
 <body>
@@ -80,22 +128,24 @@
             <div class="login-container">
                 <h2>Đăng nhập</h2>
                 <form id="login-form">
-                    <label for="username">Tên đăng nhập</label>
-                    <input type="text" id="username" placeholder="Tên đăng nhập" required />
+                    <label for="username" id="tdn">Tên đăng nhập</label>
+                    <input type="text" id="username" style=" margin: 10px 0; font-size: 15px;" placeholder="Tên đăng nhập" required />
                     
-                    <label for="password">Mật khẩu</label>
-                    <input type="password" id="password" placeholder="Mật khẩu" required />
-                    
+                    <label for="password" id="mk">Mật khẩu</label>
+                    <input type="password" id="password" style=" margin: 10px 0;" placeholder="Mật khẩu" required />
+                    <div id="a">Bạn chưa có tài khoản? <a href="dki.html"> Đăng ký ngay.</a></div>
                     <button type="button" id="btlg" onclick="login()">Đăng nhập</button>
                 </form>
                 <div id="error-message" class="error-message"></div>
             </div> 
         </main>
+      
         <div id="footer"></div>
     </div>
+
     <script src="js/Header.js"></script>
     <script>
-    function login() {
+       function login() {
     const username = document.getElementById("username").value;
     const password = document.getElementById("password").value;
 
